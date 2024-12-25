@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:falling_anvil",
+    "minecraft:arrow",
+    "minecraft:cactus",
+    "minecraft:cramming",
+    "minecraft:falling_block",
+    "minecraft:falling_stalactite",
+    "minecraft:fly_into_wall",
+    "minecraft:mob_attack",
+    "minecraft:mob_attack_no_aggro",
+    "minecraft:mob_projectile",
+    "minecraft:player_attack",
+    "minecraft:sting",
+    "minecraft:sweet_berry_bush",
+    "minecraft:thrown",
+    "minecraft:trident"
+  ]
+}

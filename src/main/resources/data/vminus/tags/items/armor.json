@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#vminus:golden_armor",
+    "#vminus:iron_armor",
+    "#vminus:diamond_armor",
+    "#vminus:netherite_armor",
+    "#vminus:leather_armor",
+    "#vminus:turtle_armor"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "attribute.vminus.blast_protection": "Blast Protection",
+  "attribute.vminus.blunt_protection": "Blunt Protection",
+  "attribute.vminus.critical_damage": "Critical Damage",
+  "attribute.vminus.fall_protection": "Fall Protection",
+  "attribute.vminus.fire_protection": "Fire Protection",
+  "attribute.vminus.magic_protection": "Magic Protection",
+  "attribute.vminus.mining_speed": "Mining Speed",
+  "attribute.vminus.protection": "Protection",
+  "block.vminus.default_block": "Default Block",
+  "entity.vminus.porcupine": "Default Entity",
+  "item.vminus.default_item": "Default Item",
+  "key.vminus.open_capes_menu": "Capes",
+  "vminus.screen.capes.title": "Capes"
+}

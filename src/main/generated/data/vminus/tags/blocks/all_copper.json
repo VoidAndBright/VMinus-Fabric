@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#vminus:copper",
+    "#vminus:waxed_copper",
+    "#vminus:copper",
+    "#vminus:waxed_copper"
+  ]
+}
