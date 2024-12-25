@@ -1,4 +1,4 @@
-package lixir.vminus;
+package lixir.vminus.vision;
 
 public class Vision {
     String[] blocks;

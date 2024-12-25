@@ -35,3 +35,7 @@ terraform.rc
 /.gradle/
 /build/
 /src/main/generated/
+/.idea/
+/src/VMinus-main/
+/run/
+/.idea/

@@ -1,4 +1,4 @@
-package lixir.vminus;
+package lixir.vminus.vision;
 
 public class NumberUtil {
     public static double modifyNumber(double existingNumber, double number, String operation) {
