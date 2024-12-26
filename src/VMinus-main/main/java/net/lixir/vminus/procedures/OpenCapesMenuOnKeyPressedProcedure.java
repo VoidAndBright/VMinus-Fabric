@@ -11,11 +11,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.World;
 import net.minecraftforge.network.NetworkHooks;
 
 public class OpenCapesMenuOnKeyPressedProcedure {
-    public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+    public static void execute(World world, double x, double y, double z, Entity entity) {
         if (entity == null)
             return;
         if (entity instanceof ServerPlayer _ent) {

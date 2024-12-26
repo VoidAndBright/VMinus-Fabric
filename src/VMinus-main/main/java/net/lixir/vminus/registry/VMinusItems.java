@@ -4,7 +4,7 @@
  */
 package net.lixir.vminus.registry;
 
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.lixir.vminus.item.DefaultItemItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class VMinusItems {
-    public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, VMinusMod.MODID);
+    public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, VMinus.MODID);
     public static final RegistryObject<Item> DEFAULT_ITEM = REGISTRY.register("default_item", () -> new DefaultItemItem());
     public static final RegistryObject<Item> DEFAULT_BLOCK = block(VMinusBlocks.DEFAULT_BLOCK);
 

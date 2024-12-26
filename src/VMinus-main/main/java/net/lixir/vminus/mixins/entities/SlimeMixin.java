@@ -26,7 +26,7 @@ public abstract class SlimeMixin extends Mob implements Enemy {
     @Inject(method = "remove", at = @At("HEAD"), cancellable = true)
     private void remove(Entity.RemovalReason removalReason, CallbackInfo ci) {
         int size = slime.getSize();
-        if (!slime.level().isClientSide && size > 1 && slime.isDeadOrDying()) {
+        if (!slime.level().isClient && size > 1 && slime.isDeadOrDying()) {
             Component customName = slime.getCustomName();
             boolean noAi = slime.isNoAi();
             float offset = (float) size / 4.0F;

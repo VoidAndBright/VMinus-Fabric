@@ -1,6 +1,6 @@
 package net.lixir.vminus.datagen;
 
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.lixir.vminus.registry.util.VMinusTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class VMinusBlockTagGenerator extends BlockTagsProvider {
     public VMinusBlockTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, VMinusMod.MODID, existingFileHelper);
+        super(output, lookupProvider, VMinus.MODID, existingFileHelper);
     }
 
     @Override

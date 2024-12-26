@@ -28,7 +28,7 @@ public class RecordItemMixin {
         BlockState blockState = level.getBlockState(blockPos);
         if (blockState.is(Blocks.JUKEBOX) && !blockState.getValue(JukeboxBlock.HAS_RECORD)) {
             ItemStack itemStack = context.getItemInHand();
-            if (!level.isClientSide) {
+            if (!level.isClient) {
                 Player player = context.getPlayer();
                 BlockEntity blockEntity = level.getBlockEntity(blockPos);
                 if (blockEntity instanceof JukeboxBlockEntity jukeboxBlockEntity) {
@@ -42,7 +42,7 @@ public class RecordItemMixin {
                     }
                 }
             }
-            cir.setReturnValue(InteractionResult.sidedSuccess(level.isClientSide));
+            cir.setReturnValue(InteractionResult.sidedSuccess(level.isClient));
             cir.cancel();
         }
     }

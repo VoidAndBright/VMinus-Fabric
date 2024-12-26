@@ -3,8 +3,8 @@ package net.lixir.vminus.visions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.lixir.vminus.VMinusMod;
-import net.lixir.vminus.network.VMinusModVariables;
+import net.lixir.vminus.VMinus;
+import net.lixir.vminus.network.VMinusVariables;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
@@ -111,23 +111,23 @@ public class VisionHandler {
     }
 
     public static void loadVisions() {
-        if (VMinusModVariables.main_item_vision != null) {
+        if (VMinusVariables.main_item_vision != null) {
             for (Item item : ForgeRegistries.ITEMS.getValues()) {
                 ItemStack itemStack = new ItemStack(item);
                 VisionHandler.getVisionData(itemStack);
             }
         }
-        if (VMinusModVariables.main_block_vision != null) {
+        if (VMinusVariables.main_block_vision != null) {
             for (Block block : ForgeRegistries.BLOCKS.getValues()) {
                 VisionHandler.getVisionData(block);
             }
         }
-        if (VMinusModVariables.main_effect_vision != null) {
+        if (VMinusVariables.main_effect_vision != null) {
             for (MobEffect effect : ForgeRegistries.MOB_EFFECTS.getValues()) {
                 VisionHandler.getVisionData(effect);
             }
         }
-        if (VMinusModVariables.main_enchantment_vision != null) {
+        if (VMinusVariables.main_enchantment_vision != null) {
             for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS.getValues()) {
                 VisionHandler.getVisionData(enchantment);
             }
@@ -229,7 +229,7 @@ public class VisionHandler {
         byte type = -1;
 
         if (debug) {
-            VMinusMod.LOGGER.info("______________DEBUGGING______________");
+            VMinus.LOGGER.info("______________DEBUGGING______________");
         }
 
         if (itemstack != null) {
@@ -280,7 +280,7 @@ public class VisionHandler {
                 visionCache = ENCHANTMENT_VISION_CACHE;
             }
             default -> {
-                VMinusMod.LOGGER.warn("Vision type could not be found.");
+                VMinus.LOGGER.warn("Vision type could not be found.");
                 return null;
             }
         }
@@ -314,11 +314,11 @@ public class VisionHandler {
 
     private static JsonObject getMainVisionByType(byte type) {
         return switch (type) {
-            case ITEM_TYPE -> VMinusModVariables.main_item_vision;
-            case BLOCK_TYPE -> VMinusModVariables.main_block_vision;
-            case ENTITY_TYPE -> VMinusModVariables.main_entity_vision;
-            case EFFECT_TYPE -> VMinusModVariables.main_effect_vision;
-            case ENCHANTMENT_TYPE -> VMinusModVariables.main_enchantment_vision;
+            case ITEM_TYPE -> VMinusVariables.main_item_vision;
+            case BLOCK_TYPE -> VMinusVariables.main_block_vision;
+            case ENTITY_TYPE -> VMinusVariables.main_entity_vision;
+            case EFFECT_TYPE -> VMinusVariables.main_effect_vision;
+            case ENCHANTMENT_TYPE -> VMinusVariables.main_enchantment_vision;
             default -> null;
         };
     }

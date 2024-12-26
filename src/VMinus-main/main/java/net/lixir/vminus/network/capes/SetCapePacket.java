@@ -1,7 +1,7 @@
 package net.lixir.vminus.network.capes;
 
-import net.lixir.vminus.VMinusMod;
-import net.lixir.vminus.network.VMinusModVariables;
+import net.lixir.vminus.VMinus;
+import net.lixir.vminus.network.VMinusVariables;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -41,22 +41,22 @@ public class SetCapePacket {
             if (context.getDirection().getReceptionSide().isClient()) {
                 AbstractClientPlayer clientPlayer = (AbstractClientPlayer) Minecraft.getInstance().level.getPlayerByUUID(packet.playerUUID);
                 if (clientPlayer != null) {
-                    clientPlayer.getCapability(VMinusModVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(capability -> {
+                    clientPlayer.getCapability(VMinusVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(capability -> {
                         capability.cape_id = packet.capeId;
                     });
                 }
             } else {
                 ServerPlayer player = context.getSender();
                 if (player != null) {
-                    player.getCapability(VMinusModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+                    player.getCapability(VMinusVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
                         capability.cape_id = packet.capeId;
                         capability.syncPlayerVariables(player);
                         for (ServerPlayer otherPlayer : player.server.getPlayerList().getPlayers()) {
-                            VMinusMod.PACKET_HANDLER.sendTo(new SetCapePacket(capability.cape_id, player.getUUID()), otherPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                            VMinus.PACKET_HANDLER.sendTo(new SetCapePacket(capability.cape_id, player.getUUID()), otherPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                         }
                     });
                 } else {
-                    VMinusMod.LOGGER.error("Could not find the player for the cape packet!");
+                    VMinus.LOGGER.error("Could not find the player for the cape packet!");
                 }
             }
         });
@@ -65,6 +65,6 @@ public class SetCapePacket {
 
     
     public static void registerMessage(FMLCommonSetupEvent event) {
-        VMinusMod.addNetworkMessage(SetCapePacket.class, SetCapePacket::encode, SetCapePacket::decode, SetCapePacket::handle);
+        VMinus.addNetworkMessage(SetCapePacket.class, SetCapePacket::encode, SetCapePacket::decode, SetCapePacket::handle);
     }
 }

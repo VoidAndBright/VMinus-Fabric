@@ -1,13 +1,13 @@
 package net.lixir.vminus.procedures;
 
-import net.lixir.vminus.VMinusMod;
-import net.lixir.vminus.network.VMinusModVariables;
+import net.lixir.vminus.VMinus;
+import net.lixir.vminus.network.VMinusVariables;
 import net.lixir.vminus.visions.VisionHandler;
 
 public class PrintEntityVisionFileProcedure {
     public static void execute() {
-        VMinusMod.LOGGER.info(("Raw Entity Vision File: " + VMinusModVariables.main_entity_vision));
-        VMinusMod.LOGGER.info(("Raw Entity Vision Cache: " + VisionHandler.getEntityVisionCache()));
-        VMinusMod.LOGGER.info(("Raw Entity Vision Key: " + VisionHandler.getEntityVisionKey()));
+        VMinus.LOGGER.info(("Raw Entity Vision File: " + VMinusVariables.main_entity_vision));
+        VMinus.LOGGER.info(("Raw Entity Vision Cache: " + VisionHandler.getEntityVisionCache()));
+        VMinus.LOGGER.info(("Raw Entity Vision Key: " + VisionHandler.getEntityVisionKey()));
     }
 }

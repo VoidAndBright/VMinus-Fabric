@@ -161,7 +161,7 @@ Details:
 	Current Language: en_us
 	CPU: 12x Intel(R) Core(TM) i5-10400 CPU @ 2.90GHz
 	Server Running: true
-	Player Count: 1 / 8; [ServerPlayerEntity['Player987'/22, l='ServerLevel[New World]', x=-201.38, y=119.94, z=-390.40]]
+	Player Count: 1 / 8; [ServerPlayerEntity['Player987'/22, l='ServerWorld[New World]', x=-201.38, y=119.94, z=-390.40]]
 	Data Packs: vanilla, fabric
 	Enabled Feature Flags: minecraft:vanilla
 	World Generation: Stable

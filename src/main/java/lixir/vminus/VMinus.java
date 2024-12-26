@@ -26,6 +26,5 @@ public class VMinus implements ModInitializer {
 		VMinusItems.register();
 		VMinusKeyBinds.register();
 		VMinusPacketReceiver.register();
-
 	}
 }

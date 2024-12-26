@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerWorld;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -31,9 +31,9 @@ import java.util.List;
 public class LivingTickEventHandler {
     
     public static void onEntityTick(LivingEvent.LivingTickEvent event) {
-        LevelAccessor world = event.getEntity().level();
+        World world = event.getEntity().level();
         Entity entity = event.getEntity();
-        if (entity == null || !(world instanceof ServerLevel serverWorld))
+        if (entity == null || !(world instanceof ServerWorld serverWorld))
             return;
         if (world.getLevelData().getGameTime() % 4 == 0 && entity instanceof LivingEntity livingEntity) {
             if (!isSpectator(entity)) {
@@ -52,7 +52,7 @@ public class LivingTickEventHandler {
         if (entity instanceof ServerPlayer serverPlayer) {
             GameType gameMode = serverPlayer.gameMode.getGameModeForPlayer();
             return gameMode == GameType.SPECTATOR;
-        } else if (entity.level().isClientSide() && entity instanceof Player player) {
+        } else if (entity.level().isClient() && entity instanceof Player player) {
             var connection = Minecraft.getInstance().getConnection();
             if (connection != null) {
                 var playerInfo = connection.getPlayerInfo(player.getGameProfile().getId());
@@ -87,7 +87,7 @@ public class LivingTickEventHandler {
         return new double[]{spawnX, spawnY, spawnZ};
     }
 
-    private static void spawnParticleForEffect(String effect, ServerLevel world, double[] spawnCoords, Entity entity) {
+    private static void spawnParticleForEffect(String effect, ServerWorld world, double[] spawnCoords, Entity entity) {
         Identifier effectLocation = new Identifier(effect);
         MobEffect mobEffect = ForgeRegistries.MOB_EFFECTS.getValue(effectLocation);
         if (mobEffect == null) {

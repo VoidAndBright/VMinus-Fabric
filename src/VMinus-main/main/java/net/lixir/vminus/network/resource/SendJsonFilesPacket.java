@@ -1,6 +1,6 @@
 package net.lixir.vminus.network.resource;
 
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,6 +32,6 @@ public record SendJsonFilesPacket(String itemJsonChunk, String blockJsonChunk, S
 
     
     public static void registerMessage(FMLCommonSetupEvent event) {
-        VMinusMod.addNetworkMessage(SendJsonFilesPacket.class, SendJsonFilesPacket::encode, SendJsonFilesPacket::decode, SendJsonFilesPacketHandler::handle);
+        VMinus.addNetworkMessage(SendJsonFilesPacket.class, SendJsonFilesPacket::encode, SendJsonFilesPacket::decode, SendJsonFilesPacketHandler::handle);
     }
 }

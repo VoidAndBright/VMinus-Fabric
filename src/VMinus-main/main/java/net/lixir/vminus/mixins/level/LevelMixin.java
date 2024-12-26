@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.World;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -38,7 +38,7 @@ public abstract class LevelMixin {
             Identifier Identifier = new Identifier(replaceString);
             Block replacingBlock = ForgeRegistries.BLOCKS.getValue(Identifier);
             if (replacingBlock != null) {
-                LevelAccessor world = (LevelAccessor) this;
+                World world = (World) this;
                 cir.setReturnValue(setBlock(pos, replacingBlock.defaultBlockState(), i));
                 world.scheduleTick(pos, replacingBlock, 1);
             }

@@ -38,9 +38,3 @@ terraform.rc
 /.idea/
 /src/VMinus-main/
 /run/
-/.idea/
-/.idea
-run/usercache.json
-run/saves/New World/session.lock
-run/saves/New World/region/r.0.-2.mca
-run/saves/New World/region/r.0.-1.mca

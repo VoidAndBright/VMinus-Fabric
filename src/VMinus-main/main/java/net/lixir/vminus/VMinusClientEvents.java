@@ -30,7 +30,7 @@ public class VMinusClientEvents {
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof Player && entity == Minecraft.getInstance().player) {
-            VMinusMod.PACKET_HANDLER.sendToServer(new RequestFileGenerationPacket());
+            VMinus.PACKET_HANDLER.sendToServer(new RequestFileGenerationPacket());
         }
     }
 
@@ -38,7 +38,7 @@ public class VMinusClientEvents {
     public static void onItemTooltip(ItemTooltipEvent event) {
         Entity player = event.getEntity();
         if (player != null) {
-            // LevelAccessor world = player.level();
+            // World world = player.level();
             List<Component> tooltip = event.getToolTip();
             ItemStack itemstack = event.getItemStack();
             if (tooltip == null)

@@ -1,7 +1,7 @@
 package net.lixir.vminus.events;
 
 import com.google.gson.JsonObject;
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.lixir.vminus.visions.VisionHandler;
 import net.lixir.vminus.visions.VisionValueHandler;
 import net.minecraft.core.BlockPos;
@@ -22,7 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.World;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -46,7 +46,7 @@ public class EntityAttackedEventHandler {
     public static void onEntityAttacked(LivingAttackEvent event) {
         if (event != null && event.getEntity() != null) {
 
-            LevelAccessor world = event.getEntity().level();
+            World world = event.getEntity().level();
             DamageSource damagesource = event.getSource();
             Entity entity = event.getEntity();
             Entity sourceentity = event.getSource().getEntity();
@@ -101,7 +101,7 @@ public class EntityAttackedEventHandler {
                             void timedLoop(int current, int total, int ticks) {
                                 entity.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0.25, 0.05, 0.25));
                                 final int tick2 = ticks;
-                                VMinusMod.queueServerWork(tick2, () -> {
+                                VMinus.queueServerWork(tick2, () -> {
                                     if (total > current + 1) {
                                         timedLoop(current + 1, total, tick2);
                                     }
@@ -137,7 +137,7 @@ public class EntityAttackedEventHandler {
                                 }
                                 if (visionData.has("sound")) {
                                     String soundString = VisionValueHandler.getFirstValidString(visionData, "sound");
-                                    if (!world.isClientSide())
+                                    if (!world.isClient())
                                         world.playSound(null, BlockPos.containing(sourceentity.getX(),
                                                         sourceentity.getY() + 1,
                                                         sourceentity.getZ()),

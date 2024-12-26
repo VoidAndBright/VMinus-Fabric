@@ -2,8 +2,8 @@ package net.lixir.vminus.network.resource;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.lixir.vminus.VMinusMod;
-import net.lixir.vminus.network.VMinusModVariables;
+import net.lixir.vminus.VMinus;
+import net.lixir.vminus.network.VMinusVariables;
 import net.lixir.vminus.visions.VisionHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkEvent;
@@ -63,23 +63,23 @@ public class SendJsonFilesPacketHandler {
                 throw new IOException("Invalid JSON received.");
             switch (type) {
                 case VisionHandler.ITEM_TYPE:
-                    VMinusModVariables.main_item_vision = jsonObject;
+                    VMinusVariables.main_item_vision = jsonObject;
                     break;
                 case VisionHandler.BLOCK_TYPE:
-                    VMinusModVariables.main_block_vision = jsonObject;
+                    VMinusVariables.main_block_vision = jsonObject;
                     break;
                 case VisionHandler.ENTITY_TYPE:
-                    VMinusModVariables.main_entity_vision = jsonObject;
+                    VMinusVariables.main_entity_vision = jsonObject;
                     break;
                 case VisionHandler.EFFECT_TYPE:
-                    VMinusModVariables.main_effect_vision = jsonObject;
+                    VMinusVariables.main_effect_vision = jsonObject;
                     break;
                 case VisionHandler.ENCHANTMENT_TYPE:
-                    VMinusModVariables.main_enchantment_vision = jsonObject;
+                    VMinusVariables.main_enchantment_vision = jsonObject;
                     break;
             }
         } catch (IOException e) {
-            VMinusMod.LOGGER.error("Error processing received JSON: ", e);
+            VMinus.LOGGER.error("Error processing received JSON: ", e);
         }
     }
 }

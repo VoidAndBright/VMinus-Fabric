@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.lixir.vminus.SoundHelper;
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.lixir.vminus.helpers.DurabilityHelper;
 import net.lixir.vminus.visions.VisionValueHandler;
 import net.lixir.vminus.visions.util.EnchantmentVisionHelper;
@@ -168,14 +168,14 @@ public abstract class ItemStackMixin {
                 if (startColorString != null)
                     startColor = Integer.decode(startColorString.trim());
             } catch (NumberFormatException e) {
-                VMinusMod.LOGGER.error("Invalid start_color format: " + itemData.get("start_color").getAsString());
+                VMinus.LOGGER.error("Invalid start_color format: " + itemData.get("start_color").getAsString());
             }
             try {
                 String endColorString = VisionValueHandler.getFirstValidString(itemData, "bar", itemstack, "end_color");
                 if (endColorString != null)
                     endColor = Integer.decode(endColorString.trim());
             } catch (NumberFormatException e) {
-                VMinusMod.LOGGER.error("Invalid end_color format: " + itemData.get("end_color").getAsString());
+                VMinus.LOGGER.error("Invalid end_color format: " + itemData.get("end_color").getAsString());
             }
             float durabilityRatio = (float) DurabilityHelper.getDurability(itemstack) / (float) DurabilityHelper.getDurability(true, itemstack);
             int transitionColor = interpolateColor(endColor, startColor, durabilityRatio);

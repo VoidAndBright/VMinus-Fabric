@@ -1,6 +1,6 @@
 package net.lixir.vminus.registry.util;
 
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -17,14 +17,14 @@ public class VMinusTags {
         public static final TagKey<Block> CONCRETE_POWDER = tag("concrete_powder");
 
         private static TagKey<Block> tag(String name) {
-            return BlockTags.create(new Identifier(VMinusMod.MODID, name));
+            return BlockTags.create(new Identifier(VMinus.MODID, name));
         }
     }
 
     public static class Items {
 
         private static TagKey<Item> tag(String name) {
-            return ItemTags.create(new Identifier(VMinusMod.MODID, name));
+            return ItemTags.create(new Identifier(VMinus.MODID, name));
         }
     }
 }

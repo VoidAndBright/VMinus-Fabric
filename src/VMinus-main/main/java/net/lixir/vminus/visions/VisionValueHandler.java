@@ -19,7 +19,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.World;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -399,7 +399,7 @@ public class VisionValueHandler {
             }
             if (conditions.has("in_biome_tag")) {
                 String biomeId = conditions.get("in_biome_tag").getAsString();
-                LevelAccessor level = entity.level();
+                World level = entity.level();
                 BlockPos pos = BlockPos.containing(entity.getX(), entity.getY(), entity.getZ());
                 boolean inverted = checkInverted(conditions);
                 if (inverted == level.getBiome(pos).is(TagKey.create(Registries.BIOME, new Identifier(biomeId)))) {

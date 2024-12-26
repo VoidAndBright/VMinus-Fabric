@@ -3,14 +3,14 @@ package net.lixir.vminus.events;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.lixir.vminus.helpers.MobVariantHelper;
 import net.lixir.vminus.network.mobvariants.MobVariantSyncPacket;
 import net.lixir.vminus.visions.VisionHandler;
 import net.lixir.vminus.visions.VisionValueHandler;
 import net.lixir.vminus.visions.util.ItemVisionHelper;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerWorld;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -31,7 +31,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class EntitySpawnedEventHandler {
     (priority = EventPriority.NORMAL)
     public static void onEntityJoin(EntityJoinLevelEvent event) {
-        if (!(event.getLevel() instanceof ServerLevel serverLevel)) return;
+        if (!(event.getLevel() instanceof ServerWorld ServerWorld)) return;
 
         Entity entity = event.getEntity();
         if (entity == null)
@@ -115,15 +115,15 @@ public class EntitySpawnedEventHandler {
             final String chosenVariant = MobVariantHelper.setOrGetVariant(entity, visionData);
             /* Have to have the first one without a delay for when it first spawns,
              and another one with a delay on rejoin so that it works */
-            serverLevel.getServer().execute(() -> {
-                VMinusMod.PACKET_HANDLER.send(
+            ServerWorld.getServer().execute(() -> {
+                VMinus.PACKET_HANDLER.send(
                         PacketDistributor.TRACKING_ENTITY.with(() -> entity),
                         new MobVariantSyncPacket(entity.getId(), chosenVariant)
                 );
             });
-            VMinusMod.queueServerWork(1, () -> {
-                serverLevel.getServer().execute(() -> {
-                    VMinusMod.PACKET_HANDLER.send(
+            VMinus.queueServerWork(1, () -> {
+                ServerWorld.getServer().execute(() -> {
+                    VMinus.PACKET_HANDLER.send(
                             PacketDistributor.TRACKING_ENTITY.with(() -> entity),
                             new MobVariantSyncPacket(entity.getId(), chosenVariant)
                     );

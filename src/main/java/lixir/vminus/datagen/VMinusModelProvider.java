@@ -1,6 +1,5 @@
 package lixir.vminus.datagen;
 
-import lixir.vminus.block.DefaultBlock;
 import lixir.vminus.block.VMinusBlocks;
 import lixir.vminus.item.VMinusItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;

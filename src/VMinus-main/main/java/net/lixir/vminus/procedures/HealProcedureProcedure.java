@@ -8,21 +8,21 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerWorld;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.World;
 
 public class HealProcedureProcedure {
-    public static void execute(LevelAccessor world, double x, double y, double z, CommandContext<CommandSourceStack> arguments, Entity entity) {
+    public static void execute(World world, double x, double y, double z, CommandContext<CommandSourceStack> arguments, Entity entity) {
         if (entity == null)
             return;
         String currentDimension = entity.level().dimension().location().toString();
         try {
             for (Entity entityiterator : EntityArgument.getEntities(arguments, "entities")) {
                 if (world instanceof ServerWorld serverWorld) {
-                    LevelAccessor _worldorig = world;
+                    World _worldorig = world;
                     world = serverWorld.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new Identifier(currentDimension)));
                     if (world != null) {
                         if (entity instanceof LivingEntity _entity)
@@ -33,7 +33,7 @@ public class HealProcedureProcedure {
         } catch (CommandSyntaxException e) {
             e.printStackTrace();
         }
-        if (world instanceof Level _level && !_level.isClientSide())
+        if (world instanceof Level _level && !_level.isClient())
             _level.explode(null, x, y, z, 4, Level.ExplosionInteraction.NONE);
     }
 }

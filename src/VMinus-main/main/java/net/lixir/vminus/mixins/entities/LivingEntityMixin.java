@@ -86,7 +86,7 @@ public abstract class LivingEntityMixin {
                 if (!mobeffectinstance.tick(entity, () -> {
                     accessor.callOnEffectUpdated(mobeffectinstance, true, null);
                 })) {
-                    if (!entity.level().isClientSide) {
+                    if (!entity.level().isClient) {
                         iterator.remove();
                         accessor.callOnEffectRemoved(mobeffectinstance);
                     }
@@ -97,7 +97,7 @@ public abstract class LivingEntityMixin {
         } catch (ConcurrentModificationException ignored) {
         }
         if (accessor.isEffectsDirty()) {
-            if (!entity.level().isClientSide) {
+            if (!entity.level().isClient) {
                 accessor.callUpdateInvisibilityStatus();
                 accessor.callUpdateGlowingStatus();
             }

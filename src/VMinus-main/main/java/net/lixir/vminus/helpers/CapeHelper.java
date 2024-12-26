@@ -1,6 +1,6 @@
 package net.lixir.vminus.helpers;
 
-import net.lixir.vminus.network.VMinusModVariables;
+import net.lixir.vminus.network.VMinusVariables;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
@@ -127,7 +127,7 @@ public class CapeHelper {
     private static final Identifier TROLL_CAPE = new Identifier("vminus", "textures/cape/troll_cape.png");
 
     public static Identifier getCapeTexture(AbstractClientPlayer player) {
-        String capeId = player.getCapability(VMinusModVariables.PLAYER_VARIABLES_CAPABILITY, null).map(capability -> capability.cape_id).orElse("");
+        String capeId = player.getCapability(VMinusVariables.PLAYER_VARIABLES_CAPABILITY, null).map(capability -> capability.cape_id).orElse("");
         if (ownsCape(player, capeId)) {
             switch (capeId) {
                 case "beeper":

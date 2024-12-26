@@ -31,8 +31,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Mod("vminus")
-public class VMinusMod {
-    public static final Logger LOGGER = LogManager.getLogger(VMinusMod.class);
+public class VMinus {
+    public static final Logger LOGGER = LogManager.getLogger(VMinus.class);
     public static final String MODID = "vminus";
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(
@@ -44,7 +44,7 @@ public class VMinusMod {
     private static final Collection<AbstractMap.SimpleEntry<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
     private static int messageID = 0;
 
-    public VMinusMod() {
+    public VMinus() {
         MinecraftForge.EVENT_BUS.register(this);
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         VMinusBlocks.REGISTRY.register(bus);

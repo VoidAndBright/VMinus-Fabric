@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import net.lixir.vminus.visions.VisionHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.World;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 public class EntityPlaceEventHandler {
     
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
-        LevelAccessor world = event.getLevel();
+        World world = event.getLevel();
         Entity entity = event.getEntity();
         if (entity == null) return;
         double x = entity.getX();

@@ -1,15 +1,10 @@
 package lixir.vminus.vision;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import lixir.vminus.VMinus;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.minecraft.resource.JsonDataLoader;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceType;
+import net.minecraft.resource.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
@@ -19,26 +14,30 @@ import java.util.Map;
 
 public class VisionLoader {
     public static void register() {
-    	ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(
-            new SimpleSynchronousResourceReloadListener() {
-                @Override
-                public Identifier getFabricId () {
-                    return new Identifier(VMinus.MOD_ID, "visions");
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
+            public Identifier getFabricId() {
+                return new Identifier(VMinus.MOD_ID, "visions");
+            }
+            public void reload(ResourceManager manager) {
+                var gson = new Gson();
+                for(Map.Entry<Identifier, Resource> entry : manager.findResources("visions/block_visions", path -> path.getPath().endsWith(".json")).entrySet()) {
+                    try (Reader reader = entry.getValue().getReader()){
+                        VisionBannedBlocks visionBannedBlocks = JsonHelper.deserialize(gson,reader, VisionBannedBlocks.class);
+                        visionBannedBlocks.getBlockTags();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                @Override
-                public void reload (ResourceManager manager){
-                    var gson = new Gson();
-                    for(Map.Entry<Identifier, Resource> entry : manager.findResources("visions/block_visions", path -> path.getPath().endsWith("banned.json")).entrySet()) {
-                        try (Reader reader = entry.getValue().getReader()) {
-                            Vision vision = JsonHelper.deserialize(gson, reader, Vision.class);
-                            VMinus.LOGGER.info("{}", (Object) vision.blocks);
-                            VMinus.LOGGER.info("{}",vision.banned);
-                        } catch (IllegalArgumentException | IOException | JsonParseException exception) {
-                            VMinus.LOGGER.error("Couldn't parse data file from ", exception);
-                        }
+                for(Map.Entry<Identifier, Resource> entry : manager.findResources("visions/fuel_visions", path -> path.getPath().endsWith(".json")).entrySet()) {
+                    try (Reader reader = entry.getValue().getReader()){
+                        VisionFuelItems visionFuelItems = JsonHelper.deserialize(gson,reader, VisionFuelItems.class);
+                        visionFuelItems.getItemTags();
+                        VisionData.load_fuels();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
-        );
+        });
     }
 }

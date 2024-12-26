@@ -1,6 +1,6 @@
 package net.lixir.vminus.datagen;
 
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(modid = VMinusMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = VMinus.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class VMinusDataGenerators {
     
     public static void gatherData(GatherDataEvent event) {

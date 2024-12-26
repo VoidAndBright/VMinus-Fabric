@@ -3,8 +3,13 @@
   "package": "lixir.vminus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "block.CocoaBlockMixin",
+    "block.PowderSnowBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  },
+  "client": [
+    "client.HorseArmorFeatureRendererMixin"
+  ]
 }

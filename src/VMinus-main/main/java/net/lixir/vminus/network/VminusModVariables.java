@@ -1,6 +1,6 @@
 package net.lixir.vminus.network;
 
-import net.lixir.vminus.VMinusMod;
+import net.lixir.vminus.VMinus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +23,7 @@ import net.minecraftforge.network.PacketDistributor;
 
 import java.util.function.Supplier;
 
-public class VMinusModVariables {
+public class VMinusVariables {
     public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<PlayerVariables>() {
     });
     public static com.google.gson.JsonObject main_item_vision = new com.google.gson.JsonObject();
@@ -34,7 +34,7 @@ public class VMinusModVariables {
 
     
     public static void init(FMLCommonSetupEvent event) {
-        VMinusMod.addNetworkMessage(PlayerVariablesSyncMessage.class, PlayerVariablesSyncMessage::buffer, PlayerVariablesSyncMessage::new, PlayerVariablesSyncMessage::handler);
+        VMinus.addNetworkMessage(PlayerVariablesSyncMessage.class, PlayerVariablesSyncMessage::buffer, PlayerVariablesSyncMessage::new, PlayerVariablesSyncMessage::handler);
     }
 
     
@@ -45,19 +45,19 @@ public class VMinusModVariables {
     public static class EventBusVariableHandlers {
         
         public static void onPlayerLoggedInSyncPlayerVariables(PlayerEvent.PlayerLoggedInEvent event) {
-            if (!event.getEntity().level().isClientSide())
+            if (!event.getEntity().level().isClient())
                 event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getEntity());
         }
 
         
         public static void onPlayerRespawnedSyncPlayerVariables(PlayerEvent.PlayerRespawnEvent event) {
-            if (!event.getEntity().level().isClientSide())
+            if (!event.getEntity().level().isClient())
                 event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getEntity());
         }
 
         
         public static void onPlayerChangedDimensionSyncPlayerVariables(PlayerEvent.PlayerChangedDimensionEvent event) {
-            if (!event.getEntity().level().isClientSide())
+            if (!event.getEntity().level().isClient())
                 event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getEntity());
         }
 
@@ -103,7 +103,7 @@ public class VMinusModVariables {
 
         public void syncPlayerVariables(Entity entity) {
             if (entity instanceof ServerPlayer serverPlayer)
-                VMinusMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new PlayerVariablesSyncMessage(this));
+                VMinus.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new PlayerVariablesSyncMessage(this));
         }
 
         public Tag writeNBT() {
