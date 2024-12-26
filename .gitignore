@@ -37,4 +37,4 @@ terraform.rc
 /src/main/generated/
 /.idea/
 /src/VMinus-main/
-/run/
+/run
