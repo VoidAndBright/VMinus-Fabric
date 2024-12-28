@@ -3,13 +3,14 @@ package lixir.vminus.vision.visions;
 public class BlockVision {
     String blocks;
     float slipperiness;
-    float velocity_factor;
-    float jump_velocity_factor;
+    float velocity_multiplier;
+    float jump_velocity_multiplier;
     boolean banned;
-    BlockVision(String block, float slipperiness,float velocity,boolean banned){
+    BlockVision(String block, float slipperiness,float velocity_multiplier,float jump_velocity_multiplier,boolean banned){
         this.blocks = block;
         this.slipperiness = slipperiness;
-        this.velocity_factor = velocity;
+        this.velocity_multiplier = velocity_multiplier;
+        this.jump_velocity_multiplier = jump_velocity_multiplier;
         this.banned = banned;
     }
     public void addVision() {
@@ -19,9 +20,9 @@ public class BlockVision {
         return slipperiness;
     }
     public float getVelocityFactor() {
-        return velocity_factor;
+        return velocity_multiplier;
     }
     public float getJumpVelocityFactor() {
-        return jump_velocity_factor;
+        return jump_velocity_multiplier;
     }
 }

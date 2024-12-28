@@ -30,6 +30,13 @@ public abstract class BlockRealMixin {
     @Inject(method = "getJumpVelocityMultiplier",at = @At(value = "HEAD"), cancellable = true)
     private void returnJumpVelocityMultiplier(CallbackInfoReturnable<Float> cir){
         BlockVision blockVision = Visions.getBlockVision(block);
+        if (blockVision != null){
+            cir.setReturnValue(blockVision.getJumpVelocityFactor());
+        }
+    }
+    @Inject(method = "getBlastResistance",at = @At(value = "HEAD"), cancellable = true)
+    private void returnBlastResistance(CallbackInfoReturnable<Float> cir){
+        BlockVision blockVision = Visions.getBlockVision(block);
         if (blockVision != null && blockVision.getJumpVelocityFactor() > 0){
             cir.setReturnValue(blockVision.getJumpVelocityFactor());
         }
