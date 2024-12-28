@@ -1,9 +1,9 @@
-// 1.20.1	2024-12-26T00:04:18.5235401	VMinus/Tags for minecraft:item
-d5c21cc357c1d84c2d9c8003f821053fcd5aec84 data\vminus\tags\items\rarity\epic.json
+// 1.20.1	2024-12-27T23:50:09.8092898	VMinus/Tags for minecraft:item
+6d3f2fc84cb4b4f39b1ca60fb162fc7782762cf4 data\vminus\tags\items\rarity\epic.json
 31161a4bd6d72ccc3d921feabf37515a7b8ff814 data\vminus\tags\items\all_boats.json
 5944f3b052186f6ee7251c8349d47234ffb2f0bd data\vminus\tags\items\tooltip\hide_mining_speed.json
-d5c21cc357c1d84c2d9c8003f821053fcd5aec84 data\vminus\tags\items\rarity\common.json
+6d3f2fc84cb4b4f39b1ca60fb162fc7782762cf4 data\vminus\tags\items\rarity\common.json
 a7c3ec2986f0b5bdeb3e8c56d751ba4cf8eb3b68 data\minecraft\tags\items\stone_crafting_materials.json
-d5c21cc357c1d84c2d9c8003f821053fcd5aec84 data\vminus\tags\items\rarity\rare.json
+6d3f2fc84cb4b4f39b1ca60fb162fc7782762cf4 data\vminus\tags\items\rarity\rare.json
 5e73deb65417fb01608f5ff564c98343b1d24408 data\minecraft\tags\items\stone_tool_materials.json
-d5c21cc357c1d84c2d9c8003f821053fcd5aec84 data\vminus\tags\items\rarity\uncommon.json
+6d3f2fc84cb4b4f39b1ca60fb162fc7782762cf4 data\vminus\tags\items\rarity\uncommon.json

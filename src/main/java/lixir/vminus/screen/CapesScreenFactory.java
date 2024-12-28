@@ -10,9 +10,8 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 public class CapesScreenFactory implements NamedScreenHandlerFactory {
-    public Text getDisplayName() {
-        return Text.translatable(VMinus.MOD_ID+".screen.capes.title");
-    }
+    public static final Text TITLE = Text.translatable(VMinus.MOD_ID+".screen.capes.title");
+    public Text getDisplayName() {return TITLE;}
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return new CapeScreenHandler(syncId,playerInventory);
     }

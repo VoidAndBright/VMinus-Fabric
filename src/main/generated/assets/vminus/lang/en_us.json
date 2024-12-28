@@ -7,9 +7,9 @@
   "attribute.vminus.magic_protection": "Magic Protection",
   "attribute.vminus.mining_speed": "Mining Speed",
   "attribute.vminus.protection": "Protection",
-  "block.vminus.default_block": "Default Block",
-  "entity.vminus.porcupine": "Default Entity",
-  "item.vminus.default_item": "Default Item",
+  "block.vminus.defaultium_block": "Defaultium Block",
+  "entity.vminus.defaultium_entity": "Defaultium Entity",
+  "item.vminus.defaultium_item": "Defaultium Item",
   "key.vminus.open_capes_menu": "Capes",
   "vminus.screen.capes.title": "Capes"
 }

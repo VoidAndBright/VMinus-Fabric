@@ -239,16 +239,16 @@ public class VisionHandler {
                     : ForgeRegistries.ITEMS.getKey(itemstack.getItem()).toString();
         } else if (block != null) {
             type = BLOCK_TYPE;
-            id = ForgeRegistries.BLOCKS.getKey(block).toString();
+            id = ForgeRegistries.BLOCK.getKey(block).toString();
         } else if (entityType != null) {
             type = ENTITY_TYPE;
-            id = ForgeRegistries.ENTITY_TYPES.getKey(entityType).toString();
+            id = Registries.ENTITY_TYPE.getKey(entityType).toString();
         } else if (effect != null) {
             type = EFFECT_TYPE;
-            id = ForgeRegistries.MOB_EFFECTS.getKey(effect).toString();
+            id = Registries.MOB_EFFECT.getKey(effect).toString();
         } else if (enchantment != null) {
             type = ENCHANTMENT_TYPE;
-            id = ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString();
+            id = Registries.ENCHANTMENT.getKey(enchantment).toString();
         }
 
         if (type == -1 || id == null) {

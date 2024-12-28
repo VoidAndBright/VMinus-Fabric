@@ -1,0 +1,8 @@
+{
+  "blocks": [
+    "vminus:default_block",
+    "#vminus:banned",
+    "#minecraft:lush_ground_replaceable"
+  ],
+  "banned": true
+}

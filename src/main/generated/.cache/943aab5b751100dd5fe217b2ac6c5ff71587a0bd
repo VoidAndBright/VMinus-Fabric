@@ -1,4 +1,5 @@
-// 1.20.1	2024-12-26T00:04:18.5275297	VMinus/Model Definitions
-32c4bf1f8eac822965ae5e555498c273b69e38d2 assets\vminus\models\item\default_item.json
-09f28fb6e5c6749bc42fb3b80d3ff92dcd497978 assets\vminus\models\block\default_block.json
-c11b076a9d52ab46f103a206705e9de5838961bf assets\vminus\blockstates\default_block.json
+// 1.20.1	2024-12-27T23:50:09.8122806	VMinus/Model Definitions
+b6b8d9e405c489eb8323129e602aa15983cd0333 assets\vminus\models\item\defaultium_item.json
+d14d6956ab3232c84fa09c142b31959df1847c1b assets\vminus\blockstates\defaultium_block.json
+2d708a9c9d19e147d6eb4e2dd163f2de6159ae3f assets\vminus\models\item\defaultium_block.json
+b5c3bd8094e18e3f8300c45abea40433136b3bc8 assets\vminus\models\block\defaultium_block.json

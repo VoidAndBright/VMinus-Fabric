@@ -3,6 +3,7 @@
   "package": "lixir.vminus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "block.BlockRealMixin",
     "block.CocoaBlockMixin",
     "block.PowderSnowBlockMixin"
   ],
