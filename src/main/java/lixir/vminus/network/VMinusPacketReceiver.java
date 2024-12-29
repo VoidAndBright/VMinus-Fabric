@@ -14,6 +14,9 @@ public class VMinusPacketReceiver {
         ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.CAPE_MENU_PACKET_IDENTIFIER,new CapeMenuPacketHandler());
         ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.DEFAULT_MENU_PACKET_IDENTIFIER,new DefaultMenuPacketHandler());
     }
+    public void receive(MinecraftServer minecraftServer, ServerPlayerEntity serverPlayerEntity, ServerPlayNetworkHandler serverPlayNetworkHandler, PacketByteBuf packetByteBuf, PacketSender packetSender) {
+        serverPlayerEntity.openHandledScreen(new CapesScreenFactory());
+    }
     static class CapeMenuPacketHandler implements ServerPlayNetworking.PlayChannelHandler {
         public void receive(MinecraftServer minecraftServer, ServerPlayerEntity serverPlayerEntity, ServerPlayNetworkHandler serverPlayNetworkHandler, PacketByteBuf packetByteBuf, PacketSender packetSender) {
             serverPlayerEntity.openHandledScreen(new CapesScreenFactory());
