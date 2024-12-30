@@ -8,7 +8,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class VMinusItems {
-    public static final Item DEFAULT_ITEM = registerItem("defaultium_item",new Item(new FabricItemSettings()));
+    public static final Item DEFAULT_ITEM = registerItem("defaultium_item",new DefaultiumItem());
     static <T extends Item> T registerItem(String name,T item){
         return Registry.register(Registries.ITEM,new Identifier(VMinus.MOD_ID,name),item);
     }

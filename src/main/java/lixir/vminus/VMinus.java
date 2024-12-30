@@ -5,7 +5,7 @@ import lixir.vminus.command.VMinusCommands;
 import lixir.vminus.entity.VMinusEntities;
 import lixir.vminus.item.VMinusItems;
 import lixir.vminus.keybinds.VMinusKeyBinds;
-import lixir.vminus.network.VMinusPacketReceiver;
+import lixir.vminus.network.VMinusPacketHandlers;
 import lixir.vminus.screen.VMinusScreenHandlers;
 import lixir.vminus.vision.VisionLoader;
 import net.fabricmc.api.ModInitializer;
@@ -25,6 +25,6 @@ public class VMinus implements ModInitializer {
 		VMinusScreenHandlers.register();
 		VMinusItems.register();
 		VMinusKeyBinds.register();
-		VMinusPacketReceiver.register();
+		VMinusPacketHandlers.register();
 	}
 }
