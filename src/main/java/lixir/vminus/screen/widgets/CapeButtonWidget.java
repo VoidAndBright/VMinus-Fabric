@@ -24,7 +24,7 @@ public class CapeButtonWidget extends ClickableWidget {
     public CapeButtonWidget(int x, int y, CapeType type,boolean locked) {
         super(x, y, 12, 16, Text.empty());
         this.type = type;
-        this.locked = false;
+        this.locked = locked;
     }
 
     public void onClick(double mouseX, double mouseY) {
@@ -48,7 +48,7 @@ public class CapeButtonWidget extends ClickableWidget {
             context.drawTexture(TEXTURE, this.getX()+6, this.getY()+10, 234 ,2, 8, 8);
         }
         if (locked){
-            context.drawTexture(TEXTURE, this.getX()+3, this.getY()+7, 232 ,11, 12, 12);
+            context.drawTexture(TEXTURE, this.getX()+3, this.getY()+7, 233 ,12, 10, 11);
         }
     }
     protected void appendClickableNarrations(NarrationMessageBuilder builder) {
