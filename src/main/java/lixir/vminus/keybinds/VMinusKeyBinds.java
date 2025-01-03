@@ -1,5 +1,6 @@
 package lixir.vminus.keybinds;
 
+import lixir.vminus.VMinus;
 import lixir.vminus.network.VMinusPacketHandlers;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -12,16 +13,17 @@ import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
 public class VMinusKeyBinds {
+    public static final KeyBinding CAPE_KEY_BIND = registerKeyBind("open_capes_menu", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, "misc");
     public static void capeKeyBindHandler(MinecraftClient minecraftClient) {
-        while (VMinusKeyBinds.CAPE_KEYBINDING.wasPressed()){
+        while (CAPE_KEY_BIND.wasPressed()){
             if (minecraftClient.player instanceof ClientPlayerEntity){
                 ClientPlayNetworking.send(VMinusPacketHandlers.OPEN_CAPE_SCREEN_PACKET, PacketByteBufs.empty());
             }
         }
     }
-    public static final KeyBinding CAPE_KEYBINDING = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.vminus.open_capes_menu", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, "key.categories.misc"
-    ));
+    private static KeyBinding registerKeyBind(String name, InputUtil.Type input, int key, String category) {
+        return KeyBindingHelper.registerKeyBinding(new KeyBinding("key."+ VMinus.MOD_ID + name, input, key, "key.categories."+category ));
+    }
     public static void register() {
         ClientTickEvents.END_CLIENT_TICK.register(VMinusKeyBinds::capeKeyBindHandler);
     }

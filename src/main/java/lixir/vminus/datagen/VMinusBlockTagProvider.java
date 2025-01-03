@@ -72,7 +72,7 @@ public class VMinusBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(Blocks.HORN_CORAL_BLOCK);
 
         getOrCreateTagBuilder(VMinusBlockTags.EMISSIVE_RENDERING)
-                .add(VMinusBlocks.DEFAULT_BLOCK);
+                .add(VMinusBlocks.DEFAULTIUM_BLOCK);
 
         getOrCreateTagBuilder(VMinusBlockTags.EXPOSED_COPPER)
                 .add(Blocks.EXPOSED_COPPER)

@@ -1,10 +1,11 @@
 package lixir.vminus.network;
 
 import lixir.vminus.VMinus;
-import lixir.vminus.screen.CapesScreenFactory;
+import lixir.vminus.screen.screens.CapeScreen;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -16,6 +17,6 @@ public class VMinusPacketHandlers {
         ServerPlayNetworking.registerGlobalReceiver(OPEN_CAPE_SCREEN_PACKET, lixir.vminus.network.VMinusPacketHandlers::OpenCapeScreenPacketHandler);
     }
     private static void OpenCapeScreenPacketHandler(MinecraftServer minecraftServer, ServerPlayerEntity serverPlayerEntity, ServerPlayNetworkHandler serverPlayNetworkHandler, PacketByteBuf packetByteBuf, PacketSender packetSender) {
-        serverPlayerEntity.openHandledScreen(new CapesScreenFactory());
+        serverPlayerEntity.openHandledScreen(new SimpleNamedScreenHandlerFactory(CapeScreen::OpenCapeScreen,CapeScreen.TITLE));
     }
 }

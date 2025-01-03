@@ -1,3 +1,4 @@
 {
-  "block_tags": ["#vminus:banned"]
+  "blocks": ["#vminus:banned"],
+  "speed_multiplier": 2.0
 }

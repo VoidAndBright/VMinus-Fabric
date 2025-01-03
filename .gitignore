@@ -40,3 +40,7 @@ replay_*.log
 *.jfr
 /.idea
 /run
+.idea/modules/VMinus-Fabric.test.iml
+.idea/modules/VMinus-Fabric.main.iml
+.idea/modules/VMinus-Fabric.main.iml
+.idea/modules/VMinus-Fabric.test.iml

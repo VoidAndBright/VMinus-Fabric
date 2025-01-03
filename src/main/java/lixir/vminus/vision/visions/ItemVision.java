@@ -7,7 +7,4 @@ public class ItemVision {
         this.item_tags = item_tags;
         this.time = time;
     }
-    public void addVision() {
-          Visions.ITEM_VISIONS.add(this);
-    }
 }

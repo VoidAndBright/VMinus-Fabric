@@ -42,7 +42,7 @@ ao:true
 prioritizeChunkUpdates:0
 biomeBlendRadius:2
 renderClouds:"true"
-resourcePacks:["fabric"]
+resourcePacks:["vanilla","fabric","file/pack"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
@@ -101,7 +101,7 @@ key_key.pickItem:key.mouse.middle
 key_key.command:key.keyboard.slash
 key_key.socialInteractions:key.keyboard.unknown
 key_key.screenshot:key.keyboard.unknown
-key_key.togglePerspective:key.keyboard.unknown
+key_key.togglePerspective:key.keyboard.f5
 key_key.smoothCamera:key.keyboard.unknown
 key_key.fullscreen:key.keyboard.unknown
 key_key.spectatorOutlines:key.keyboard.unknown
@@ -118,8 +118,7 @@ key_key.hotbar.6:key.keyboard.6
 key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
-key_key.vminus.open_capes_menu:key.keyboard.v
-key_key.vminus.open_default_menu:key.keyboard.w
+key_key.vminusopen_capes_menu:key.keyboard.v
 soundCategory_master:0.0
 soundCategory_music:1.0
 soundCategory_record:1.0

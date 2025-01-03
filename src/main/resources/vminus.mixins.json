@@ -5,7 +5,8 @@
   "mixins": [
     "block.BlockRealMixin",
     "block.CocoaBlockMixin",
-    "block.PowderSnowBlockMixin"
+    "block.PowderSnowBlockMixin",
+    "client.CapeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

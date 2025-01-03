@@ -7,6 +7,7 @@ import lixir.vminus.vision.visions.ItemVision;
 import lixir.vminus.vision.visions.Visions;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.block.Block;
 import net.minecraft.resource.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -21,12 +22,12 @@ public class VisionLoader {
             public Identifier getFabricId() {
                 return new Identifier(VMinus.MOD_ID, "visions");
             }
-            static final Gson gson = new Gson();
+            static final Gson GSON = new Gson();
             public void reload(ResourceManager manager) {
                 Visions.clear();
                 for(Map.Entry<Identifier, Resource> entry : manager.findResources("visions/blocks", path -> path.getPath().endsWith(".json")).entrySet()) {
                     try (Reader reader = entry.getValue().getReader()){
-                        BlockVision blockVision = JsonHelper.deserialize(gson,reader, BlockVision.class);
+                        BlockVision blockVision = JsonHelper.deserialize(GSON,reader, BlockVision.class);
                         blockVision.addVision();
                         VMinus.LOGGER.info("{}",blockVision);
                     } catch (IOException exception) {
@@ -35,8 +36,7 @@ public class VisionLoader {
                 }
                 for(Map.Entry<Identifier, Resource> entry : manager.findResources("visions/items", path -> path.getPath().endsWith(".json")).entrySet()) {
                     try (Reader reader = entry.getValue().getReader()){
-                        ItemVision itemVision = JsonHelper.deserialize(gson,reader, ItemVision.class);
-                        itemVision.addVision();
+                        ItemVision itemVision = JsonHelper.deserialize(GSON,reader, ItemVision.class);
                         VMinus.LOGGER.info("{}",itemVision);
                     } catch (IOException exception) {
                         throw new RuntimeException(exception);

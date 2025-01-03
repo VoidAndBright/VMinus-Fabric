@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#vminus:armor",
+    "#vminus:horse_armor",
+    "#vminus:armor",
+    "#vminus:horse_armor"
+  ]
+}

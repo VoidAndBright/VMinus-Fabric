@@ -20,11 +20,11 @@ public class DefaultScreenHandler extends ScreenHandler {
         checkSize(inventory, 3);
         this.inventory = inventory;
 
-        this.addSlot(new Slot(inventory, 0, 56, 17));
+        this.addSlot(new Slot(inventory, 0, 87, 14));
 
-        this.addSlot(new Slot(inventory, 1, 56, 53));
+        this.addSlot(new Slot(inventory, 1, 57, 35));
 
-        this.addSlot(new Slot(inventory, 2, 116, 35));
+        this.addSlot(new Slot(inventory, 2, 105, 59));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);

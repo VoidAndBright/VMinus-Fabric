@@ -13,9 +13,9 @@ public class VMinusModelProvider extends FabricModelProvider {
         super(output);
     }
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(VMinusBlocks.DEFAULT_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(VMinusBlocks.DEFAULTIUM_BLOCK);
     }
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(VMinusItems.DEFAULT_ITEM, Models.GENERATED);
+        itemModelGenerator.register(VMinusItems.DEFAULTIUM_ITEM, Models.GENERATED);
     }
 }
