@@ -2,9 +2,11 @@ package lixir.vminus.vision.visions;
 
 import lixir.vminus.VMinus;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
@@ -15,7 +17,7 @@ public class BlockVision {
     float jump_multiplier;
     float blast_resistance;
     boolean banned;
-    BlockVision(String[] block, float slipperiness, float speed_multiplier, float jump_multiplier, float blast_resistance, boolean banned){
+    public BlockVision(String[] block, float slipperiness, float speed_multiplier, float jump_multiplier, float blast_resistance, boolean banned){
         this.blocks = block;
         this.slipperiness = slipperiness;
         this.speed_multiplier = speed_multiplier;
@@ -23,19 +25,29 @@ public class BlockVision {
         this.blast_resistance = blast_resistance;
         this.banned = banned;
     }
-    public void addVision() {
-        for (String entry : this.blocks) {
-            if (entry.startsWith("#")) {
-                entry = entry.substring(1);
-                TagKey<Block> tagKey = TagKey.of(RegistryKeys.BLOCK, Identifier.splitOn(entry, ':'));
-                for (RegistryEntry<Block> block : Registries.BLOCK.iterateEntries(tagKey)) {
-                    Visions.BLOCK_VISIONS.put(block.value(), this);
-                    VMinus.LOGGER.info("Hey why this no work{}", block.value().getTranslationKey());
+    public void addVision(){
+
+    }
+    public void processVision() {
+        for (String string : blocks) {
+            VMinus.LOGGER.info("{}", string);
+            if (string.startsWith("#")) {
+                String tag = string.substring(1);
+                TagKey<Block> blockTagKey = TagKey.of(RegistryKeys.BLOCK, Identifier.tryParse(tag));
+               if (Blocks.BLACK_BED.asItem().getDefaultStack().isIn(ItemTags.BEDS)){
+                   VMinus.LOGGER.info("{}", "Mmm this check is working");
+               }
+                VMinus.LOGGER.info("{}", blockTagKey.toString());
+                for (Block block : Registries.BLOCK){
+                    if (block.getDefaultState().isIn(blockTagKey)){
+                        Visions.BLOCK_DATA.put(Registries.BLOCK.getRawId(block),this);
+                        VMinus.LOGGER.info("{}", block.getTranslationKey());
+                    }
                 }
-                VMinus.LOGGER.info("{}", entry);
             }
         }
     }
+
     public float getSlipperiness() {
         return slipperiness;
     }

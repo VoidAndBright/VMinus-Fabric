@@ -3,6 +3,7 @@ package lixir.vminus.screen.widgets;
 import lixir.vminus.VMinus;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
+import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -14,17 +15,17 @@ public class CapeButtonWidget extends ClickableWidget {
     public CapeType type;
     public enum CapeType {
         NONE,
+        PROTOTYPE,
         BEEPER,
         GHOST,
         MARROW,
         TROLL,
         SHROUD,
-        PROTOTYPE
     }
     public CapeButtonWidget(int x, int y, CapeType type,boolean locked) {
         super(x, y, 12, 16, Text.empty());
         this.type = type;
-        this.locked = locked;
+        this.locked = false;
     }
 
     public void onClick(double mouseX, double mouseY) {
@@ -37,12 +38,12 @@ public class CapeButtonWidget extends ClickableWidget {
     protected void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
         switch(type){
             case NONE -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 178,2, width, height);
-            case BEEPER -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 192,2, width, height);
+            case PROTOTYPE -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 192 ,20, width, height);
+            case BEEPER -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 206 ,20, width, height);
             case GHOST -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 206 ,2, width, height);
             case MARROW -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 220 ,2, width, height);
             case TROLL -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 178,20, width, height);
-            case SHROUD -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 192 ,20, width, height);
-            case PROTOTYPE -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 206 ,20, width, height);
+            case SHROUD -> context.drawTexture(TEXTURE, this.getX(), this.getY(), 192,2, width, height);
         }
         if (selected == type) {
             context.drawTexture(TEXTURE, this.getX()+6, this.getY()+10, 234 ,2, 8, 8);
@@ -52,5 +53,9 @@ public class CapeButtonWidget extends ClickableWidget {
         }
     }
     protected void appendClickableNarrations(NarrationMessageBuilder builder) {
+        builder.put(NarrationPart.TITLE,Text.literal("Hey"));
+        builder.put(NarrationPart.USAGE,Text.literal("Hey"));
+        builder.put(NarrationPart.HINT,Text.literal("Hey"));
+        builder.put(NarrationPart.POSITION,Text.literal("Hey"));
     }
 }

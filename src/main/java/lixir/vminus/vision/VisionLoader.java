@@ -7,7 +7,6 @@ import lixir.vminus.vision.visions.ItemVision;
 import lixir.vminus.vision.visions.Visions;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.minecraft.block.Block;
 import net.minecraft.resource.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -28,7 +27,7 @@ public class VisionLoader {
                 for(Map.Entry<Identifier, Resource> entry : manager.findResources("visions/blocks", path -> path.getPath().endsWith(".json")).entrySet()) {
                     try (Reader reader = entry.getValue().getReader()){
                         BlockVision blockVision = JsonHelper.deserialize(GSON,reader, BlockVision.class);
-                        blockVision.addVision();
+                        blockVision.processVision();
                         VMinus.LOGGER.info("{}",blockVision);
                     } catch (IOException exception) {
                         throw new RuntimeException(exception);

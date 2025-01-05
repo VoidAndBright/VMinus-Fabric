@@ -10,7 +10,8 @@
   "block.vminus.defaultium_block": "Defaultium Block",
   "entity.vminus.defaultium_entity": "Defaultium Entity",
   "item.vminus.defaultium_item": "Defaultium Item",
+  "item.vminus.mining_tool": "Mining Item",
   "key.vminusopen_capes_menu": "Capes",
-  "vminus.screen.capes.title": "Capes",
+  "vminus.screen.capes.title": "VMinus Capes",
   "vminus.screen.default.title": "Defaultium"
 }

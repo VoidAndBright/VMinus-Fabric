@@ -1,4 +1,9 @@
 {
-  "blocks": ["#vminus:banned"],
+  "blocks": [
+    "#vminus:banned",
+    "#vminus:copper",
+    "#minecraft:beds",
+    "#minecraft:invalid"
+  ],
   "speed_multiplier": 2.0
 }

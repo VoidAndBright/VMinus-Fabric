@@ -10,6 +10,7 @@ public class VMinusBlocks {
     public static final Block DEFAULTIUM_BLOCK = registerBlock("defaultium_block",new DefaultiumBlock());
     static <T extends Block> T registerBlock(String name,T block){
         Registry.register(Registries.ITEM, Identifier.of(VMinus.MOD_ID, name), new DefaultiumBlockItem(block));
+
         return Registry.register(Registries.BLOCK,new Identifier(VMinus.MOD_ID,name),block);
     }
     public static void register(){}

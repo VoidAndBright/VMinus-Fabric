@@ -1,5 +1,6 @@
-// 1.20.1	2025-01-03T01:25:38.8214092	VMinus/Model Definitions
+// 1.20.1	2025-01-04T18:46:06.5979353	VMinus/Model Definitions
 b5c3bd8094e18e3f8300c45abea40433136b3bc8 assets\vminus\models\block\defaultium_block.json
 b6b8d9e405c489eb8323129e602aa15983cd0333 assets\vminus\models\item\defaultium_item.json
 2d708a9c9d19e147d6eb4e2dd163f2de6159ae3f assets\vminus\models\item\defaultium_block.json
+4ad67faee7e19a7fb7c6546f1dded97dad8e1117 assets\vminus\models\item\mining_tool.json
 d14d6956ab3232c84fa09c142b31959df1847c1b assets\vminus\blockstates\defaultium_block.json
