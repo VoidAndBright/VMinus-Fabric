@@ -1,4 +1,4 @@
-package lixir.vminus.mixin.client;
+package lixir.vminus.mixin.server;
 
 import lixir.vminus.VMinus;
 import lixir.vminus.screen.widgets.CapeButtonWidget;

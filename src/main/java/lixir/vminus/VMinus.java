@@ -4,14 +4,11 @@ import lixir.vminus.block.VMinusBlocks;
 import lixir.vminus.command.VMinusCommands;
 import lixir.vminus.entity.VMinusEntities;
 import lixir.vminus.item.VMinusItems;
-import lixir.vminus.keybinds.VMinusKeyBinds;
+import lixir.vminus.keybind.VMinusKeyBinds;
 import lixir.vminus.network.VMinusPacketHandlers;
 import lixir.vminus.screen.VMinusScreenHandlers;
 import lixir.vminus.vision.VisionLoader;
-import lixir.vminus.vision.visions.BlockVision;
-import lixir.vminus.vision.visions.Visions;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.block.Blocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

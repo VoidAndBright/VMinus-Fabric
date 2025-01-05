@@ -20,7 +20,6 @@ public class CapeScreen extends HandledScreen<CapeScreenHandler> {
     public CapeScreen(CapeScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         this.playerInventoryTitleY = 1000;
-
     }
 
     protected void init() {

@@ -1,4 +1,4 @@
-package lixir.vminus.keybinds;
+package lixir.vminus.keybind;
 
 import lixir.vminus.VMinus;
 import lixir.vminus.network.VMinusPacketHandlers;
@@ -17,6 +17,7 @@ public class VMinusKeyBinds {
     public static void capeKeyBindHandler(MinecraftClient minecraftClient) {
         while (CAPE_KEY_BIND.wasPressed()){
             if (minecraftClient.player instanceof ClientPlayerEntity){
+                minecraftClient.player.fallDistance=10;
                 ClientPlayNetworking.send(VMinusPacketHandlers.OPEN_CAPE_SCREEN_PACKET, PacketByteBufs.empty());
             }
         }

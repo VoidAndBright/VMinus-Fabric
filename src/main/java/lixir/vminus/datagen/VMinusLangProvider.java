@@ -4,7 +4,7 @@ import lixir.vminus.attribute.VMinusAttributes;
 import lixir.vminus.block.VMinusBlocks;
 import lixir.vminus.entity.VMinusEntities;
 import lixir.vminus.item.VMinusItems;
-import lixir.vminus.keybinds.VMinusKeyBinds;
+import lixir.vminus.keybind.VMinusKeyBinds;
 import lixir.vminus.screen.screens.CapeScreen;
 import lixir.vminus.screen.screens.DefaultScreen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;

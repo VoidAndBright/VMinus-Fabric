@@ -3,10 +3,11 @@
   "package": "lixir.vminus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "block.BlockRealMixin",
+    "block.BlockStateVisionMixin",
+    "block.BlockVisionMixin",
     "block.CocoaBlockMixin",
     "block.PowderSnowBlockMixin",
-    "client.CapeMixin"
+    "server.CapeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
