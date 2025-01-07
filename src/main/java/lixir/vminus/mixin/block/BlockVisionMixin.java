@@ -41,4 +41,5 @@ public abstract class BlockVisionMixin {
             cir.setReturnValue(blockVision.blast_resistance);
         }
     }
+
 }

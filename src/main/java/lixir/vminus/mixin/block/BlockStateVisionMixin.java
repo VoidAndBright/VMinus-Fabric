@@ -4,6 +4,7 @@ import lixir.vminus.vision.BlockVision;
 import lixir.vminus.vision.Visions;
 import net.minecraft.block.AbstractBlock.AbstractBlockState;
 import net.minecraft.block.Block;
+import net.minecraft.sound.BlockSoundGroup;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -25,8 +26,15 @@ public abstract class BlockStateVisionMixin {
     @Inject(method = "getHardness",at = @At(value = "HEAD"), cancellable = true)
     private void returnHardness(CallbackInfoReturnable<Integer> cir){
         BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.luminance != 0){
-            cir.setReturnValue(Math.min(Math.max(blockVision.luminance, 0), 15));
+        if (blockVision != null && blockVision.hardness != 0) {
+            cir.setReturnValue(blockVision.hardness);
+        }
+    }
+    @Inject(method = "getSoundGroup",at = @At(value = "HEAD"), cancellable = true)
+    private void returnSoundGroup(CallbackInfoReturnable<BlockSoundGroup> cir){
+        BlockVision blockVision = Visions.getBlockVision(BLOCK);
+        if (blockVision != null && blockVision.hardness != 0) {
+            //cir.setReturnValue(new BlockSoundGroup(5,6,6,6,6,6,6));
         }
     }
 }
