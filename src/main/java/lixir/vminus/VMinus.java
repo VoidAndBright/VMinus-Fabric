@@ -21,8 +21,8 @@ public class VMinus implements ModInitializer {
 		VisionLoader.register();
 		VMinusCommands.register();
 		VMinusBlocks.register();
-		VMinusEntities.register();
 		VMinusScreenHandlers.register();
+		VMinusEntities.register();
 		VMinusItems.register();
 		VMinusKeyBinds.register();
 		VMinusPacketHandlers.register();

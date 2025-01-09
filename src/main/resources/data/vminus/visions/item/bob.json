@@ -1,6 +1,8 @@
 {
   "items":[
-    "minecraft:stone_axe"
+    "#minecraft:beds"
   ],
-  "banned": true
+  "banned": {
+    "value": true
+  }
 }

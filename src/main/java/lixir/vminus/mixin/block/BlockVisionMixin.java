@@ -1,6 +1,6 @@
 package lixir.vminus.mixin.block;
 
-import lixir.vminus.vision.BlockVision;
+import lixir.vminus.vision.type.BlockVision;
 import lixir.vminus.vision.Visions;
 import net.minecraft.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,30 +16,29 @@ public abstract class BlockVisionMixin {
     @Inject(method = "getSlipperiness",at = @At(value = "HEAD"), cancellable = true)
     private void returnSlipperiness(CallbackInfoReturnable<Float> cir){
         BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.slipperiness != 0) {
+        if (blockVision != null && blockVision.slipperiness != null) {
             cir.setReturnValue(blockVision.slipperiness);
         }
     }
     @Inject(method = "getVelocityMultiplier",at = @At(value = "HEAD"), cancellable = true)
     private void returnVelocityMultiplier(CallbackInfoReturnable<Float> cir) {
         BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.speed_multiplier != 0) {
+        if (blockVision != null && blockVision.speed_multiplier != null) {
             cir.setReturnValue(blockVision.speed_multiplier);
         }
     }
     @Inject(method = "getJumpVelocityMultiplier",at = @At(value = "HEAD"), cancellable = true)
     private void returnJumpVelocityMultiplier(CallbackInfoReturnable<Float> cir){
         BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.jump_multiplier != 0) {
+        if (blockVision != null && blockVision.jump_multiplier != null) {
             cir.setReturnValue(blockVision.jump_multiplier);
         }
     }
     @Inject(method = "getBlastResistance",at = @At(value = "HEAD"), cancellable = true)
     private void returnBlastResistance(CallbackInfoReturnable<Float> cir){
         BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.blast_resistance != 0) {
+        if (blockVision != null && blockVision.blast_resistance != null) {
             cir.setReturnValue(blockVision.blast_resistance);
         }
     }
-
 }

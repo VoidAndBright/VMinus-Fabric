@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
 public class VMinusDataGenerator implements DataGeneratorEntrypoint {
-	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(VMinusLangProvider::new);
@@ -15,5 +14,6 @@ public class VMinusDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(VMinusEntityTypeTagProvider::new);
 		pack.addProvider(VMinusDamageTypeTagProvider::new);
 		pack.addProvider(VMinusModelProvider::new);
+		pack.addProvider(VMinusBlockLootTableProvider::new);
 	}
 }

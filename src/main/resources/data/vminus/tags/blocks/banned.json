@@ -2,6 +2,6 @@
   "replace": false,
   "values": [
     "vminus:defaultium_block",
-    "minecraft:bedrock"
+    "minecraft:glowstone"
   ]
 }

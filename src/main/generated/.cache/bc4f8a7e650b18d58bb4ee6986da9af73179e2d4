@@ -1,11 +1,11 @@
-// 1.20.1	2025-01-04T18:46:06.5989327	VMinus/Tags for minecraft:block
+// 1.20.1	2025-01-07T16:30:52.3403666	VMinus/Tags for minecraft:block
 efe69e6bd76b22bcad7807683f52215bfcb1dd17 data\vminus\tags\blocks\all_copper.json
 1b1f73a54e3012a745c2b89e904970cd254c5785 data\vminus\tags\blocks\waxed_weathered_copper.json
 cf1e650c11cf915591191089745c30189c0fa5cf data\vminus\tags\blocks\waxed_copper.json
 0b06f7c22ee007c5ef8c9ef025cffe7263240720 data\vminus\tags\blocks\stone_replaceable.json
 2f281f6bfbf1c18a38e4355f961e3b1948922c53 data\vminus\tags\blocks\mob_heads.json
-69d73bdd36caa8ea78e56d974175a105084542c8 data\minecraft\tags\blocks\mineable\hoe.json
 b4913afb3168c2f2d400c3722ac2c73f24b462e9 data\minecraft\tags\blocks\mineable\axe.json
+69d73bdd36caa8ea78e56d974175a105084542c8 data\minecraft\tags\blocks\mineable\hoe.json
 119770ae3a67e30778046b04963063124cbc0f02 data\vminus\tags\blocks\large_plants.json
 0d1cd7bf02b321e20a8e83c63b36043d9735ae58 data\vminus\tags\blocks\exposed_copper.json
 5d25da0b9025bb086140c3b594403a6893690c5a data\vminus\tags\blocks\all_oxidized_copper.json

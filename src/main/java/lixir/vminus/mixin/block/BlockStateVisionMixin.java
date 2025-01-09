@@ -1,10 +1,11 @@
 package lixir.vminus.mixin.block;
 
-import lixir.vminus.vision.BlockVision;
+import lixir.vminus.vision.type.BlockVision;
 import lixir.vminus.vision.Visions;
 import net.minecraft.block.AbstractBlock.AbstractBlockState;
 import net.minecraft.block.Block;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -19,22 +20,15 @@ public abstract class BlockStateVisionMixin {
     @Inject(method = "getLuminance",at = @At(value = "HEAD"), cancellable = true)
     private void returnLuminance(CallbackInfoReturnable<Integer> cir){
         BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.luminance != 0){
+        if (blockVision != null && blockVision.luminance != null){
             cir.setReturnValue(Math.min(Math.max(blockVision.luminance, 0), 15));
         }
     }
     @Inject(method = "getHardness",at = @At(value = "HEAD"), cancellable = true)
-    private void returnHardness(CallbackInfoReturnable<Integer> cir){
+    private void returnHardness(BlockView world, BlockPos pos, CallbackInfoReturnable<Float> cir){
         BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.hardness != 0) {
+        if (blockVision != null && blockVision.hardness != null) {
             cir.setReturnValue(blockVision.hardness);
-        }
-    }
-    @Inject(method = "getSoundGroup",at = @At(value = "HEAD"), cancellable = true)
-    private void returnSoundGroup(CallbackInfoReturnable<BlockSoundGroup> cir){
-        BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.hardness != 0) {
-            //cir.setReturnValue(new BlockSoundGroup(5,6,6,6,6,6,6));
         }
     }
 }

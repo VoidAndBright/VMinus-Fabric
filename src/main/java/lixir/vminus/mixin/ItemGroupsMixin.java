@@ -1,7 +1,6 @@
 package lixir.vminus.mixin;
 
-import com.google.gson.JsonObject;
-import lixir.vminus.vision.ItemVision;
+import lixir.vminus.vision.type.ItemVision;
 import lixir.vminus.vision.Visions;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -27,18 +26,11 @@ public abstract class ItemGroupsMixin {
         List<ItemStack> bannedItems = new ArrayList<>();
         for(ItemStack itemstack : this.searchTabStacks) {
             ItemVision itemVision = Visions.getItemVision(itemstack.getItem());
-            if (itemVision != null) {
+            if (itemVision != null && itemVision.banned != null && itemVision.banned.value) {
                 bannedItems.add(itemstack);
             }
         }
         bannedItems.forEach(this.searchTabStacks::remove);
-        bannedItems.clear();
-        for(ItemStack itemstack : this.displayStacks) {
-            ItemVision itemVision = Visions.getItemVision(itemstack.getItem());
-            if (itemVision != null) {
-                bannedItems.add(itemstack);
-            }
-        }
         bannedItems.forEach(this.displayStacks::remove);
     }
 }
