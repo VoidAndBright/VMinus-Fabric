@@ -14,7 +14,7 @@ import net.minecraft.command.argument.EntityArgumentType;
 public class BurnCommand implements CommandRegistrationCallback {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> commandDispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
-        commandDispatcher.register(CommandManager.literal("burn").requires(source->source.hasPermissionLevel(3))
+        commandDispatcher.register(CommandManager.literal("burn").requires(VMinusCommands::permission_level_3)
                 .then(CommandManager.argument("entities", EntityArgumentType.entities())
                 .then(CommandManager.argument("seconds", IntegerArgumentType.integer(0))
                 .executes(arguments -> {

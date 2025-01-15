@@ -17,20 +17,19 @@ import java.util.Set;
 
 @Mixin(ItemGroup.class)
 
-public abstract class ItemGroupsMixin {
+public abstract class ItemGroupMixin {
     @Shadow private Collection<ItemStack> displayStacks;
     @Shadow private Set<ItemStack> searchTabStacks;
-
     @Inject(method = "updateEntries",at = @At(value = "TAIL"))
     private void updateEntries(ItemGroup.DisplayContext displayContext, CallbackInfo ci){
         List<ItemStack> bannedItems = new ArrayList<>();
         for(ItemStack itemstack : this.searchTabStacks) {
-            ItemVision itemVision = Visions.getItemVision(itemstack.getItem());
-            if (itemVision != null && itemVision.banned != null && itemVision.banned.value) {
+            ItemVision itemVision = Visions.get_item_vision(itemstack.getItem());
+            if (itemVision != null && itemVision.get_banned() != null && itemVision.get_banned()) {
                 bannedItems.add(itemstack);
             }
         }
-        bannedItems.forEach(this.searchTabStacks::remove);
-        bannedItems.forEach(this.displayStacks::remove);
+        bannedItems.forEach(searchTabStacks::remove);
+        bannedItems.forEach(displayStacks::remove);
     }
 }

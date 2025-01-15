@@ -18,7 +18,7 @@ import net.minecraft.util.Hand;
 public class HealCommand implements CommandRegistrationCallback {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> commandDispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
-        commandDispatcher.register(CommandManager.literal("heal").requires(source -> source.hasPermissionLevel(3))
+        commandDispatcher.register(CommandManager.literal("heal").requires(VMinusCommands::permission_level_3)
                 .then(CommandManager.argument("entities", EntityArgumentType.entities())
                 .then(CommandManager.argument("amount", IntegerArgumentType.integer())
                 .executes(arguments -> {

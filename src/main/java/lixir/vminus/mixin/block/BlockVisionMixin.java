@@ -15,30 +15,30 @@ public abstract class BlockVisionMixin {
 
     @Inject(method = "getSlipperiness",at = @At(value = "HEAD"), cancellable = true)
     private void returnSlipperiness(CallbackInfoReturnable<Float> cir){
-        BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.slipperiness != null) {
-            cir.setReturnValue(blockVision.slipperiness);
+        BlockVision blockVision = Visions.get_block_vision(BLOCK);
+        if (blockVision != null && blockVision.get_slipperiness() != null) {
+            cir.setReturnValue(blockVision.get_slipperiness());
         }
     }
     @Inject(method = "getVelocityMultiplier",at = @At(value = "HEAD"), cancellable = true)
     private void returnVelocityMultiplier(CallbackInfoReturnable<Float> cir) {
-        BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.speed_multiplier != null) {
-            cir.setReturnValue(blockVision.speed_multiplier);
+        BlockVision blockVision = Visions.get_block_vision(BLOCK);
+        if (blockVision != null && blockVision.get_speed_multiplier() != null) {
+            cir.setReturnValue(blockVision.get_speed_multiplier());
         }
     }
     @Inject(method = "getJumpVelocityMultiplier",at = @At(value = "HEAD"), cancellable = true)
     private void returnJumpVelocityMultiplier(CallbackInfoReturnable<Float> cir){
-        BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.jump_multiplier != null) {
-            cir.setReturnValue(blockVision.jump_multiplier);
+        BlockVision blockVision = Visions.get_block_vision(BLOCK);
+        if (blockVision != null && blockVision.get_jump_multiplier() != null) {
+            cir.setReturnValue(blockVision.get_jump_multiplier());
         }
     }
     @Inject(method = "getBlastResistance",at = @At(value = "HEAD"), cancellable = true)
     private void returnBlastResistance(CallbackInfoReturnable<Float> cir){
-        BlockVision blockVision = Visions.getBlockVision(BLOCK);
-        if (blockVision != null && blockVision.blast_resistance != null) {
-            cir.setReturnValue(blockVision.blast_resistance);
+        BlockVision blockVision = Visions.get_block_vision(BLOCK);
+        if (blockVision != null && blockVision.get_blast_resistance() != null) {
+            cir.setReturnValue(blockVision.get_blast_resistance());
         }
     }
 }

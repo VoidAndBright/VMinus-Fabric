@@ -13,7 +13,7 @@ import net.minecraft.server.command.ServerCommandSource;
 
 public class FreezeCommand implements CommandRegistrationCallback {
     public void register(CommandDispatcher<ServerCommandSource> commandDispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
-        commandDispatcher.register(CommandManager.literal("freeze").requires(source -> source.hasPermissionLevel(3))
+        commandDispatcher.register(CommandManager.literal("freeze").requires(VMinusCommands::permission_level_3)
                 .then(CommandManager.argument("entities", EntityArgumentType.entities())
                 .then(CommandManager.argument("ticks", IntegerArgumentType.integer(0))
                 .executes(arguments -> {

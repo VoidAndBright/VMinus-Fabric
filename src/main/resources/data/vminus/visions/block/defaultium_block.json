@@ -2,8 +2,8 @@
   "blocks": [
     "#vminus:banned"
   ],
-  "luminance": 5,
-  "jump_multiplier": 0.5,
-  "speed_multiplier": 2.0,
-  "blast_resistance": 100.0
+  "luminance":[{"value": 5}],
+  "jump_multiplier": [{"value": 0.5}],
+  "speed_multiplier": [{"value": 2.0}],
+  "blast_resistance": [{"value": 100.0}]
 }

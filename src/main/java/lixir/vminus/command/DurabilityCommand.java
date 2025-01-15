@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class DurabilityCommand implements CommandRegistrationCallback {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> commandDispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
-        commandDispatcher.register(CommandManager.literal("durability").requires(source -> source.hasPermissionLevel(3))
+        commandDispatcher.register(CommandManager.literal("durability").requires(VMinusCommands::permission_level_3)
                 .then(CommandManager.argument("entities", EntityArgumentType.entities())
                 .then(CommandManager.argument("operation", StringArgumentType.word())
                 .then(CommandManager.argument("amount", IntegerArgumentType.integer())

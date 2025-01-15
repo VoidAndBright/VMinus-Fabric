@@ -3,7 +3,8 @@
   "package": "lixir.vminus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ItemGroupsMixin",
+    "ItemGroupMixin",
+    "StatusEffectMixin",
     "block.BlockStateVisionMixin",
     "block.BlockVisionMixin",
     "block.CocoaBlockMixin",

@@ -2,7 +2,12 @@
   "items":[
     "#minecraft:beds"
   ],
-  "banned": {
-    "value": true
-  }
+  "banned": [
+    {
+      "value": true,
+      "conditions": [
+        {"is_mod_loaded": "vminus"}
+      ]
+    }
+  ]
 }

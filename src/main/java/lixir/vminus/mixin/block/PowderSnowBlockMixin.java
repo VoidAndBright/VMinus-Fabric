@@ -21,17 +21,15 @@ public class PowderSnowBlockMixin {
             ItemStack livingEntityBootSlot = livingEntity.getEquippedStack(EquipmentSlot.FEET);
             NbtCompound nbtCompound = livingEntity.getEquippedStack(EquipmentSlot.FEET).getNbt();
             if (nbtCompound != null && !nbtCompound.getBoolean("broken")) {
-                boolean lightFooted = livingEntityBootSlot.isIn(VMinusItemTags.LIGHTFOOTED);
+                boolean lightFooted = nbtCompound.getBoolean("lightfooted");
                 cir.setReturnValue(lightFooted);
-                return;
             }
             if (livingEntity instanceof HorseEntity horse) {
                 ItemStack horseEntityArmorSlot = horse.getEquippedStack(EquipmentSlot.CHEST);
                 NbtCompound nbtCompoundHorse = horseEntityArmorSlot.getNbt();
                 if (nbtCompoundHorse != null && !nbtCompoundHorse.getBoolean("broken")) {
-                    boolean lightFooted = horseEntityArmorSlot.isIn(VMinusItemTags.LIGHTFOOTED);
+                    boolean lightFooted = nbtCompoundHorse.getBoolean("lightfooted");
                     cir.setReturnValue(lightFooted);
-                    return;
                 }
             }
         }
