@@ -23,7 +23,7 @@ public class VMinusKeyBinds {
         }
     }
     private static KeyBinding registerKeyBind(String name, InputUtil.Type input, int key, String category) {
-        return KeyBindingHelper.registerKeyBinding(new KeyBinding("key."+ VMinus.MOD_ID + name, input, key, "key.categories."+category ));
+        return KeyBindingHelper.registerKeyBinding(new KeyBinding("key."+ VMinus.MOD_ID + "." + name, input, key, "key.categories."+category ));
     }
     public static void register() {
         ClientTickEvents.END_CLIENT_TICK.register(VMinusKeyBinds::capeKeyBindHandler);

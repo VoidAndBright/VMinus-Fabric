@@ -5,6 +5,7 @@ import lixir.vminus.VMinus;
 import lixir.vminus.vision.type.BlockVision;
 import lixir.vminus.vision.type.EntityVision;
 import lixir.vminus.vision.type.ItemVision;
+import lixir.vminus.vision.type.StatusEffectVision;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.*;
@@ -44,6 +45,14 @@ public class VisionLoader {
                     try (Reader reader = entry.getValue().getReader()){
                         ItemVision itemVision = JsonHelper.deserialize(GSON,reader, ItemVision.class);
                         Visions.RESOURCE_ITEM_VISIONS.add(itemVision);
+                    } catch (IOException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                }
+                for(Map.Entry<Identifier, Resource> entry : manager.findResources("visions/status_effect", path -> path.getPath().endsWith(".json")).entrySet()) {
+                    try (Reader reader = entry.getValue().getReader()){
+                        StatusEffectVision statusEffectVision = JsonHelper.deserialize(GSON,reader, StatusEffectVision.class);
+                        Visions.RESOURCE_STATUS_EFFECT_VISIONS.add(statusEffectVision);
                     } catch (IOException exception) {
                         throw new RuntimeException(exception);
                     }

@@ -1,8 +1,6 @@
 package lixir.vminus.vision;
 
-import lixir.vminus.vision.type.BlockVision;
-import lixir.vminus.vision.type.EntityVision;
-import lixir.vminus.vision.type.ItemVision;
+import lixir.vminus.vision.type.*;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -18,10 +16,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Visions {
     public static final CopyOnWriteArrayList<BlockVision> RESOURCE_BLOCK_VISIONS = new CopyOnWriteArrayList<>();
     public static final CopyOnWriteArrayList<EntityVision> RESOURCE_ENTITY_VISIONS = new CopyOnWriteArrayList<>();
+    public static final CopyOnWriteArrayList<EnchantmentVision> RESOURCE_ENCHANTMENT_VISIONS = new CopyOnWriteArrayList<>();
     public static final CopyOnWriteArrayList<ItemVision> RESOURCE_ITEM_VISIONS = new CopyOnWriteArrayList<>();
+    public static final CopyOnWriteArrayList<StatusEffectVision> RESOURCE_STATUS_EFFECT_VISIONS = new CopyOnWriteArrayList<>();
     public static final Map<Block, BlockVision> BLOCK_VISIONS = new HashMap<>();
     public static final Map<Entity, EntityVision> ENTITY_VISIONS = new HashMap<>();
+    public static final Map<Entity, EnchantmentVision> ENCHANTMENT_VISIONS = new HashMap<>();
     public static final Map<Item, ItemVision> ITEM_VISIONS = new HashMap<>();
+    public static final Map<Entity, StatusEffectVision> STATUS_EFFECT_VISIONS = new HashMap<>();
 
 
     private static void add_block_visions(int index){

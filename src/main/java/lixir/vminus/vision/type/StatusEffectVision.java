@@ -2,12 +2,13 @@ package lixir.vminus.vision.type;
 
 import lixir.vminus.vision.VisionElement;
 
-public class EntityVision {
+public class StatusEffectVision {
     public String[] entities;
-    public VisionElement<Boolean>[] banned;
-    public EntityVision(EntityVision entityVision){
+    private final VisionElement<Boolean>[] banned;
+
+    public StatusEffectVision(VisionElement<Boolean>[] banned) {
         this.entities = null;
-        this.banned = entityVision.banned;
+        this.banned = banned;
     }
     public Boolean get_banned(){
         if (banned == null) return null;

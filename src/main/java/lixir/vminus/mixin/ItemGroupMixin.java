@@ -22,14 +22,14 @@ public abstract class ItemGroupMixin {
     @Shadow private Set<ItemStack> searchTabStacks;
     @Inject(method = "updateEntries",at = @At(value = "TAIL"))
     private void updateEntries(ItemGroup.DisplayContext displayContext, CallbackInfo ci){
-        List<ItemStack> bannedItems = new ArrayList<>();
+        List<ItemStack> banned_items = new ArrayList<>();
         for(ItemStack itemstack : this.searchTabStacks) {
             ItemVision itemVision = Visions.get_item_vision(itemstack.getItem());
             if (itemVision != null && itemVision.get_banned() != null && itemVision.get_banned()) {
-                bannedItems.add(itemstack);
+                banned_items.add(itemstack);
             }
         }
-        bannedItems.forEach(searchTabStacks::remove);
-        bannedItems.forEach(displayStacks::remove);
+        banned_items.forEach(searchTabStacks::remove);
+        banned_items.forEach(displayStacks::remove);
     }
 }
