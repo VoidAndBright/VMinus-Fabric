@@ -1,9 +1,6 @@
 {
   "items":[
-    "#minecraft:beds",
-    "minecraft:iron_ingot",
-    "minecraft:iron_nugget",
-    "minecraft:iron_block"
+    "#minecraft:beds"
   ],
   "banned": [
     {
