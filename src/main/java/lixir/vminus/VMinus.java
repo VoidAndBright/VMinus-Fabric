@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 public class VMinus implements ModInitializer {
 	public static final String MOD_ID = "vminus";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
 	public void onInitialize() {
 		LOGGER.info("VMinus Is Loading");
 		VisionLoader.register();
