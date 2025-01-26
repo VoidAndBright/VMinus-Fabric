@@ -1,0 +1,6 @@
+{
+  "items":[
+    "minecraft:wooden_shovel"
+  ],
+  "replacement": [{"return_value":"minecraft:wooden_sword"}]
+}

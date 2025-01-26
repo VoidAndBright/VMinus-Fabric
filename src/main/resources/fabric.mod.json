@@ -3,9 +3,9 @@
 	"id": "vminus",
 	"version": "${version}",
 	"name": "VMinus",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Check VMinus from Forge for this",
 	"authors": [
-		"Me!"
+		"Ether/Void"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
@@ -16,18 +16,19 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"lixir.vminus.VMinus"
+			"net.lixir.vminus.VMinus"
 		],
 		"client": [
-			"lixir.vminus.VMinusClient"
+			"net.lixir.vminus.VMinusClient"
 		],
 		"fabric-datagen": [
-			"lixir.vminus.VMinusDataGenerator"
+			"net.lixir.vminus.VMinusDataGenerator"
 		]
 	},
 	"mixins": [
 		"vminus.mixins.json"
 	],
+	"accessWidener" : "vminus.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.16.9",
 		"minecraft": "~1.20.1",

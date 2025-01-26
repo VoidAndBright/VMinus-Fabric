@@ -1,16 +1,28 @@
 {
   "required": true,
-  "package": "lixir.vminus.mixin",
+  "package": "net.lixir.vminus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "FormattingMixin",
     "ItemGroupMixin",
     "StatusEffectMixin",
-    "block.BlockStateVisionMixin",
-    "block.BlockVisionMixin",
+    "block.AbstractBlockStateMixin",
+    "block.BlockMixin",
     "block.CocoaBlockMixin",
     "block.PowderSnowBlockMixin",
-    "server.CapeMixin"
+    "entity.ItemEntityMixin",
+    "entity.LivingEntityAccessor",
+    "entity.LivingEntityMixin",
+    "item.ItemMixin",
+    "item.ItemStackMixin",
+    "recipe.IngredientMixin",
+    "recipe.ShapedRecipeMixin",
+    "recipe.ShapelessRecipeMixin",
+    "recipe.SpecialCraftingRecipeMixin",
+    "world.ChunkSectionMixin",
+    "world.PlayerInventoryMixin",
+    "world.PlayerListEntryMixin",
+    "world.SimpleInventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

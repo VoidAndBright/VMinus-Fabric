@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "vminus:defaultium_item"
+    "vminus:defaultium_block",
+    "minecraft:glowstone",
+    "#minecraft:beds"
   ]
 }

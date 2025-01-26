@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-07T16:30:52.3343823	VMinus/Tags for minecraft:item
+// 1.20.1	2025-01-25T01:05:26.3671852	VMinus/Tags for minecraft:item
 b0963006443aafa27c8c80a05609431ea9723a12 data\vminus\tags\items\stained_glass_panes.json
 46fdd0a71fe19d8b5d83f5c8530d5649b502dd75 data\vminus\tags\items\leather_armor.json
 921264649601f2908a02ee801cf77d9a24363161 data\vminus\tags\items\minecarts.json
@@ -13,12 +13,12 @@ a7c3ec2986f0b5bdeb3e8c56d751ba4cf8eb3b68 data\minecraft\tags\items\stone_craftin
 cd8bd3a6d501286e3d91b38dc18ec3cd400a786b data\vminus\tags\items\wooden_tools.json
 686dba8aa474dfb7843a8b774dc70de61c071f20 data\vminus\tags\items\fishing_rods.json
 144e676062b64a4002feaa73b1ca37e5c891d6db data\vminus\tags\items\tridents.json
-8aaa717612b418e67d8cb472b425ac28cca61b28 data\vminus\tags\items\golden_tools.json
 5eab677cef8f037fc69b4bf0855d48dd3ed13101 data\vminus\tags\items\iron_equipment.json
+8aaa717612b418e67d8cb472b425ac28cca61b28 data\vminus\tags\items\golden_tools.json
 6d3f2fc84cb4b4f39b1ca60fb162fc7782762cf4 data\vminus\tags\items\rarity\epic.json
 4801c465e4dfdba555a53834f7195aad766073c3 data\vminus\tags\items\shulker_boxes.json
-e9085b5e1ba99cc59ca684e262f7f1039a83a179 data\vminus\tags\items\diamond_armor.json
 3bb1ecb00d3a7958a51b57737e6593bea0491eb3 data\vminus\tags\items\all_meats.json
+e9085b5e1ba99cc59ca684e262f7f1039a83a179 data\vminus\tags\items\diamond_armor.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data\vminus\tags\items\unenchantable.json
 6d3f2fc84cb4b4f39b1ca60fb162fc7782762cf4 data\vminus\tags\items\rarity\uncommon.json
 6d3e8c72280bea839edb7879bbacbc342f2eb63f data\vminus\tags\items\equipment.json
