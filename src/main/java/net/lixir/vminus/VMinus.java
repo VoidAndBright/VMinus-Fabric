@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class VMinus implements ModInitializer {
 	public static final String MOD_ID = "vminus";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
 	public void onInitialize() {
 		LOGGER.info("VMinus Is Loading");
 		VisionLoader.register();
@@ -40,13 +39,4 @@ public class VMinus implements ModInitializer {
 		VMinusKeyBinds.register();
 		VMinusPacketHandlers.register();
 	}
-	private <T extends Collection<ItemStack>> T replace_or_remove_itemstacks(Iterator<ItemStack> itemstacks, T new_collection){
-		if(itemstacks.hasNext()){
-			ItemStack itemstack = itemstacks.next();
-			new_collection.add(itemstack);
-			return replace_or_remove_itemstacks(itemstacks,new_collection);
-		}
-		else return new_collection;
-	}
-
 }

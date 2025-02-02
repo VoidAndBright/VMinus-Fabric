@@ -16,7 +16,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
 public class VMinusBlocks {
-    public static final Block DEFAULTIUM_BLOCK = registerBlock("defaultium_block",new Block(FabricBlockSettings.create().instrument(Instrument.BASEDRUM).sounds(BlockSoundGroup.NETHERITE).strength(1f, 10f).luminance(15)));
+    public static final Block DEFAULTIUM_BLOCK = registerBlock("defaultium_block",new DefaultiumBlock(FabricBlockSettings.create().instrument(Instrument.BASEDRUM).sounds(BlockSoundGroup.NETHERITE).strength(1f, 10f).luminance(15)));
     private static <T extends Block> T registerBlock(String name,T block){
         Registry.register(Registries.ITEM, Identifier.of(VMinus.MOD_ID, name), new BlockItem(block,new FabricItemSettings()));
         return Registry.register(Registries.BLOCK,new Identifier(VMinus.MOD_ID,name),block);

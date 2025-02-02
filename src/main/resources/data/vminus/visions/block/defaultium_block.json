@@ -7,5 +7,5 @@
     "!oak_log",
     "#c:ores"
   ],
-  "replacement": [{"return_value": "copper_block"}]
+  "replacement": [{"value": "copper_block"}]
 }

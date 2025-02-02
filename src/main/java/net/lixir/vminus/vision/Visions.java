@@ -1,6 +1,5 @@
 package net.lixir.vminus.vision;
 
-import net.lixir.vminus.Functional;
 import net.lixir.vminus.vision.type.*;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -8,15 +7,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
 
 public class Visions {
     public static final CopyOnWriteArrayList<BlockVision> BLOCK_VISION_JSONS = new CopyOnWriteArrayList<>();
@@ -29,9 +23,6 @@ public class Visions {
     public static final Map<EntityType<?>, EntityTypeVision> ENTITY_TYPE_VISIONS = new HashMap<>();
     public static final Map<Item, ItemVision> ITEM_VISIONS = new HashMap<>();
     public static final Map<StatusEffect, StatusEffectVision> STATUS_EFFECT_VISIONS = new HashMap<>();
-    private static void add_block_visions(){
-        iterate_block_visions(0);
-    }
     private static void iterate_block_visions(int index){
         if (index < BLOCK_VISION_JSONS.size()) {
             BlockVision block_vision = BLOCK_VISION_JSONS.get(index);
@@ -41,198 +32,114 @@ public class Visions {
     }
     private static void iterate_block_vision(BlockVision block_vision, String[] targets, int index){
         if (index < targets.length) {
-            Visions.BLOCK_VISIONS.put(Registries.BLOCK.get(new Identifier(targets[index])), new BlockVision(block_vision));
+            Block block = Registries.BLOCK.get(new Identifier(targets[index]));
+            BLOCK_VISIONS.put(block, new BlockVision(block,block_vision));
             iterate_block_vision(block_vision,targets,index + 1);
         }
     }
-    private static void add_enchantment_visions(){
-        iterate_enchantment_visions(0);
-    }
     private static void iterate_enchantment_visions(int index){
         if (index < ENCHANTMENT_VISION_JSONS.size()) {
-            EnchantmentVision entityTypeVision = ENCHANTMENT_VISION_JSONS.get(index);
-            add_enchantments(entityTypeVision);
+            EnchantmentVision enchantment_vision = ENCHANTMENT_VISION_JSONS.get(index);
+            iterate_enchantment_vision(enchantment_vision,enchantment_vision.get_targets(),0);
             iterate_enchantment_visions(index + 1);
         }
     }
-    private static void add_enchantments(EnchantmentVision enchantmentVision){
-        iterate_enchantment_vision(enchantmentVision,0);
-    }
-    private static void iterate_enchantment_vision(EnchantmentVision enchantmentVision, int index){
-        if (index < enchantmentVision.enchantments.length) {
-            String string = enchantmentVision.enchantments[index];
-            if (string.startsWith("#")) add_enchantment_tag(string.substring(1),enchantmentVision);
-            else if (!string.startsWith("!")) add_enchantment(string,enchantmentVision);
-            iterate_enchantment_vision(enchantmentVision,index + 1);
+    private static void iterate_enchantment_vision(EnchantmentVision enchantmentVision,String[] targets, int index){
+        if (index < targets.length) {
+            String string = targets[index];
+            Enchantment enchantment = Registries.ENCHANTMENT.get(new Identifier(string));
+            ENCHANTMENT_VISIONS.put(enchantment, new EnchantmentVision(enchantmentVision));
+            iterate_enchantment_vision(enchantmentVision,targets,index + 1);
         }
-    }
-    private static void add_enchantment(String string, EnchantmentVision enchantmentVision){
-        Enchantment entityType = Registries.ENCHANTMENT.get(new Identifier(string));
-        Visions.ENCHANTMENT_VISIONS.put(entityType, new EnchantmentVision(enchantmentVision));
-    }
-    private static void add_enchantment_tag(String string, EnchantmentVision entityVision){
-        TagKey<Enchantment> entityTypeTagKey = TagKey.of(RegistryKeys.ENCHANTMENT, new Identifier(string));
-        Registries.ENCHANTMENT.iterateEntries(entityTypeTagKey).forEach(
-                entityTypeRegistryEntry ->
-                        Visions.ENCHANTMENT_VISIONS.put(entityTypeRegistryEntry.value(), new EnchantmentVision(entityVision))
-        );
-    }
-
-
-    private static void add_entity_type_visions(){
-        iterate_entity_type_visions(0);
     }
     private static void iterate_entity_type_visions(int index){
         if (index < ENTITY_TYPE_VISION_JSONS.size()) {
-            EntityTypeVision itemVision = ENTITY_TYPE_VISION_JSONS.get(index);
-            add_entity_types(itemVision);
+            EntityTypeVision entity_type_vision = ENTITY_TYPE_VISION_JSONS.get(index);
+            iterate_entity_type_vision(entity_type_vision,entity_type_vision.get_targets(),0);
             iterate_entity_type_visions(index + 1);
         }
     }
-    private static void add_entity_types(EntityTypeVision entityVision){
-        iterate_entity_type_vision(entityVision,0);
-    }
-    private static void iterate_entity_type_vision(EntityTypeVision entityVision, int index){
-        if (index < entityVision.entity_types.length) {
-            String string = entityVision.entity_types[index];
-            if (string.startsWith("#")) add_entity_type_tag(string.substring(1),entityVision);
-            else if (!string.startsWith("!")) add_entity_type(string,entityVision);
-            iterate_entity_type_vision(entityVision,index + 1);
+    private static void iterate_entity_type_vision(EntityTypeVision entity_type_vision, String[] targets, int index){
+        if (index < targets.length) {
+            String string = targets[index];
+            EntityType<?> entity_type = Registries.ENTITY_TYPE.get(new Identifier(string));
+            ENTITY_TYPE_VISIONS.put(entity_type, new EntityTypeVision(entity_type_vision));
+            iterate_entity_type_vision(entity_type_vision,targets,index + 1);
         }
-    }
-    private static void add_entity_type(String string, EntityTypeVision entityVision){
-        EntityType<?> entityType = Registries.ENTITY_TYPE.get(new Identifier(string));
-        Visions.ENTITY_TYPE_VISIONS.put(entityType, new EntityTypeVision(entityVision));
-    }
-    private static void add_entity_type_tag(String string, EntityTypeVision entityVision){
-        TagKey<EntityType<?>> entityTypeTagKey = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(string));
-        Registries.ENTITY_TYPE.iterateEntries(entityTypeTagKey).forEach(
-                entityTypeRegistryEntry ->
-                        Visions.ENTITY_TYPE_VISIONS.put(entityTypeRegistryEntry.value(), new EntityTypeVision(entityVision))
-        );
-    }
-
-
-    private static void add_item_visions(){
-        iterate_item_visions(0);
     }
     private static void iterate_item_visions(int index){
         if (index < ITEM_VISION_JSONS.size()) {
             ItemVision itemVision = ITEM_VISION_JSONS.get(index);
-            add_items(itemVision);
+            iterate_item_vision(itemVision,itemVision.get_targets(),0);
             iterate_item_visions(index + 1);
         }
     }
-    private static void add_items(ItemVision itemVision){
-        iterate_item_vision(itemVision, 0);
-    }
-    private static void iterate_item_vision(ItemVision itemVision, int index){
-        if (index < itemVision.items.length) {
-            String string = itemVision.items[index];
-            add_item(string,itemVision);
-            iterate_item_vision(itemVision,index + 1);
+    private static void iterate_item_vision(ItemVision item_vision,String[] targets, int index){
+        if (index < targets.length) {
+            String string = targets[index];
+            Item item = Registries.ITEM.get(new Identifier(string));
+            if (ITEM_VISIONS.containsKey(item)){
+                ITEM_VISIONS.put(item,new ItemVision(ITEM_VISIONS.get(item),item_vision));
+            }
+            ITEM_VISIONS.put(item, new ItemVision(item,item_vision));
+            iterate_item_vision(item_vision,targets,index + 1);
         }
     }
-    private static void add_item_tag(String string, ItemVision itemVision){
-        TagKey<Item> itemTagKey = TagKey.of(RegistryKeys.ITEM, new Identifier(string));
-        Registries.ITEM.iterateEntries(itemTagKey).forEach(itemRegistryEntry -> Visions.ITEM_VISIONS.put(itemRegistryEntry.value(), new ItemVision(itemVision)));
-    }
-    private static void remove_item_tag(String string){
-        TagKey<Item> itemTagKey = TagKey.of(RegistryKeys.ITEM, new Identifier(string));
-        Registries.ITEM.iterateEntries(itemTagKey).forEach(itemRegistryEntry -> Visions.ITEM_VISIONS.remove(itemRegistryEntry.value()));
-    }
-    private static void add_item(String string, ItemVision itemVision){
-        Item item = Registries.ITEM.get(new Identifier(string));
-        Visions.ITEM_VISIONS.put(item, new ItemVision(itemVision));
-    }
-    private static void remove_item(String string, ItemVision itemVision){
-        Item item = Registries.ITEM.get(new Identifier(string));
-        Visions.ITEM_VISIONS.remove(item);
-    }
-    private static void add_status_effect_visions(){
-        iterate_status_effect_visions(0);
-    }
-
     private static void iterate_status_effect_visions(int index){
         if (index < STATUS_EFFECT_VISION_JSONS.size()) {
-            StatusEffectVision itemVision = STATUS_EFFECT_VISION_JSONS.get(index);
-            add_status_effects(itemVision);
+            StatusEffectVision status_effect_vision = STATUS_EFFECT_VISION_JSONS.get(index);
+            iterate_status_effect_vision(status_effect_vision,status_effect_vision.get_targets(),0);
             iterate_status_effect_visions(index + 1);
         }
     }
-    private static void add_status_effects(StatusEffectVision entityVision){
-        iterate_status_effect_vision(entityVision,0);
-    }
-    private static void iterate_status_effect_vision(StatusEffectVision status_effect_vision, int index){
-        if (index < status_effect_vision.entities.length) {
-            String string = status_effect_vision.entities[index];
-            if (string.startsWith("#")) add_status_effect_tag(string.substring(1),status_effect_vision);
-            else if (!string.startsWith("!")) add_status_effect(string,status_effect_vision);
-            iterate_status_effect_vision(status_effect_vision,index + 1);
+    private static void iterate_status_effect_vision(StatusEffectVision status_effect_vision,String[] targets, int index){
+        if (index < targets.length) {
+            String string = targets[index];
+            StatusEffect status_effect = Registries.STATUS_EFFECT.get(new Identifier(string));
+            STATUS_EFFECT_VISIONS.put(status_effect, new StatusEffectVision(status_effect_vision));
+            iterate_status_effect_vision(status_effect_vision,targets,index + 1);
         }
     }
-    private static void add_status_effect(String string, StatusEffectVision entityVision){
-        StatusEffect entityType = Registries.STATUS_EFFECT.get(new Identifier(string));
-        Visions.STATUS_EFFECT_VISIONS.put(entityType, new StatusEffectVision(entityVision));
-    }
-    private static void add_status_effect_tag(String string, StatusEffectVision status_effect_vision){
-        TagKey<StatusEffect> entityTypeTagKey = TagKey.of(RegistryKeys.STATUS_EFFECT, new Identifier(string));
-        Registries.STATUS_EFFECT.iterateEntries(entityTypeTagKey).forEach(
-                entityTypeRegistryEntry ->
-                        Visions.STATUS_EFFECT_VISIONS.put(entityTypeRegistryEntry.value(), new StatusEffectVision(status_effect_vision))
-        );
-    }
-
-
     public static BlockVision get_block_vision(Block block){
-        if (Visions.is_empty()) {
-            add_visions();
-            Visions.json_clear();
-        }
+        vision_protocol();
         return BLOCK_VISIONS.get(block);
     }
     public static EnchantmentVision get_enchantment_vision(Enchantment enchantment){
-        if (Visions.is_empty()) {
-            add_visions();
-            Visions.json_clear();
-        }
+        vision_protocol();
         return ENCHANTMENT_VISIONS.get(enchantment);
     }
-    public static EntityTypeVision get_enchantment_vision(EntityType<?> entity_type){
-        if (Visions.is_empty()) {
-            add_visions();
-            Visions.json_clear();
-        }
+    public static EntityTypeVision get_entity_type_vision(EntityType<?> entity_type){
+        vision_protocol();
         return ENTITY_TYPE_VISIONS.get(entity_type);
     }
 
     public static ItemVision get_item_vision(Item item){
-        if (Visions.is_empty()) {
-            add_visions();
-            Visions.json_clear();
-        }
+        vision_protocol();
         return ITEM_VISIONS.get(item);
     }
 
     public static StatusEffectVision get_status_effect_vision(StatusEffect status_effect){
+        vision_protocol();
+        return STATUS_EFFECT_VISIONS.get(status_effect);
+    }
+
+    private static void vision_protocol(){
         if (Visions.is_empty()) {
             add_visions();
             Visions.json_clear();
         }
-        return STATUS_EFFECT_VISIONS.get(status_effect);
     }
-
-    public static void add_visions(){
-        add_block_visions();
-        add_enchantment_visions();
-        add_entity_type_visions();
-        add_status_effect_visions();
-        add_item_visions();
-    }
-    public static boolean is_empty(){
+    private static boolean is_empty(){
         return BLOCK_VISIONS.isEmpty() && ENCHANTMENT_VISIONS.isEmpty() && ENTITY_TYPE_VISIONS.isEmpty() && ITEM_VISIONS.isEmpty() && STATUS_EFFECT_VISIONS.isEmpty();
     }
-    public static void json_clear(){
+    public static void add_visions(){
+        iterate_block_visions(0);
+        iterate_enchantment_visions(0);
+        iterate_entity_type_visions(0);
+        iterate_status_effect_visions(0);
+        iterate_item_visions(0);
+    }
+    private static void json_clear(){
         BLOCK_VISION_JSONS.clear();
         ENCHANTMENT_VISION_JSONS.clear();
         ENTITY_TYPE_VISION_JSONS.clear();
@@ -246,5 +153,4 @@ public class Visions {
         ITEM_VISIONS.clear();
         STATUS_EFFECT_VISIONS.clear();
     }
-
 }

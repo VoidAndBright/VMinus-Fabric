@@ -1,28 +1,35 @@
 package net.lixir.vminus.vision.type;
 
-import net.lixir.vminus.vision.VisionElement;
+import net.lixir.vminus.vision.value.VisionValue;
+import net.lixir.vminus.vision.value.block.BlockVisionBoolean;
+import net.lixir.vminus.vision.value.block.BlockVisionFloat;
+import net.lixir.vminus.vision.value.block.BlockVisionInteger;
+import net.lixir.vminus.vision.value.block.BlockVisionSoundGroup;
+import net.lixir.vminus.vision.value.block.BlockVisionString;
 import net.lixir.vminus.vision.properties.SoundGroup;
+import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
+import java.util.Vector;
 
-import java.util.*;
 
-public class BlockVision implements Vision {
-    public String[] blocks;
-    private final VisionElement<Boolean>[] banned;
-    private final VisionElement<String>[] replacement;
-    private final VisionElement<Float>[] slipperiness;
-    private final VisionElement<Float>[] speed_multiplier;
-    private final VisionElement<Float>[] jump_multiplier;
-    private final VisionElement<Float>[] blast_resistance;
-    private final VisionElement<Float>[] hardness;
-    private final VisionElement<Integer>[] luminance;
-	private final VisionElement<Integer>[] pitch;
-	private final VisionElement<SoundGroup>[] sound_group;
-    private final VisionElement<String>[] direction;
+public class BlockVision implements Vision<Block> {
+    private final String[] blocks;
+    private final BlockVisionBoolean[] banned;
+    private final BlockVisionString[] replacement;
+    private final BlockVisionFloat[] slipperiness;
+    private final BlockVisionFloat[] speed_multiplier;
+    private final BlockVisionFloat[] jump_multiplier;
+    private final BlockVisionFloat[] blast_resistance;
+    private final BlockVisionFloat[] hardness;
+    private final BlockVisionInteger[] luminance;
+	private final BlockVisionInteger[] pitch;
+	private final BlockVisionSoundGroup[] sound_group;
+    private final BlockVisionString[] direction;
 
-    public BlockVision(BlockVision blockVision){
-        this.blocks = null;
+    public BlockVision(Block block,BlockVision blockVision){
+        this.blocks = new String[]{};
+        //this.block = block;
         this.slipperiness = blockVision.slipperiness;
         this.speed_multiplier = blockVision.speed_multiplier;
         this.jump_multiplier = blockVision.jump_multiplier;
@@ -34,6 +41,20 @@ public class BlockVision implements Vision {
         this.pitch = blockVision.pitch;
         this.sound_group = blockVision.sound_group;
         this.direction = blockVision.direction;
+    }
+    public BlockVision(String[] blocks, BlockVisionBoolean[] banned, BlockVisionString[] replacement, BlockVisionFloat[] slipperiness, BlockVisionFloat[] speed_multiplier, BlockVisionFloat[] jump_multiplier, BlockVisionFloat[] blast_resistance, BlockVisionFloat[] hardness, BlockVisionInteger[] luminance, BlockVisionInteger[] pitch, BlockVisionSoundGroup[] sound_group, BlockVisionString[] direction) {
+        this.blocks = blocks;
+        this.banned = banned;
+        this.replacement = replacement;
+        this.slipperiness = slipperiness;
+        this.speed_multiplier = speed_multiplier;
+        this.jump_multiplier = jump_multiplier;
+        this.blast_resistance = blast_resistance;
+        this.hardness = hardness;
+        this.luminance = luminance;
+        this.pitch = pitch;
+        this.sound_group = sound_group;
+        this.direction = direction;
     }
 
     public SoundGroup get_sound_group() {
@@ -77,6 +98,10 @@ public class BlockVision implements Vision {
     }
 
     public String[] get_targets() {
-        return processed_entries(new ArrayList<>(),blocks,0,Registries.BLOCK,RegistryKeys.BLOCK);
+        return refine_entries(new Vector<>(),blocks,0,Registries.BLOCK,RegistryKeys.BLOCK);
+    }
+
+    public Block get_vision_type() {
+        return null;
     }
 }

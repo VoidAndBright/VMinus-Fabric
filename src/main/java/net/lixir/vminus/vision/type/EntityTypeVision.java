@@ -1,20 +1,29 @@
 package net.lixir.vminus.vision.type;
 
-import net.lixir.vminus.vision.VisionElement;
+import net.lixir.vminus.vision.value.entity_type.EntityTypeVisionBoolean;
+import net.minecraft.entity.EntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 
-public class EntityTypeVision implements Vision {
+import java.util.Vector;
+
+
+public class EntityTypeVision implements Vision<EntityType<?>> {
     public String[] entity_types;
-    public VisionElement<Boolean>[] banned;
+    public EntityTypeVisionBoolean[] banned;
     public EntityTypeVision(EntityTypeVision entityVision){
-        this.entity_types = null;
+        this.entity_types = new String[]{};
         this.banned = entityVision.banned;
     }
     public Boolean get_banned(){
         return get_value(banned);
     }
 
-    @Override
     public String[] get_targets() {
-        return new String[0];
+        return refine_entries(new Vector<>(),entity_types,0,Registries.ENTITY_TYPE, RegistryKeys.ENTITY_TYPE);
+    }
+
+    public EntityType<?> get_vision_type() {
+        return null;
     }
 }

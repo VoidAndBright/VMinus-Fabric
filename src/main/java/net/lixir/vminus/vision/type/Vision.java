@@ -1,46 +1,55 @@
 package net.lixir.vminus.vision.type;
 
-import net.lixir.vminus.Functional;
-import net.lixir.vminus.vision.VisionElement;
+import net.lixir.vminus.vision.value.VisionValue;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Vector;
 
-public interface Vision {
-    String[] get_targets();
-    default <T> T get_value(VisionElement<T>[] vision_elements){
-        return iterate_vision_elements(vision_elements,0);
+public interface Vision<V>{
+    V get_vision_type();
+    default <T,TV extends VisionValue<T,V>> T get_value(TV[] vision_elements){
+        return iterate_get_value(vision_elements,0);
     }
-    private <T> T iterate_vision_elements(VisionElement<T>[] vision_elements, int index){
+    default <T,TV extends VisionValue<T,V>> T iterate_get_value(TV[] vision_elements, int index){
         if (vision_elements != null && index < vision_elements.length){
-            VisionElement<T> vision_element = vision_elements[index];
-            if (vision_element.conditions_is_true()) return vision_element.get_value();
-            else return iterate_vision_elements(vision_elements,index+1);
+            TV vision_element = vision_elements[index];
+            if (vision_element.is_conditions_true(get_vision_type(), vision_element.get_conditions(),0)) return vision_element.get_value();
+            else return iterate_get_value(vision_elements,index+1);
         }
-        else return null;
+        return null;
     }
-    default <T> String[] processed_entries(ArrayList<String> targets, String[] entries, int index, Registry<T> registry, RegistryKey<Registry<T>> registry_key){
+    default String[] refine_entries(Vector<String> targets, String[] entries, int index, Registry<V> registry, RegistryKey<Registry<V>> registry_key){
         if (index < entries.length){
             String entry = entries[index];
             if (entry.startsWith("!#")) {
                 String block_tag =  entry.substring(2);
-                TagKey<T> block_tag_key = TagKey.of(registry_key, new Identifier(block_tag));
-                Functional.for_each(registry.iterateEntries(block_tag_key).iterator(), block_registry_entry -> targets.remove(registry.getId(block_registry_entry.value()).toString()));
+                TagKey<V> block_tag_key = TagKey.of(registry_key, new Identifier(block_tag));
+                registry.iterateEntries(block_tag_key).forEach(block_registry_entry -> targets.remove(registry.getId(block_registry_entry.value()).toString()));
             }
             else if (entry.startsWith("#")) {
-                String block_tag =  entry.substring(1);
-                TagKey<T> block_tag_key = TagKey.of(registry_key, new Identifier(block_tag));
-                Functional.for_each(registry.iterateEntries(block_tag_key).iterator(), block_registry_entry -> targets.add(registry.getId(block_registry_entry.value()).toString()));
+                String block_tag = entry.substring(1);
+                TagKey<V> block_tag_key = TagKey.of(registry_key, new Identifier(block_tag));
+                registry.iterateEntries(block_tag_key).forEach(block_registry_entry -> targets.add(registry.getId(block_registry_entry.value()).toString()));
             }
-            else if (entry.startsWith("!")) {
-                targets.remove(new Identifier(entry.substring(1)).toString());
-            }
+            else if (entry.startsWith("!")) targets.remove(new Identifier(entry.substring(1)).toString());
             else targets.add(new Identifier(entry).toString());
-            return processed_entries(targets,entries,index+1,registry,registry_key);
+            return refine_entries(targets,entries,index+1,registry,registry_key);
         }
         else return targets.toArray(String[]::new);
+    }
+    default <T,TV extends VisionValue<T,V>> Vector<TV> merge(TV[] left, TV[] right){
+        if (left != null && right != null){
+            final Vector<TV> banned = new Vector<>(List.of(left));
+            banned.addAll(List.of(right));
+            banned.sort(Comparator.comparingInt(TV::get_priority));
+            return banned;
+        }
+        else if (left == null) return new Vector<>(List.of(right));
+        else return new Vector<>(List.of(left));
     }
 }

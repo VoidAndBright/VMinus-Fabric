@@ -1,6 +1,7 @@
 {
   "items":[
-    "minecraft:wooden_shovel"
+    "minecraft:wooden_pickaxe"
   ],
-  "replacement": [{"return_value":"minecraft:wooden_sword"}]
+  "banned":["thing"],
+  "thing": true
 }
