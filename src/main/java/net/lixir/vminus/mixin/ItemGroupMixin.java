@@ -4,6 +4,7 @@ import net.lixir.vminus.VMinus;
 import net.lixir.vminus.vision.VisionHelper;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.lixir.vminus.vision.Visions;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemStackSet;
@@ -27,16 +28,18 @@ public class ItemGroupMixin {
     private void updateEntries(ItemGroup.DisplayContext displayContext, CallbackInfo ci){
         Set<ItemStack> search_tab_stacks = ItemStackSet.create();
         for (ItemStack itemstack : searchTabStacks) {
-            ItemVision itemVision = Visions.get_item_vision(itemstack.getItem());
-            if (itemVision != null && itemVision.get_replacement() != null) search_tab_stacks.add(VisionHelper.itemstack(itemVision.get_replacement(),1));
-            else if (itemVision == null || itemVision.get_banned() == null || !itemVision.get_banned()) search_tab_stacks.add(itemstack);
+            Item item = itemstack.getItem();
+            ItemVision itemVision = Visions.get_item_vision(item);
+            if (itemVision != null && itemVision.get_replacement(item) != null) search_tab_stacks.add(VisionHelper.itemstack(itemVision.get_replacement(item),1));
+            else if (itemVision == null || itemVision.get_banned(item) == null || !itemVision.get_banned(item)) search_tab_stacks.add(itemstack);
         }
         searchTabStacks = search_tab_stacks;
         Collection<ItemStack> display_stacks = ItemStackSet.create();
         for (ItemStack itemstack : displayStacks) {
-            ItemVision itemVision = Visions.get_item_vision(itemstack.getItem());
-            if (itemVision != null && itemVision.get_replacement() != null) display_stacks.add(VisionHelper.itemstack(itemVision.get_replacement(),1));
-            else if (itemVision == null || itemVision.get_banned() == null || !itemVision.get_banned()) display_stacks.add(itemstack);
+            Item item = itemstack.getItem();
+            ItemVision itemVision = Visions.get_item_vision(item);
+            if (itemVision != null && itemVision.get_replacement(item) != null) display_stacks.add(VisionHelper.itemstack(itemVision.get_replacement(item),1));
+            else if (itemVision == null || itemVision.get_banned(item) == null || !itemVision.get_banned(item)) display_stacks.add(itemstack);
         }
         displayStacks = display_stacks;
     }

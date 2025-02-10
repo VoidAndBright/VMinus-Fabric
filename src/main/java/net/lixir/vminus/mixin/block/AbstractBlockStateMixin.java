@@ -17,16 +17,17 @@ public abstract class AbstractBlockStateMixin {
     @Shadow public abstract Block getBlock();
     @Inject(method = "getLuminance",at = @At("HEAD"), cancellable = true)
     private void returnLuminance(CallbackInfoReturnable<Integer> cir){
+
         BlockVision blockVision = Visions.get_block_vision(getBlock());
-        if (blockVision != null && blockVision.get_luminance() != null){
-            cir.setReturnValue(Math.min(Math.max(blockVision.get_luminance(), 0), 15));
+        if (blockVision != null && blockVision.get_luminance(getBlock()) != null){
+            cir.setReturnValue(Math.min(Math.max(blockVision.get_luminance(getBlock()), 0), 15));
         }
     }
     @Inject(method = "getHardness",at = @At(value = "HEAD"), cancellable = true)
     private void returnHardness(BlockView world, BlockPos pos, CallbackInfoReturnable<Float> cir){
         BlockVision blockVision = Visions.get_block_vision(getBlock());
-        if (blockVision != null && blockVision.get_hardness() != null) {
-            cir.setReturnValue(blockVision.get_hardness());
+        if (blockVision != null && blockVision.get_hardness(getBlock()) != null) {
+            cir.setReturnValue(blockVision.get_hardness(getBlock()));
         }
     }
 }

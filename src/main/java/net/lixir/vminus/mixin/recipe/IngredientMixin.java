@@ -3,6 +3,7 @@ package net.lixir.vminus.mixin.recipe;
 import net.lixir.vminus.vision.VisionHelper;
 import net.lixir.vminus.vision.Visions;
 import net.lixir.vminus.vision.type.ItemVision;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import org.spongepowered.asm.mixin.Final;
@@ -41,10 +42,11 @@ public abstract class IngredientMixin {
     @Unique
     private boolean iterate_itemstack(ItemStack[] itemstacks,ItemStack target_itemstack,int index){
         if (index < itemstacks.length){
-            ItemVision itemVision = Visions.get_item_vision(itemstacks[index].getItem());
+            Item item = itemstacks[index].getItem();
+            ItemVision itemVision = Visions.get_item_vision(item);
             if (itemVision != null)
-                if(itemVision.get_replacement() != null && VisionHelper.item(itemVision.get_replacement()) == target_itemstack.getItem()) return true;
-                else if (itemVision.get_banned() != null && !itemVision.get_banned() && itemstacks[index].isOf(target_itemstack.getItem())) return true;
+                if(itemVision.get_replacement(item) != null && VisionHelper.item(itemVision.get_replacement(item)) == target_itemstack.getItem()) return true;
+                else if (itemVision.get_banned(item) != null && !itemVision.get_banned(item) && itemstacks[index].isOf(target_itemstack.getItem())) return true;
             return iterate_itemstack(itemstacks,target_itemstack,index+1);
         }
         else return false;

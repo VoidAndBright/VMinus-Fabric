@@ -1,6 +1,7 @@
 package net.lixir.vminus.attribute;
 
 
+import com.mojang.text2speech.OperatingSystem;
 import net.lixir.vminus.VMinus;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;

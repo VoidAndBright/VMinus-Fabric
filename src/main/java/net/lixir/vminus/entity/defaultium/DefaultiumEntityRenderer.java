@@ -1,6 +1,7 @@
-package net.lixir.vminus.entity;
+package net.lixir.vminus.entity.defaultium;
 
 import net.lixir.vminus.VMinus;
+import net.lixir.vminus.entity.VMinusModelLayers;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;

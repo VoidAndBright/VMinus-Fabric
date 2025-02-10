@@ -6,8 +6,8 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 @Mixin(Formatting.class)
 public class FormattingMixin {
@@ -47,11 +47,11 @@ public class FormattingMixin {
     }
     @Unique
     private static Formatting formatting_constructor(String name, char character, int color) {
-        ArrayList<Formatting> formats = new ArrayList<>(List.of(field_1072));
+        Vector<Formatting> formats = new Vector<>(List.of(field_1072));
         int identifier = formats.size();
         Formatting formatting = formatting_constructor(name, identifier, name, character, identifier, color);
         formats.add(formatting);
-        field_1072 = formats.toArray(new Formatting[0]);
+        field_1072 = formats.toArray(Formatting[]::new);
         return formatting;
     }
 }

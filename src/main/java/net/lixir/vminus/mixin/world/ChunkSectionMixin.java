@@ -21,15 +21,16 @@ public abstract class ChunkSectionMixin {
 
     @Inject(method = "setBlockState(IIILnet/minecraft/block/BlockState;)Lnet/minecraft/block/BlockState;", at = @At("HEAD"), cancellable = true)
     private void setBlockState(int x, int y, int z, BlockState blockstate, CallbackInfoReturnable<BlockState> cir){
-        BlockVision block_vision = Visions.get_block_vision(blockstate.getBlock());
+        Block block = blockstate.getBlock();
+        BlockVision block_vision = Visions.get_block_vision(block);
         if (block_vision != null) {
-            if (block_vision.get_replacement() != null) {
-                Block replacement = VisionHelper.block(block_vision.get_replacement());
+            if (block_vision.get_replacement(block) != null) {
+                Block replacement = VisionHelper.block(block_vision.get_replacement(block));
                 cir.setReturnValue(setBlockState(x,y,z, replacement.getDefaultState()));
             }
-            else if (block_vision.get_banned() != null && block_vision.get_banned()) cir.setReturnValue(Blocks.AIR.getDefaultState());
-            else if (block_vision.get_direction() != null) {
-                Direction direction = VisionHelper.direction(block_vision.get_direction());
+            else if (block_vision.get_banned(block) != null && block_vision.get_banned(block)) cir.setReturnValue(Blocks.AIR.getDefaultState());
+            else if (block_vision.get_direction(block) != null) {
+                Direction direction = VisionHelper.direction(block_vision.get_direction(block));
                 if (direction != null) {
                     BlockState new_blockState = VisionHelper.new_direction(blockstate, direction);
                     if (new_blockState != null && !blockstate.equals(new_blockState)) cir.setReturnValue(setBlockState(x,y,z, new_blockState));

@@ -1,4 +1,4 @@
-package net.lixir.vminus.entity;
+package net.lixir.vminus.entity.defaultium;
 
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -17,8 +17,7 @@ public class DefaultiumEntity extends HostileEntity {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder createAttributes()
-    {
+    public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 15)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f)
@@ -29,19 +28,16 @@ public class DefaultiumEntity extends HostileEntity {
     public static EntityDimensions getDimensions() {return EntityDimensions.fixed(1f, 1f);}
 
     
-    protected void initGoals()
-    {
+    protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 1D));
         this.goalSelector.add(6, new LookAroundGoal(this));
     }
 
     
-    public void tick()
-    {
+    public void tick() {
         super.tick();
-        if (this.getWorld().isClient())
-        {
+        if (this.getWorld().isClient()) {
             setupAnimationStates();
         }
     }

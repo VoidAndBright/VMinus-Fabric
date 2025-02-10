@@ -14,7 +14,7 @@ public class SoundGroup {
     public String place_sound;
     public String hit_sound;
     public String fall_sound;
-    public BlockSoundGroup to_block_sound_group() {
+    public BlockSoundGroup to_sound_group() {
         float sound_event_volume = volume != null ? volume : 1f;
         float sound_event_pitch = pitch != null ? pitch : 1f;
         SoundEvent break_sound_event = break_sound != null ? Registries.SOUND_EVENT.get(new Identifier(break_sound)) : SoundEvents.BLOCK_STONE_BREAK;

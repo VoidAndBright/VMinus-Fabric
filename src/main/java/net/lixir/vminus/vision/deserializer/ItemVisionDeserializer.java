@@ -7,6 +7,7 @@ import net.lixir.vminus.vision.value.item.ItemVisionBoolean;
 import net.lixir.vminus.vision.type.ItemVision;
 
 import java.lang.reflect.Type;
+import java.util.Comparator;
 
 public class ItemVisionDeserializer implements JsonDeserializer<ItemVision> {
     public ItemVision deserialize(JsonElement json_element, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -14,10 +15,10 @@ public class ItemVisionDeserializer implements JsonDeserializer<ItemVision> {
         String[] entries = json_object.get("items").getAsJsonArray().asList().stream().map(JsonElement::getAsString).toArray(String[]::new);
         ItemVisionBoolean[] banned = item_vision_elements(json_object,"banned");
         VMinus.LOGGER.info("this is triggering");
-        return new ItemVision(entries,banned,null,null,null,null,null,null,null,null,null,null);
+        return new ItemVision(entries,banned,null,null,null,null,null,null,null,null,null,null,null,null);
     }
     public static ItemVisionBoolean[] item_vision_elements(JsonObject json_object, String name){
-        return json_object.get(name).getAsJsonArray().asList().stream().map(json_element_banned -> item_vision_element(json_object,json_element_banned)).toArray(ItemVisionBoolean[]::new);
+        return json_object.get(name).getAsJsonArray().asList().stream().map(json_element_banned -> item_vision_element(json_object,json_element_banned)).sorted(Comparator.comparingInt(ItemVisionBoolean::get_priority)).toArray(ItemVisionBoolean[]::new);
     }
     public static ItemVisionBoolean item_vision_element(JsonObject json_object, JsonElement json_element){
         String name = json_element.getAsString();
@@ -31,7 +32,7 @@ public class ItemVisionDeserializer implements JsonDeserializer<ItemVision> {
     public static ItemCondition item_condition(JsonElement json_element){
         JsonObject json_object = json_element.getAsJsonObject();
         boolean inverted = json_object.has("inverted") && json_object.get("inverted").getAsBoolean();
-        String is_mod_loaded = json_object.has("is_mod_loaded") ? json_object.get("is_mod_loaded").getAsString():null;
+        String is_mod_loaded = json_object.has("is_mod_loaded") ? json_object.get("is_mod_loaded").getAsString() : null;
         return new ItemCondition(inverted,is_mod_loaded);
     }
 }

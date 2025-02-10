@@ -1,6 +1,5 @@
 package net.lixir.vminus.vision.type;
 
-import net.lixir.vminus.vision.value.VisionValue;
 import net.lixir.vminus.vision.value.block.BlockVisionBoolean;
 import net.lixir.vminus.vision.value.block.BlockVisionFloat;
 import net.lixir.vminus.vision.value.block.BlockVisionInteger;
@@ -27,9 +26,8 @@ public class BlockVision implements Vision<Block> {
 	private final BlockVisionSoundGroup[] sound_group;
     private final BlockVisionString[] direction;
 
-    public BlockVision(Block block,BlockVision blockVision){
+    public BlockVision(BlockVision blockVision){
         this.blocks = new String[]{};
-        //this.block = block;
         this.slipperiness = blockVision.slipperiness;
         this.speed_multiplier = blockVision.speed_multiplier;
         this.jump_multiplier = blockVision.jump_multiplier;
@@ -57,51 +55,47 @@ public class BlockVision implements Vision<Block> {
         this.direction = direction;
     }
 
-    public SoundGroup get_sound_group() {
-        return get_value(sound_group);
+    public SoundGroup get_sound_group(Block block) {
+        return get_value(block,sound_group);
     }
 
-    public Integer get_luminance() {
-        return get_value(luminance);
+    public Integer get_luminance(Block block) {
+        return get_value(block,luminance);
     }
 
-    public Float get_hardness() {
-        return get_value(hardness);
+    public Float get_hardness(Block block) {
+        return get_value(block,hardness);
     }
 
-    public Float get_blast_resistance() {
-        return get_value(blast_resistance);
+    public Float get_blast_resistance(Block block) {
+        return get_value(block,blast_resistance);
     }
 
-    public Float get_jump_multiplier() {
-        return get_value(jump_multiplier);
+    public Float get_jump_multiplier(Block block) {
+        return get_value(block,jump_multiplier);
     }
 
-    public Float get_speed_multiplier() {
-        return get_value(speed_multiplier);
+    public Float get_speed_multiplier(Block block) {
+        return get_value(block,speed_multiplier);
     }
 
-    public Float get_slipperiness() {
-        return get_value(slipperiness);
+    public Float get_slipperiness(Block block) {
+        return get_value(block,slipperiness);
     }
 
-    public String get_replacement() {
-        return get_value(replacement);
+    public String get_replacement(Block block) {
+        return get_value(block,replacement);
     }
 
-    public Boolean get_banned() {
-        return get_value(banned);
+    public Boolean get_banned(Block block) {
+        return get_value(block,banned);
     }
 
-    public String get_direction() {
-        return get_value(direction);
+    public String get_direction(Block block) {
+        return get_value(block,direction);
     }
 
     public String[] get_targets() {
-        return refine_entries(new Vector<>(),blocks,0,Registries.BLOCK,RegistryKeys.BLOCK);
-    }
-
-    public Block get_vision_type() {
-        return null;
+        return get_targets(new Vector<>(),blocks,0,Registries.BLOCK,RegistryKeys.BLOCK);
     }
 }

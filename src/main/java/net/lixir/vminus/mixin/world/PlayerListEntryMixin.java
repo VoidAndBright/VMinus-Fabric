@@ -21,7 +21,7 @@ public class PlayerListEntryMixin {
                 case TROLL -> new Identifier(VMinus.MOD_ID,"textures/cape/troll_cape.png");
                 case SHROUD -> new Identifier(VMinus.MOD_ID,"textures/cape/shroud_cape.png");
                 case PROTOTYPE -> new Identifier(VMinus.MOD_ID,"textures/cape/prototype_cape.png");
-                default -> throw new IllegalStateException("Unexpected value: " + CapeButtonWidget.selected);
+                default -> null;
             };
             cir.setReturnValue(texture);
         }

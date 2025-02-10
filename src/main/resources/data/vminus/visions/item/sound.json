@@ -2,6 +2,7 @@
   "items":[
     "minecraft:wooden_pickaxe"
   ],
-  "banned":["thing"],
-  "thing": true
+  "banned":[{
+    "value": true
+  }]
 }

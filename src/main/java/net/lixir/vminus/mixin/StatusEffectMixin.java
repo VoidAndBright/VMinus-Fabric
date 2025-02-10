@@ -17,15 +17,14 @@ public class StatusEffectMixin {
     private final StatusEffect This = (StatusEffect)(Object)this;
     @Inject(method = "getColor",at = @At("HEAD"), cancellable = true)
     private void returnColour(CallbackInfoReturnable<Integer> cir){
-        StatusEffectVision status_effect_vision =Visions.get_status_effect_vision(This);
-        if(status_effect_vision != null && status_effect_vision.get_color() != null)
-            cir.setReturnValue(VisionHelper.hex(status_effect_vision.get_color()));
+        StatusEffectVision status_effect_vision = Visions.get_status_effect_vision(This);
+        if(status_effect_vision != null && status_effect_vision.get_color(This) != null)
+            cir.setReturnValue(VisionHelper.hex(status_effect_vision.get_color(This)));
     }
     @Inject(method = "getCategory",at = @At("HEAD"),cancellable = true)
     private void returnCategory(CallbackInfoReturnable<StatusEffectCategory> cir) {
         StatusEffectVision status_effect_vision =Visions.get_status_effect_vision(This);
-        if(status_effect_vision != null && status_effect_vision.get_category() != null)
-            cir.setReturnValue(VisionHelper.category(status_effect_vision.get_category()));
+        if(status_effect_vision != null && status_effect_vision.get_category(This) != null)
+            cir.setReturnValue(VisionHelper.category(status_effect_vision.get_category(This)));
     }
-
 }

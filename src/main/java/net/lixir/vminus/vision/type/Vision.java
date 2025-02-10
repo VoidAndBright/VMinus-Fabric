@@ -11,19 +11,18 @@ import java.util.List;
 import java.util.Vector;
 
 public interface Vision<V>{
-    V get_vision_type();
-    default <T,TV extends VisionValue<T,V>> T get_value(TV[] vision_elements){
-        return iterate_get_value(vision_elements,0);
+    default <T,TV extends VisionValue<T,V>> T get_value(V vision_type,TV[] vision_elements){
+        return iterate_get_value(vision_type,vision_elements,0);
     }
-    default <T,TV extends VisionValue<T,V>> T iterate_get_value(TV[] vision_elements, int index){
+    default <T,TV extends VisionValue<T,V>> T iterate_get_value(V vision_type,TV[] vision_elements, int index){
         if (vision_elements != null && index < vision_elements.length){
             TV vision_element = vision_elements[index];
-            if (vision_element.is_conditions_true(get_vision_type(), vision_element.get_conditions(),0)) return vision_element.get_value();
-            else return iterate_get_value(vision_elements,index+1);
+            if (vision_element.is_conditions_true(vision_type, vision_element.get_conditions(),0)) return vision_element.get_value();
+            else return iterate_get_value(vision_type,vision_elements,index+1);
         }
         return null;
     }
-    default String[] refine_entries(Vector<String> targets, String[] entries, int index, Registry<V> registry, RegistryKey<Registry<V>> registry_key){
+    default String[] get_targets(Vector<String> targets, String[] entries, int index, Registry<V> registry, RegistryKey<Registry<V>> registry_key){
         if (index < entries.length){
             String entry = entries[index];
             if (entry.startsWith("!#")) {
@@ -38,18 +37,19 @@ public interface Vision<V>{
             }
             else if (entry.startsWith("!")) targets.remove(new Identifier(entry.substring(1)).toString());
             else targets.add(new Identifier(entry).toString());
-            return refine_entries(targets,entries,index+1,registry,registry_key);
+            return get_targets(targets,entries,index+1,registry,registry_key);
         }
         else return targets.toArray(String[]::new);
     }
-    default <T,TV extends VisionValue<T,V>> Vector<TV> merge(TV[] left, TV[] right){
+    default <T,TV extends VisionValue<T,V>> Vector<TV> group_vision_values(TV[] left, TV[] right){
         if (left != null && right != null){
             final Vector<TV> banned = new Vector<>(List.of(left));
             banned.addAll(List.of(right));
             banned.sort(Comparator.comparingInt(TV::get_priority));
             return banned;
         }
-        else if (left == null) return new Vector<>(List.of(right));
-        else return new Vector<>(List.of(left));
+        else if (left == null && right != null) return new Vector<>(List.of(right));
+        else if (left != null) return new Vector<>(List.of(left));
+        else return new Vector<>();
     }
 }

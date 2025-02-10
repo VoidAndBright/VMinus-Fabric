@@ -1,0 +1,8 @@
+{
+  "entity_types": [
+     "minecraft:zombie"
+  ],
+  "fire_proof":[{
+    "value": true
+  }]
+}

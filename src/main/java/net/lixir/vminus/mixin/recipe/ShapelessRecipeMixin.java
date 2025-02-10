@@ -3,6 +3,7 @@ package net.lixir.vminus.mixin.recipe;
 import net.lixir.vminus.vision.VisionHelper;
 import net.lixir.vminus.vision.Visions;
 import net.lixir.vminus.vision.type.ItemVision;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.registry.DynamicRegistryManager;
@@ -19,9 +20,10 @@ public class ShapelessRecipeMixin {
     ItemStack output;
     @Inject(method = "getOutput", at = @At("RETURN"), cancellable = true)
     public void return_result_item(DynamicRegistryManager registryManager, CallbackInfoReturnable<ItemStack> cir) {
-        ItemVision item_vision = Visions.get_item_vision(output.getItem());
+        Item item = output.getItem();
+        ItemVision item_vision = Visions.get_item_vision(item);
         if(item_vision != null)
-            if(item_vision.get_replacement() != null) cir.setReturnValue(new ItemStack(VisionHelper.item(item_vision.get_replacement()),output.getCount()));
-            else if(item_vision.get_banned() != null && item_vision.get_banned()) cir.setReturnValue(ItemStack.EMPTY);
+            if(item_vision.get_replacement(item) != null) cir.setReturnValue(new ItemStack(VisionHelper.item(item_vision.get_replacement(item)),output.getCount()));
+            else if(item_vision.get_banned(item) != null && item_vision.get_banned(item)) cir.setReturnValue(ItemStack.EMPTY);
     }
 }
