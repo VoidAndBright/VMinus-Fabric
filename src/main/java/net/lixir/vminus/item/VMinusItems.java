@@ -4,7 +4,7 @@ import net.lixir.vminus.VMinus;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.lixir.vminus.rarity.VMinusRarities;
+import net.lixir.vminus.util.VMinusRarities;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

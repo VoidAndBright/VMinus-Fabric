@@ -24,20 +24,20 @@ public class MiningToolItemMixin {
     private final MiningToolItemAccessor ACCESSOR = (MiningToolItemAccessor) THIS;
 
     @Inject(method = "getMiningSpeedMultiplier", at = @At("HEAD"), cancellable = true)
-    public void getDestroySpeed(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> ci) {
-        float newSpeed = 0;
+    public void return_mining_speed(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> ci) {
+        float new_mining_speed = 0;
         EquipmentSlot slot = EquipmentSlot.MAINHAND;
         Multimap<EntityAttribute, EntityAttributeModifier> modifiers = stack.getAttributeModifiers(slot);
         for (EntityAttribute attribute : modifiers.keySet()) {
             Collection<EntityAttributeModifier> attributeModifiers = modifiers.get(attribute);
-            for (EntityAttributeModifier modifier : attributeModifiers) {
+            for (EntityAttributeModifier entity_attribute_modifier : attributeModifiers) {
                 if (attribute == VMinusAttributes.MINING_SPEED) {
-                    newSpeed += (float) modifier.getValue();
+                    new_mining_speed += (float) entity_attribute_modifier.getValue();
                 }
             }
         }
         if (state.isIn(ACCESSOR.get_effective_blocks())) {
-            ci.setReturnValue(newSpeed != 0 ? newSpeed : ACCESSOR.get_mining_speed());
+            ci.setReturnValue(new_mining_speed != 0 ? new_mining_speed : ACCESSOR.get_mining_speed());
         } else {
             ci.setReturnValue(1.0F);
         }

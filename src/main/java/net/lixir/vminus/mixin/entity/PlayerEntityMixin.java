@@ -14,7 +14,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,10 +25,8 @@ public abstract class PlayerEntityMixin extends LivingEntity{
         super(entityType, world);
     }
 
-    @Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
-
     @Unique
-    private PlayerEntity THIS = (PlayerEntity) (Object) this;
+    private final PlayerEntity THIS = (PlayerEntity) (Object) this;
     @Inject(method = "eatFood",at = @At("HEAD"), cancellable = true)
     private void get_burp_sound(World world, ItemStack itemstack, CallbackInfoReturnable<ItemStack> cir){
         THIS.getHungerManager().eat(itemstack.getItem(), itemstack);
@@ -37,7 +34,7 @@ public abstract class PlayerEntityMixin extends LivingEntity{
         ItemVision item_vision = Visions.get_item_vision(item);
         if (item_vision != null && item_vision.get_food_properties(item) != null && item_vision.get_food_properties(item).get_burp_sound() != null){
             SoundEvent sound_event = Registries.SOUND_EVENT.get(new Identifier(item_vision.get_food_properties(item).get_burp_sound()));
-            this.playSound(sound_event, 0.5F, world.getRandom().nextFloat() * 0.1F + 0.9F);
+            THIS.playSound(sound_event, 0.5F, world.getRandom().nextFloat() * 0.1F + 0.9F);
         }
         if (THIS instanceof ServerPlayerEntity server_player_entity) {
             Criteria.CONSUME_ITEM.trigger(server_player_entity, itemstack);

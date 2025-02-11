@@ -25,21 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin{
-    @Shadow public abstract Item getItem();
 
-    @Shadow public abstract NbtCompound getOrCreateNbt();
-
-    @Shadow public abstract boolean isEnchantable();
-
-    @Shadow public abstract @Nullable NbtCompound getNbt();
-
-    @Shadow public abstract int getDamage();
-
-    @Shadow public abstract int getMaxDamage();
-
-    @Shadow public abstract boolean hasEnchantments();
-
-    @Shadow public abstract boolean isEmpty();
 
     @Unique
     private final ItemStack This = (ItemStack) (Object) this;
@@ -47,12 +33,12 @@ public abstract class ItemStackMixin{
     @Inject(method = "damage(ILnet/minecraft/util/math/random/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z",at=@At("RETURN"), cancellable = true)
     public void replace_item_upon_breaking(int amount, Random random, ServerPlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
-            Item item = this.getItem();
+            Item item = This.getItem();
             ItemVision item_vision = Visions.get_item_vision(item);
             if (item_vision != null && item_vision.get_break_replacement(item) != null) {
                 ItemStack replacement_stack = new ItemStack(VisionHelper.item(item_vision.get_break_replacement(item)));
                 if(item_vision.get_transfer_nbt(item) != null && item_vision.get_transfer_nbt(item)) {
-                    replacement_stack.setNbt(this.getOrCreateNbt());
+                    replacement_stack.setNbt(This.getOrCreateNbt());
                     replacement_stack.setDamage(1);
                 }
                 PlayerInventory player_inventory = player.getInventory();
@@ -71,7 +57,7 @@ public abstract class ItemStackMixin{
     }
     @Inject(method = "getMaxDamage", at = @At("RETURN"), cancellable = true)
     public void return_max_damage(CallbackInfoReturnable<Integer> cir) {
-        Item item = this.getItem();
+        Item item = This.getItem();
         ItemVision item_vision = Visions.get_item_vision(item);
         if (item_vision!=null && item_vision.get_max_damage(item) != null) {
             cir.setReturnValue(item_vision.get_max_damage(item));
@@ -79,7 +65,7 @@ public abstract class ItemStackMixin{
     }
     @Inject(method = "isEnchantable", at = @At("HEAD"), cancellable = true)
     private void return_enchantable(CallbackInfoReturnable<Boolean> cir) {
-        Item item = this.getItem();
+        Item item = This.getItem();
         ItemVision item_vision = Visions.get_item_vision(item);
         if (item_vision!= null && item_vision.get_enchantable(item) != null) {
             cir.setReturnValue(item_vision.get_enchantable(item));
@@ -87,7 +73,7 @@ public abstract class ItemStackMixin{
     }
     @Inject(method = "hasGlint", at = @At("HEAD"), cancellable = true)
     private void return_glinted(CallbackInfoReturnable<Boolean> cir){
-        Item item = this.getItem();
+        Item item = This.getItem();
         ItemVision item_vision = Visions.get_item_vision(item);
         if (item_vision!= null && item_vision.get_glinted(item) != null) {
             cir.setReturnValue(item_vision.get_glinted(item));
@@ -112,9 +98,9 @@ public abstract class ItemStackMixin{
         EnchantmentVision enchantment_vision = Visions.get_enchantment_vision(enchantment);
         if (enchantment_vision != null ) {
             if (enchantment_vision.get_banned(enchantment) != null && enchantment_vision.get_banned(enchantment)) ci.cancel();
-            NbtCompound nbt_compound = this.getOrCreateNbt();
+            NbtCompound nbt_compound = This.getOrCreateNbt();
             int enchantment_limit = nbt_compound.contains("enchantment_limit") ? nbt_compound.getInt("enchantment_limit") : 1000;
-            int total_enchantment_level = this.hasEnchantments() ? get_total_enchantment_level(This) : 0;
+            int total_enchantment_level = This.hasEnchantments() ? get_total_enchantment_level(This) : 0;
             if (total_enchantment_level + level > enchantment_limit) ci.cancel();
         }
     }

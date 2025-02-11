@@ -1,4 +1,4 @@
-package net.lixir.vminus.rarity;
+package net.lixir.vminus.util;
 
 import net.minecraft.util.Rarity;
 
