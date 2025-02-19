@@ -8,8 +8,8 @@
 		"Ether/Void"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/VoidAndBright",
+		"sources": "https://github.com/VoidAndBright/VMinus-Fabric"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/vminus/icon.png",
@@ -23,6 +23,9 @@
 		],
 		"fabric-datagen": [
 			"net.lixir.vminus.VMinusDataGenerator"
+		],
+		"modmenu": [
+			"net.lixir.vminus.VMinusModMenu"
 		]
 	},
 	"mixins": [
@@ -37,5 +40,11 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"badges": ["library"],
+			"update_checker": true
+		}
 	}
 }

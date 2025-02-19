@@ -1,5 +1,6 @@
 package net.lixir.vminus.vision.type;
 
+import net.lixir.vminus.vision.VisionHelper;
 import net.lixir.vminus.vision.properties.FoodProperties;
 import net.lixir.vminus.vision.value.item.ItemVisionBoolean;
 import net.lixir.vminus.vision.value.item.ItemVisionFoodProperties;
@@ -8,11 +9,14 @@ import net.lixir.vminus.vision.value.item.ItemVisionString;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 
 import java.util.Vector;
 
 
-public class ItemVision implements Vision<Item> {
+public class ItemVision {
     private final String[] items;
     private final ItemVisionBoolean[] banned;
     private final ItemVisionString[] replacement;
@@ -27,9 +31,9 @@ public class ItemVision implements Vision<Item> {
     private final ItemVisionInteger[] min_damage;
     private final ItemVisionInteger[] reinforcement;
     private final ItemVisionInteger[] max_damage;
+    private final ItemVisionInteger[] max_stack;
 
-
-    public ItemVision(String[] items, ItemVisionBoolean[] banned, ItemVisionString[] replacement,ItemVisionString[] pick_up_sound,ItemVisionFoodProperties[] food_properties, ItemVisionString[] break_replacement, ItemVisionBoolean[] fire_resistant, ItemVisionBoolean[] transfer_nbt, ItemVisionBoolean[] enchantable, ItemVisionBoolean[] glinted, ItemVisionInteger[] fuel_time, ItemVisionInteger[] min_damage, ItemVisionInteger[] reinforcement, ItemVisionInteger[] max_damage) {
+    public ItemVision(String[] items, ItemVisionBoolean[] banned, ItemVisionString[] replacement,ItemVisionString[] pick_up_sound,ItemVisionFoodProperties[] food_properties, ItemVisionString[] break_replacement, ItemVisionBoolean[] fire_resistant, ItemVisionBoolean[] transfer_nbt, ItemVisionBoolean[] enchantable, ItemVisionBoolean[] glinted, ItemVisionInteger[] fuel_time, ItemVisionInteger[] min_damage, ItemVisionInteger[] reinforcement, ItemVisionInteger[] max_damage,ItemVisionInteger[] max_stack) {
         this.items = items;
         this.banned = banned;
         this.replacement = replacement;
@@ -44,73 +48,79 @@ public class ItemVision implements Vision<Item> {
         this.min_damage = min_damage;
         this.reinforcement = reinforcement;
         this.max_damage = max_damage;
-    }
-    public ItemVision(ItemVision item_vision) {
-        this.items = new String[]{};
-        this.fuel_time = item_vision.fuel_time;
-        this.banned = item_vision.banned;
-        this.fire_resistant = item_vision.fire_resistant;
-        this.replacement = item_vision.replacement;
-        this.pick_up_sound = item_vision.pick_up_sound;
-        this.food_properties = item_vision.food_properties;
-        this.break_replacement = item_vision.break_replacement;
-        this.transfer_nbt = item_vision.transfer_nbt;
-        this.enchantable = item_vision.enchantable;
-        this.glinted = item_vision.glinted;
-        this.min_damage = item_vision.min_damage;
-        this.reinforcement = item_vision.reinforcement;
-        this.max_damage = item_vision.max_damage;
+        this.max_stack = max_stack;
     }
     public ItemVision(ItemVision vision_left,ItemVision vision_right){
         this.items = new String[]{};
-        this.banned = group_vision_values(vision_left.banned,vision_right.banned).toArray(ItemVisionBoolean[]::new);
-        this.replacement = group_vision_values(vision_left.replacement,vision_right.replacement).toArray(ItemVisionString[]::new);
-        this.break_replacement = group_vision_values(vision_left.break_replacement,vision_right.break_replacement).toArray(ItemVisionString[]::new);
-        this.pick_up_sound = group_vision_values(vision_left.pick_up_sound,vision_right.pick_up_sound).toArray(ItemVisionString[]::new);
-        this.food_properties = group_vision_values(vision_left.food_properties,vision_right.food_properties).toArray(ItemVisionFoodProperties[]::new);
-        this.fire_resistant = group_vision_values(vision_left.fire_resistant,vision_right.fire_resistant).toArray(ItemVisionBoolean[]::new);
-        this.transfer_nbt = group_vision_values(vision_left.transfer_nbt,vision_right.transfer_nbt).toArray(ItemVisionBoolean[]::new);
-        this.enchantable = group_vision_values(vision_left.enchantable,vision_right.enchantable).toArray(ItemVisionBoolean[]::new);
-        this.glinted = group_vision_values(vision_left.glinted,vision_right.glinted).toArray(ItemVisionBoolean[]::new);
-        this.fuel_time = group_vision_values(vision_left.fuel_time,vision_right.fuel_time).toArray(ItemVisionInteger[]::new);
-        this.min_damage = group_vision_values(vision_left.min_damage,vision_right.min_damage).toArray(ItemVisionInteger[]::new);
-        this.reinforcement = group_vision_values(vision_left.reinforcement,vision_right.reinforcement).toArray(ItemVisionInteger[]::new);
-        this.max_damage = group_vision_values(vision_left.max_damage,vision_right.max_damage).toArray(ItemVisionInteger[]::new);
+        this.banned = VisionHelper.collect_vision_values(vision_left.banned,vision_right.banned).toArray(ItemVisionBoolean[]::new);
+        this.replacement = VisionHelper.collect_vision_values(vision_left.replacement,vision_right.replacement).toArray(ItemVisionString[]::new);
+        this.break_replacement = VisionHelper.collect_vision_values(vision_left.break_replacement,vision_right.break_replacement).toArray(ItemVisionString[]::new);
+        this.pick_up_sound = VisionHelper.collect_vision_values(vision_left.pick_up_sound,vision_right.pick_up_sound).toArray(ItemVisionString[]::new);
+        this.food_properties = VisionHelper.collect_vision_values(vision_left.food_properties,vision_right.food_properties).toArray(ItemVisionFoodProperties[]::new);
+        this.fire_resistant = VisionHelper.collect_vision_values(vision_left.fire_resistant,vision_right.fire_resistant).toArray(ItemVisionBoolean[]::new);
+        this.transfer_nbt = VisionHelper.collect_vision_values(vision_left.transfer_nbt,vision_right.transfer_nbt).toArray(ItemVisionBoolean[]::new);
+        this.enchantable = VisionHelper.collect_vision_values(vision_left.enchantable,vision_right.enchantable).toArray(ItemVisionBoolean[]::new);
+        this.glinted = VisionHelper.collect_vision_values(vision_left.glinted,vision_right.glinted).toArray(ItemVisionBoolean[]::new);
+        this.fuel_time = VisionHelper.collect_vision_values(vision_left.fuel_time,vision_right.fuel_time).toArray(ItemVisionInteger[]::new);
+        this.min_damage = VisionHelper.collect_vision_values(vision_left.min_damage,vision_right.min_damage).toArray(ItemVisionInteger[]::new);
+        this.reinforcement = VisionHelper.collect_vision_values(vision_left.reinforcement,vision_right.reinforcement).toArray(ItemVisionInteger[]::new);
+        this.max_damage = VisionHelper.collect_vision_values(vision_left.max_damage,vision_right.max_damage).toArray(ItemVisionInteger[]::new);
+        this.max_stack = VisionHelper.collect_vision_values(vision_left.max_stack,vision_right.max_stack).toArray(ItemVisionInteger[]::new);
     }
     public Boolean get_banned(Item item) {
-        return get_value(item,banned);
+        return VisionHelper.vision_value(item,banned);
     }
     public Boolean get_fire_resistant(Item item) {
-        return get_value(item,fire_resistant);
+        return VisionHelper.vision_value(item,fire_resistant);
     }
-    public String get_replacement(Item item) {
-        return get_value(item,replacement);
+    public Item get_replacement(Item item) {
+        return VisionHelper.item(VisionHelper.vision_value(item,replacement));
     }
     public String get_break_replacement(Item item) {
-        return get_value(item,break_replacement);
+        return VisionHelper.vision_value(item,break_replacement);
     }
     public String get_pick_up_sound(Item item) {
-        return get_value(item,pick_up_sound);
+        return VisionHelper.vision_value(item,pick_up_sound);
     }
     public Boolean get_transfer_nbt(Item item) {
-        return get_value(item,transfer_nbt);
+        return VisionHelper.vision_value(item,transfer_nbt);
     }
     public Boolean get_enchantable(Item item) {
-        return get_value(item,enchantable);
+        return VisionHelper.vision_value(item,enchantable);
     }
     public Integer get_min_damage(Item item) {
-        return get_value(item,min_damage);
+        return VisionHelper.vision_value(item,min_damage);
     }
     public Integer get_max_damage(Item item) {
-        return get_value(item,max_damage);
+        return VisionHelper.vision_value(item,max_damage);
     }
     public Boolean get_glinted(Item item) {
-        return get_value(item,glinted);
+        return VisionHelper.vision_value(item,glinted);
     }
     public FoodProperties get_food_properties(Item item){
-        return get_value(item,food_properties);
+        return VisionHelper.vision_value(item,food_properties);
     }
-    public String[] get_targets() {
-        return get_targets(new Vector<>(),items,0, Registries.ITEM, RegistryKeys.ITEM);
+    public Item[] get_items(Vector<Item> vector_items,int index){
+        if (index < items.length){
+            String item_entry = items[index];
+            if (item_entry.startsWith("*")){
+                vector_items.addAll(Registries.ITEM.stream().toList());
+            }
+            if (item_entry.startsWith("!#")) {
+                String item_tag = item_entry.substring(2);
+                TagKey<Item> item_tag_key = TagKey.of(RegistryKeys.ITEM, new Identifier(item_tag));
+                vector_items.removeAll(Registries.ITEM.getOrCreateEntryList(item_tag_key).stream().map(RegistryEntry::value).toList());
+            }
+            else if (item_entry.startsWith("#")) {
+                String item_tag = item_entry.substring(1);
+                TagKey<Item> item_tag_key = TagKey.of(RegistryKeys.ITEM, new Identifier(item_tag));
+                vector_items.addAll(Registries.ITEM.getOrCreateEntryList(item_tag_key).stream().map(RegistryEntry::value).toList());
+            }
+            else if (item_entry.startsWith("!")) vector_items.remove(Registries.ITEM.get(new Identifier(item_entry.substring(1))));
+            else vector_items.add(Registries.ITEM.get(new Identifier(item_entry)));
+            return get_items(vector_items,index+1);
+        }
+        else return vector_items.toArray(Item[]::new);
     }
 }
+

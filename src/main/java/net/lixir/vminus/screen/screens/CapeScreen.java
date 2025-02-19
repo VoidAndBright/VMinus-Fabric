@@ -51,13 +51,13 @@ public class CapeScreen extends HandledScreen<CapeScreenHandler> {
             this.addDrawableChild(widget);
         }
     }
-    protected void drawBackground(DrawContext graphics, float delta, int mouseX, int mouseY) {
+    protected void drawBackground(DrawContext draw_context, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        graphics.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
+        draw_context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
     }
-    public static ScreenHandler OpenCapeScreen(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public static ScreenHandler open_cape_screen(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new CapeScreenHandler(syncId,playerInventory);
     }
 }

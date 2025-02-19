@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.entity;
 
-import net.lixir.vminus.vision.Visions;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.EntityType;
@@ -26,17 +26,17 @@ public abstract class PlayerEntityMixin extends LivingEntity{
     }
 
     @Unique
-    private final PlayerEntity THIS = (PlayerEntity) (Object) this;
+    private final PlayerEntity player_entity = (PlayerEntity) (Object) this;
     @Inject(method = "eatFood",at = @At("HEAD"), cancellable = true)
     private void get_burp_sound(World world, ItemStack itemstack, CallbackInfoReturnable<ItemStack> cir){
-        THIS.getHungerManager().eat(itemstack.getItem(), itemstack);
+        player_entity.getHungerManager().eat(itemstack.getItem(), itemstack);
         Item item = itemstack.getItem();
-        ItemVision item_vision = Visions.get_item_vision(item);
+        ItemVision item_vision = Vision.get_vision(item);
         if (item_vision != null && item_vision.get_food_properties(item) != null && item_vision.get_food_properties(item).get_burp_sound() != null){
             SoundEvent sound_event = Registries.SOUND_EVENT.get(new Identifier(item_vision.get_food_properties(item).get_burp_sound()));
-            THIS.playSound(sound_event, 0.5F, world.getRandom().nextFloat() * 0.1F + 0.9F);
+            player_entity.playSound(sound_event, 0.5F, world.getRandom().nextFloat() * 0.1F + 0.9F);
         }
-        if (THIS instanceof ServerPlayerEntity server_player_entity) {
+        if (player_entity instanceof ServerPlayerEntity server_player_entity) {
             Criteria.CONSUME_ITEM.trigger(server_player_entity, itemstack);
         }
         cir.setReturnValue(super.eatFood(world,itemstack));

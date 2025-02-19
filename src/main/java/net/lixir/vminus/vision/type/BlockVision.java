@@ -1,18 +1,23 @@
 package net.lixir.vminus.vision.type;
 
+import net.lixir.vminus.vision.VisionHelper;
 import net.lixir.vminus.vision.value.block.BlockVisionBoolean;
 import net.lixir.vminus.vision.value.block.BlockVisionFloat;
 import net.lixir.vminus.vision.value.block.BlockVisionInteger;
 import net.lixir.vminus.vision.value.block.BlockVisionSoundGroup;
 import net.lixir.vminus.vision.value.block.BlockVisionString;
-import net.lixir.vminus.vision.properties.SoundGroup;
 import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.Identifier;
+
 import java.util.Vector;
 
 
-public class BlockVision implements Vision<Block> {
+public class BlockVision {
     private final String[] blocks;
     private final BlockVisionBoolean[] banned;
     private final BlockVisionString[] replacement;
@@ -26,21 +31,21 @@ public class BlockVision implements Vision<Block> {
 	private final BlockVisionSoundGroup[] sound_group;
     private final BlockVisionString[] direction;
 
-    public BlockVision(BlockVision blockVision){
+    public BlockVision(BlockVision left_vision, BlockVision right_vision){
         this.blocks = new String[]{};
-        this.slipperiness = blockVision.slipperiness;
-        this.speed_multiplier = blockVision.speed_multiplier;
-        this.jump_multiplier = blockVision.jump_multiplier;
-        this.blast_resistance = blockVision.blast_resistance;
-        this.hardness = blockVision.hardness;
-        this.luminance = blockVision.luminance;
-        this.banned = blockVision.banned;
-        this.replacement = blockVision.replacement;
-        this.pitch = blockVision.pitch;
-        this.sound_group = blockVision.sound_group;
-        this.direction = blockVision.direction;
+        this.slipperiness = VisionHelper.collect_vision_values(left_vision.slipperiness,right_vision.slipperiness).toArray(BlockVisionFloat[]::new);
+        this.speed_multiplier = VisionHelper.collect_vision_values(left_vision.speed_multiplier,right_vision.speed_multiplier).toArray(BlockVisionFloat[]::new);
+        this.jump_multiplier = VisionHelper.collect_vision_values(left_vision.jump_multiplier,right_vision.jump_multiplier).toArray(BlockVisionFloat[]::new);
+        this.blast_resistance = VisionHelper.collect_vision_values(left_vision.blast_resistance,right_vision.blast_resistance).toArray(BlockVisionFloat[]::new);
+        this.hardness = VisionHelper.collect_vision_values(left_vision.hardness,right_vision.hardness).toArray(BlockVisionFloat[]::new);
+        this.luminance = VisionHelper.collect_vision_values(left_vision.luminance,right_vision.luminance).toArray(BlockVisionInteger[]::new);
+        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned).toArray(BlockVisionBoolean[]::new);
+        this.replacement = VisionHelper.collect_vision_values(left_vision.replacement,right_vision.replacement).toArray(BlockVisionString[]::new);
+        this.pitch = VisionHelper.collect_vision_values(left_vision.pitch,right_vision.pitch).toArray(BlockVisionInteger[]::new);
+        this.sound_group = VisionHelper.collect_vision_values(left_vision.sound_group,right_vision.sound_group).toArray(BlockVisionSoundGroup[]::new);
+        this.direction = VisionHelper.collect_vision_values(left_vision.direction,right_vision.direction).toArray(BlockVisionString[]::new);
     }
-    public BlockVision(String[] blocks, BlockVisionBoolean[] banned, BlockVisionString[] replacement, BlockVisionFloat[] slipperiness, BlockVisionFloat[] speed_multiplier, BlockVisionFloat[] jump_multiplier, BlockVisionFloat[] blast_resistance, BlockVisionFloat[] hardness, BlockVisionInteger[] luminance, BlockVisionInteger[] pitch, BlockVisionSoundGroup[] sound_group, BlockVisionString[] direction) {
+    public BlockVision(String[] blocks,BlockVisionBoolean[] banned, BlockVisionString[] replacement, BlockVisionFloat[] slipperiness, BlockVisionFloat[] speed_multiplier, BlockVisionFloat[] jump_multiplier, BlockVisionFloat[] blast_resistance, BlockVisionFloat[] hardness, BlockVisionInteger[] luminance, BlockVisionInteger[] pitch, BlockVisionSoundGroup[] sound_group, BlockVisionString[] direction) {
         this.blocks = blocks;
         this.banned = banned;
         this.replacement = replacement;
@@ -55,47 +60,66 @@ public class BlockVision implements Vision<Block> {
         this.direction = direction;
     }
 
-    public SoundGroup get_sound_group(Block block) {
-        return get_value(block,sound_group);
+    public BlockSoundGroup get_sound_group(Block block) {
+        return VisionHelper.block_sound_group(VisionHelper.vision_value(block,sound_group));
     }
 
     public Integer get_luminance(Block block) {
-        return get_value(block,luminance);
+        return VisionHelper.vision_value(block,luminance);
     }
 
     public Float get_hardness(Block block) {
-        return get_value(block,hardness);
+        return VisionHelper.vision_value(block,hardness);
     }
 
     public Float get_blast_resistance(Block block) {
-        return get_value(block,blast_resistance);
+        return VisionHelper.vision_value(block,blast_resistance);
     }
 
     public Float get_jump_multiplier(Block block) {
-        return get_value(block,jump_multiplier);
+        return VisionHelper.vision_value(block,jump_multiplier);
     }
 
     public Float get_speed_multiplier(Block block) {
-        return get_value(block,speed_multiplier);
+        return VisionHelper.vision_value(block,speed_multiplier);
     }
 
     public Float get_slipperiness(Block block) {
-        return get_value(block,slipperiness);
+        return VisionHelper.vision_value(block,slipperiness);
     }
 
-    public String get_replacement(Block block) {
-        return get_value(block,replacement);
+    public Block get_replacement(Block block) {
+        return VisionHelper.block(VisionHelper.vision_value(block,replacement));
     }
 
     public Boolean get_banned(Block block) {
-        return get_value(block,banned);
+        return VisionHelper.vision_value(block,banned);
     }
 
     public String get_direction(Block block) {
-        return get_value(block,direction);
+        return VisionHelper.vision_value(block,direction);
     }
 
-    public String[] get_targets() {
-        return get_targets(new Vector<>(),blocks,0,Registries.BLOCK,RegistryKeys.BLOCK);
+    public Block[] get_blocks(Vector<Block> vector_blocks , int index){
+        if (index < blocks.length){
+            String block_entry = blocks[index];
+            if (block_entry.startsWith("*")){
+                return Registries.BLOCK.stream().toArray(Block[]::new);
+            }
+            else if (block_entry.startsWith("!#")) {
+                String block_tag =  block_entry.substring(2);
+                TagKey<Block> block_tag_key = TagKey.of(RegistryKeys.BLOCK, new Identifier(block_tag));
+                vector_blocks.removeAll(Registries.BLOCK.getOrCreateEntryList(block_tag_key).stream().map(RegistryEntry::value).toList());
+            }
+            else if (block_entry.startsWith("#")) {
+                String block_tag = block_entry.substring(1);
+                TagKey<Block> block_tag_key = TagKey.of(RegistryKeys.BLOCK, new Identifier(block_tag));
+                vector_blocks.addAll(Registries.BLOCK.getOrCreateEntryList(block_tag_key).stream().map(RegistryEntry::value).toList());
+            }
+            else if (block_entry.startsWith("!")) vector_blocks.remove(Registries.BLOCK.get(new Identifier(block_entry.substring(1))));
+            else vector_blocks.add(Registries.BLOCK.get(new Identifier(block_entry)));
+            return get_blocks(vector_blocks,index+1);
+        }
+        return vector_blocks.toArray(Block[]::new);
     }
 }

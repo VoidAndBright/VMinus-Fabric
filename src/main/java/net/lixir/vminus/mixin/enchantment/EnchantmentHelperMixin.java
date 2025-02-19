@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.enchantment;
 
-import net.lixir.vminus.vision.Visions;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -27,7 +27,7 @@ public class EnchantmentHelperMixin {
             if ((!enchantment.isTreasure() || treasureAllowed) && enchantment.isAvailableForRandomSelection() && (enchantment.isAcceptableItem(stack) || (stack.isOf(Items.BOOK) && enchantment.isAvailableForEnchantedBookOffer()))) {
                 for (int index = enchantment.getMaxLevel(); index >= enchantment.getMinLevel(); --index) {
                     if (enchantment.getMinPower(index) <= power && power <= enchantment.getMaxPower(index)) {
-                        EnchantmentVision enchantment_vision = Visions.get_enchantment_vision(enchantment);
+                        EnchantmentVision enchantment_vision = Vision.get_vision(enchantment);
                         if (enchantment_vision != null && enchantment_vision.get_banned(enchantment) != null && enchantment_vision.get_banned(enchantment)) continue;
                         vector.add(new EnchantmentLevelEntry(enchantment, index));
                         break;

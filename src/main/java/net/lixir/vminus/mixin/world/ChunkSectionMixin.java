@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.world;
 
 import net.lixir.vminus.vision.VisionHelper;
-import net.lixir.vminus.vision.Visions;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.type.BlockVision;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,11 +22,10 @@ public abstract class ChunkSectionMixin {
     @Inject(method = "setBlockState(IIILnet/minecraft/block/BlockState;)Lnet/minecraft/block/BlockState;", at = @At("HEAD"), cancellable = true)
     private void setBlockState(int x, int y, int z, BlockState blockstate, CallbackInfoReturnable<BlockState> cir){
         Block block = blockstate.getBlock();
-        BlockVision block_vision = Visions.get_block_vision(block);
+        BlockVision block_vision = Vision.get_vision(block);
         if (block_vision != null) {
             if (block_vision.get_replacement(block) != null) {
-                Block replacement = VisionHelper.block(block_vision.get_replacement(block));
-                cir.setReturnValue(setBlockState(x,y,z, replacement.getDefaultState()));
+                cir.setReturnValue(setBlockState(x,y,z, block_vision.get_replacement(block).getDefaultState()));
             }
             else if (block_vision.get_banned(block) != null && block_vision.get_banned(block)) cir.setReturnValue(Blocks.AIR.getDefaultState());
             else if (block_vision.get_direction(block) != null) {

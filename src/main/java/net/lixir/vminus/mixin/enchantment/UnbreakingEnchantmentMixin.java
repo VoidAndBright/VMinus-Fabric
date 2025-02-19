@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.enchantment;
 
-import net.lixir.vminus.vision.Visions;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.enchantment.Enchantment;
@@ -16,18 +16,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(UnbreakingEnchantment.class)
 public class UnbreakingEnchantmentMixin {
     @Unique
-    private final Enchantment THIS = (Enchantment) (Object) this;
+    private final Enchantment enchantment = (Enchantment) (Object) this;
 
     @Inject(method = "getMaxLevel", at = @At("HEAD"), cancellable = true)
     private void getMaxLevel(CallbackInfoReturnable<Integer> cir) {
-        EnchantmentVision enchantment_vision = Visions.get_enchantment_vision(THIS);
-        if (enchantment_vision != null && enchantment_vision.get_max_level(THIS) != null)
-            cir.setReturnValue(enchantment_vision.get_max_level(THIS));
+        EnchantmentVision enchantment_vision = Vision.get_vision(enchantment);
+        if (enchantment_vision != null && enchantment_vision.get_max_level(enchantment) != null)
+            cir.setReturnValue(enchantment_vision.get_max_level(enchantment));
     }
     @Inject(method = "isAcceptableItem", at = @At("HEAD"), cancellable = true)
     private void can_enchant(ItemStack itemstack, CallbackInfoReturnable<Boolean> cir) {
         Item item = itemstack.getItem();
-        ItemVision item_vision = Visions.get_item_vision(item);
+        ItemVision item_vision = Vision.get_vision(item);
         cir.setReturnValue(item_vision != null && item_vision.get_enchantable(item) != null ? cir.getReturnValue(): false);
     }
 }

@@ -7,13 +7,13 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public class VMinusDamageTypeTags {
-    public static final TagKey<DamageType> BLAST = registerTag("protection/blast");
-    public static final TagKey<DamageType> BLUNT = registerTag("protection/blunt");
-    public static final TagKey<DamageType> FALL = registerTag("protection/fall");
-    public static final TagKey<DamageType> FIRE = registerTag("protection/fire");
-    public static final TagKey<DamageType> MAGIC = registerTag("protection/magic");
+    public static final TagKey<DamageType> BLAST = register_tag("protection/blast");
+    public static final TagKey<DamageType> BLUNT = register_tag("protection/blunt");
+    public static final TagKey<DamageType> FALL = register_tag("protection/fall");
+    public static final TagKey<DamageType> FIRE = register_tag("protection/fire");
+    public static final TagKey<DamageType> MAGIC = register_tag("protection/magic");
 
-    private static TagKey<DamageType> registerTag(String name) {
+    private static TagKey<DamageType> register_tag(String name) {
         return TagKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(VMinus.MOD_ID, name));
     }
 }

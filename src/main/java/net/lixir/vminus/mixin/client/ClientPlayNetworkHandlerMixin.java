@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.client;
 
-import net.lixir.vminus.vision.Visions;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
@@ -21,19 +21,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
     @Unique
-    ClientPlayNetworkHandler THIS = (ClientPlayNetworkHandler) (Object) this;
+    ClientPlayNetworkHandler network_handler = (ClientPlayNetworkHandler) (Object) this;
     @Unique
-    ClientPlayNetworkHandlerAccessor ACCESSOR = (ClientPlayNetworkHandlerAccessor) THIS;
+    ClientPlayNetworkHandlerAccessor accessor = (ClientPlayNetworkHandlerAccessor) network_handler;
     @Inject(method = "onItemPickupAnimation",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZ)V"))
     private void return_pick_up_sound(ItemPickupAnimationS2CPacket packet, CallbackInfo ci){
-        ClientWorld world = ACCESSOR.get_world();
+        ClientWorld world = accessor.get_world();
         Entity entity = world.getEntityById(packet.getEntityId());
         if (entity instanceof ItemEntity item_entity) {
             Item item = item_entity.getStack().getItem();
-            ItemVision item_vision = Visions.get_item_vision(item);
+            ItemVision item_vision = Vision.get_vision(item);
             if (item_vision != null && item_vision.get_pick_up_sound(item) != null) {
                 Identifier identifier = new Identifier(item_vision.get_pick_up_sound(item));
-                Random random = ACCESSOR.get_random();
+                Random random = accessor.get_random();
                 world.playSound(entity.getX(), entity.getY(), entity.getZ(), Registries.SOUND_EVENT.get(identifier), SoundCategory.PLAYERS, 0.2F, (random.nextFloat() - random.nextFloat()) * 1.4F + 2.0F, false);
             }
         }

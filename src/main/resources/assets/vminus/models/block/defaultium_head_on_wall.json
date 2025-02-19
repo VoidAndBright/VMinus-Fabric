@@ -1,0 +1,12 @@
+{
+  "parent": "vminus:block/template_head_on_wall",
+  "textures": {
+    "up": "vminus:block/defaultium_head",
+    "north": "vminus:block/defaultium_head",
+    "east": "vminus:block/defaultium_head",
+    "south": "vminus:block/defaultium_head",
+    "west": "vminus:block/defaultium_head",
+    "down": "vminus:block/defaultium_head",
+    "particle": "vminus:block/defaultium_head"
+  }
+}

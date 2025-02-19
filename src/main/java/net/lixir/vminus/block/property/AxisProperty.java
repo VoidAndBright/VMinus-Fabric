@@ -1,4 +1,4 @@
-package net.lixir.vminus.block;
+package net.lixir.vminus.block.property;
 
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.math.Direction;

@@ -1,5 +1,7 @@
 package net.lixir.vminus.screen;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.lixir.vminus.VMinus;
 import net.lixir.vminus.screen.screens.*;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -20,6 +22,7 @@ public class VMinusScreenHandlers
     }
     public static void register() {}
 
+    @Environment(EnvType.CLIENT)
     public static void client_register() {
         HandledScreens.register(DEFAULT_SCREEN_HANDLER, DefaultScreen::new);
         HandledScreens.register(CAPE_SCREEN_HANDLER, CapeScreen::new);

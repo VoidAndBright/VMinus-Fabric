@@ -1,11 +1,8 @@
 {
   "blocks": [
     "dirt",
-    "grass_block",
     "stone",
-    "#logs",
-    "!oak_log",
-    "#c:ores"
+    "grass_block"
   ],
   "replacement": [{"value": "copper_block"}]
 }

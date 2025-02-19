@@ -7,31 +7,31 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public class VMinusBlockTags {
-    public static final TagKey<Block> ALL_COPPER = registerTag("all_copper");
-    public static final TagKey<Block> ALL_EXPOSED_COPPER = registerTag("all_exposed_copper");
-    public static final TagKey<Block> ALL_OXIDIZED_COPPER = registerTag("all_oxidized_copper");
-    public static final TagKey<Block> ALL_WEATHERED_COPPER = registerTag("all_weathered_copper");
-    public static final TagKey<Block> CONCRETE_POWDER = registerTag("concrete_powder");
-    public static final TagKey<Block> COPPER = registerTag("copper");
-    public static final TagKey<Block> CORAL_BLOCKS = registerTag("coral_blocks");
-    public static final TagKey<Block> EMISSIVE_RENDERING = registerTag("emissive_rendering");
-    public static final TagKey<Block> All_OF_COPPER_SET = registerTag("all_of_copper_set");
-    public static final TagKey<Block> EXPOSED_COPPER = registerTag("exposed_copper");
-    public static final TagKey<Block> LARGE_PLANTS = registerTag("large_plants");
-    public static final TagKey<Block> MOB_HEADS = registerTag("mob_heads");
-    public static final TagKey<Block> OXIDIZED_COPPER = registerTag("oxidized_copper");
-    public static final TagKey<Block> REDSTONE_TORCHES = registerTag("redstone_torches");
-    public static final TagKey<Block> SOUL_TORCHES = registerTag("soul_torches");
-    public static final TagKey<Block> STONE_REPLACEABLE = registerTag("stone_replaceable");
-    public static final TagKey<Block> TORCHES = registerTag("torches");
-    public static final TagKey<Block> WAXED_COPPER = registerTag("waxed_copper");
-    public static final TagKey<Block> WAXED_EXPOSED_COPPER = registerTag("waxed_exposed_copper");
-    public static final TagKey<Block> WAXED_OXIDIZED_COPPER = registerTag("waxed_oxidized_copper");
-    public static final TagKey<Block> WAXED_WEATHERED_COPPER = registerTag("waxed_weathered_copper");
-    public static final TagKey<Block> WEATHERED_COPPER = registerTag("weathered_copper");
-    public static final TagKey<Block> FROGLIGHTS = registerTag("froglights");
+    public static final TagKey<Block> ALL_COPPER = register_tag("all_copper");
+    public static final TagKey<Block> ALL_EXPOSED_COPPER = register_tag("all_exposed_copper");
+    public static final TagKey<Block> ALL_OXIDIZED_COPPER = register_tag("all_oxidized_copper");
+    public static final TagKey<Block> ALL_WEATHERED_COPPER = register_tag("all_weathered_copper");
+    public static final TagKey<Block> CONCRETE_POWDER = register_tag("concrete_powder");
+    public static final TagKey<Block> COPPER = register_tag("copper");
+    public static final TagKey<Block> CORAL_BLOCKS = register_tag("coral_blocks");
+    public static final TagKey<Block> EMISSIVE_RENDERING = register_tag("emissive_rendering");
+    public static final TagKey<Block> All_OF_COPPER_SET = register_tag("all_of_copper_set");
+    public static final TagKey<Block> EXPOSED_COPPER = register_tag("exposed_copper");
+    public static final TagKey<Block> LARGE_PLANTS = register_tag("large_plants");
+    public static final TagKey<Block> MOB_HEADS = register_tag("mob_heads");
+    public static final TagKey<Block> OXIDIZED_COPPER = register_tag("oxidized_copper");
+    public static final TagKey<Block> REDSTONE_TORCHES = register_tag("redstone_torches");
+    public static final TagKey<Block> SOUL_TORCHES = register_tag("soul_torches");
+    public static final TagKey<Block> STONE_REPLACEABLE = register_tag("stone_replaceable");
+    public static final TagKey<Block> TORCHES = register_tag("torches");
+    public static final TagKey<Block> WAXED_COPPER = register_tag("waxed_copper");
+    public static final TagKey<Block> WAXED_EXPOSED_COPPER = register_tag("waxed_exposed_copper");
+    public static final TagKey<Block> WAXED_OXIDIZED_COPPER = register_tag("waxed_oxidized_copper");
+    public static final TagKey<Block> WAXED_WEATHERED_COPPER = register_tag("waxed_weathered_copper");
+    public static final TagKey<Block> WEATHERED_COPPER = register_tag("weathered_copper");
+    public static final TagKey<Block> FROGLIGHTS = register_tag("froglights");
 
-    private static TagKey<Block> registerTag(String name) {
+    private static TagKey<Block> register_tag(String name) {
         return TagKey.of(RegistryKeys.BLOCK, new Identifier(VMinus.MOD_ID, name));
     }
 }

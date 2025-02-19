@@ -74,9 +74,6 @@ public class VMinusCommands {
     public static boolean permission_level_3(ServerCommandSource source){
         return source.hasPermissionLevel(3);
     }
-    public static boolean permission_level_2(ServerCommandSource source){
-        return source.hasPermissionLevel(2);
-    }
     public static void register(){
         CommandRegistrationCallback.EVENT.register(VMinusCommands::burn_command);
         CommandRegistrationCallback.EVENT.register(VMinusCommands::freeze_command);

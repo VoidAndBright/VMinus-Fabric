@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.enchantment;
 
-import net.lixir.vminus.vision.Visions;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.MendingEnchantment;
@@ -13,11 +13,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MendingEnchantment.class)
 public class MendingEnchantmentMixin {
     @Unique
-    private final Enchantment THIS = (Enchantment) (Object) this;
+    private final Enchantment enchantment = (Enchantment) (Object) this;
     @Inject(method = "isTreasure", at = @At("HEAD"), cancellable = true)
     private void isTreasureOnly(CallbackInfoReturnable<Boolean> cir) {
-        EnchantmentVision enchantment_vision = Visions.get_enchantment_vision(THIS);
-        if (enchantment_vision != null && enchantment_vision.get_treasure(THIS) != null)
-            cir.setReturnValue(enchantment_vision.get_treasure(THIS));
+        EnchantmentVision enchantment_vision = Vision.get_vision(enchantment);
+        if (enchantment_vision != null && enchantment_vision.get_treasure(enchantment) != null)
+            cir.setReturnValue(enchantment_vision.get_treasure(enchantment));
     }
 }

@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "rotation=0,on_wall=false": {
+      "model": "vminus:block/defaultium_head"
+    },
+    "rotation=1,on_wall=false": {
+      "model": "vminus:block/defaultium_head_tilted"
+    },
+    "rotation=2,on_wall=false": {
+      "model": "vminus:block/defaultium_head_rotated"
+    },
+    "rotation=3,on_wall=false": {
+      "model": "vminus:block/defaultium_head_slanted"
+    },
+    "rotation=4,on_wall=false": {
+      "model": "vminus:block/defaultium_head",
+      "y": 90
+    },
+    "rotation=5,on_wall=false": {
+      "model": "vminus:block/defaultium_head_tilted",
+      "y": 90
+    },
+    "rotation=6,on_wall=false": {
+      "model": "vminus:block/defaultium_head_rotated",
+      "y": 90
+    },
+    "rotation=7,on_wall=false": {
+      "model": "vminus:block/defaultium_head_slanted",
+      "y": 90
+    },
+    "rotation=8,on_wall=false": {
+      "model": "vminus:block/defaultium_head",
+      "y": 180
+    },
+    "rotation=9,on_wall=false": {
+      "model": "vminus:block/defaultium_head_tilted",
+      "y": 180
+    },
+    "rotation=10,on_wall=false": {
+      "model": "vminus:block/defaultium_head_rotated",
+      "y": 180
+    },
+    "rotation=11,on_wall=false": {
+      "model": "vminus:block/defaultium_head_slanted",
+      "y": 180
+    },
+    "rotation=12,on_wall=false": {
+      "model": "vminus:block/defaultium_head",
+      "y": 270
+    },
+    "rotation=13,on_wall=false": {
+      "model": "vminus:block/defaultium_head_tilted",
+      "y": 270
+    },
+    "rotation=14,on_wall=false": {
+      "model": "vminus:block/defaultium_head_rotated",
+      "y": 270
+    },
+    "rotation=15,on_wall=false": {
+      "model": "vminus:block/defaultium_head_slanted",
+      "y": 270
+    },
+    "rotation=0,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall"
+    },
+    "rotation=1,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall"
+    },
+    "rotation=2,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall"
+    },
+    "rotation=3,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall"
+    },
+    "rotation=4,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 90
+    },
+    "rotation=5,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 90
+    },
+    "rotation=6,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 90
+    },
+    "rotation=7,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 90
+    },
+    "rotation=8,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 180
+    },
+    "rotation=9,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 180
+    },
+    "rotation=10,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 180
+    },
+    "rotation=11,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 180
+    },
+    "rotation=12,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 270
+    },
+    "rotation=13,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 270
+    },
+    "rotation=14,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 270
+    },
+    "rotation=15,on_wall=true": {
+      "model": "vminus:block/defaultium_head_on_wall",
+      "y": 270
+    }
+  }
+}

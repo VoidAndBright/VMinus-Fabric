@@ -11,9 +11,9 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class VMinusItems {
-    public static final Item DEFAULTIUM_ITEM = registerItem("defaultium_item",new DefaultiumItem(new FabricItemSettings().rarity(VMinusRarities.UNOBTAINABLE)));
+    public static final Item DEFAULTIUM_ITEM = register_item("defaultium_item",new DefaultiumItem(new FabricItemSettings().rarity(VMinusRarities.UNOBTAINABLE)));
 
-    static <T extends Item> T registerItem(String name,T item){
+    static <T extends Item> T register_item(String name, T item){
         return Registry.register(Registries.ITEM,new Identifier(VMinus.MOD_ID,name),item);
     }
 
@@ -22,6 +22,6 @@ public class VMinusItems {
     }
 
     private static void addIngredients(FabricItemGroupEntries fabricItemGroupEntries) {
-        fabricItemGroupEntries.addAfter(DEFAULTIUM_ITEM,Items.BLAZE_ROD);
+        fabricItemGroupEntries.addAfter(Items.BLAZE_ROD,DEFAULTIUM_ITEM);
     }
 }

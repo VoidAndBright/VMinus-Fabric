@@ -15,6 +15,7 @@ public class VMinusLangProvider extends FabricLanguageProvider {
     public void generateTranslations(TranslationBuilder translationBuilder) {
         translationBuilder.add(VMinusItems.DEFAULTIUM_ITEM,"Defaultium Item");
         translationBuilder.add(VMinusBlocks.DEFAULTIUM_BLOCK,"Defaultium Block");
+        translationBuilder.add(VMinusBlocks.DEFAULTIUM_HEAD,"Defaultium Head");
         translationBuilder.add(VMinusEntities.DEFAULTIUM_ENTITY,"Defaultium Entity");
         translationBuilder.add(VMinusAttributes.PROTECTION,"Protection");
         translationBuilder.add(VMinusAttributes.BLAST_PROTECTION,"Blast Protection");
@@ -24,6 +25,10 @@ public class VMinusLangProvider extends FabricLanguageProvider {
         translationBuilder.add(VMinusAttributes.FIRE_PROTECTION,"Fire Protection");
         translationBuilder.add(VMinusAttributes.MINING_SPEED,"Mining Speed");
         translationBuilder.add(VMinusAttributes.CRITICAL_DAMAGE,"Critical Damage");
+        translationBuilder.add(VMinusAttributes.MOB_DETECTION_RANGE,"Critical Damage");
+        translationBuilder.add(VMinusAttributes.HEALTH_LOST_STAT_BOOST,"Health Lost Stat Boost");
+        translationBuilder.add(VMinusAttributes.MOMENTUM,"Momentum");
+        translationBuilder.add(VMinusAttributes.TRANSLUCENCE,"Translucence");
         translationBuilder.add(VMinusKeyBinds.CAPE_KEY_BIND.getTranslationKey(),"Capes");
         translationBuilder.add(CapeScreen.TITLE.getString(),"VMinus Capes");
         translationBuilder.add(DefaultScreen.TITLE.getString(),"Defaultium");

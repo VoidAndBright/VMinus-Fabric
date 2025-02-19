@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.recipe;
 
 import net.lixir.vminus.vision.VisionHelper;
-import net.lixir.vminus.vision.Visions;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,9 +21,9 @@ public abstract class SpecialCraftingRecipeMixin {
     @Inject(method = "getOutput",at=@At("HEAD"), cancellable = true)
     private void returnResult(DynamicRegistryManager registryManager, CallbackInfoReturnable<ItemStack> cir){
         Item item = cir.getReturnValue().getItem();
-        ItemVision item_vision = Visions.get_item_vision(item);
+        ItemVision item_vision = Vision.get_vision(item);
         if(item_vision != null)
-            if(item_vision.get_replacement(item) != null) cir.setReturnValue(new ItemStack(VisionHelper.item(item_vision.get_replacement(item)),cir.getReturnValue().getCount()));
+            if(item_vision.get_replacement(item) != null) cir.setReturnValue(new ItemStack(item_vision.get_replacement(item),cir.getReturnValue().getCount()));
             else if(item_vision.get_banned(item) != null && item_vision.get_banned(item)) cir.setReturnValue(ItemStack.EMPTY);
     }
 }

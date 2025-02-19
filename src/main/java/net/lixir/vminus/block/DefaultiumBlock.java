@@ -14,8 +14,7 @@ public class DefaultiumBlock extends Block {
     public DefaultiumBlock(FabricBlockSettings settings) {
         super(settings);
     }
-
-    @Override
+    @SuppressWarnings("deprecation")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         world.setBlockState(pos.up(),VMinusBlocks.DEFAULTIUM_BLOCK.getDefaultState());
         world.setBlockState(pos.down(),VMinusBlocks.DEFAULTIUM_BLOCK.getDefaultState());
