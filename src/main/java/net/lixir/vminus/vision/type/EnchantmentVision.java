@@ -35,13 +35,13 @@ public class EnchantmentVision{
     }
     public EnchantmentVision(EnchantmentVision left_vision,EnchantmentVision right_vision) {
         this.enchantments = new String[]{};
-        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned).toArray(EnchantmentVisionBoolean[]::new);
-        this.curse = VisionHelper.collect_vision_values(left_vision.curse,right_vision.curse).toArray(EnchantmentVisionBoolean[]::new);
-        this.treasure = VisionHelper.collect_vision_values(left_vision.treasure,right_vision.treasure).toArray(EnchantmentVisionBoolean[]::new);
-        this.tradeable = VisionHelper.collect_vision_values(left_vision.tradeable,right_vision.tradeable).toArray(EnchantmentVisionBoolean[]::new);
-        this.min_level = VisionHelper.collect_vision_values(left_vision.min_level,right_vision.min_level).toArray(EnchantmentVisionInteger[]::new);
-        this.max_level = VisionHelper.collect_vision_values(left_vision.max_level,right_vision.max_level).toArray(EnchantmentVisionInteger[]::new);
-        this.rarity = VisionHelper.collect_vision_values(left_vision.rarity,right_vision.rarity).toArray(EnchantmentVisionString[]::new);
+        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned,EnchantmentVisionBoolean[]::new);
+        this.curse = VisionHelper.collect_vision_values(left_vision.curse,right_vision.curse,EnchantmentVisionBoolean[]::new);
+        this.treasure = VisionHelper.collect_vision_values(left_vision.treasure,right_vision.treasure,EnchantmentVisionBoolean[]::new);
+        this.tradeable = VisionHelper.collect_vision_values(left_vision.tradeable,right_vision.tradeable,EnchantmentVisionBoolean[]::new);
+        this.min_level = VisionHelper.collect_vision_values(left_vision.min_level,right_vision.min_level,EnchantmentVisionInteger[]::new);
+        this.max_level = VisionHelper.collect_vision_values(left_vision.max_level,right_vision.max_level,EnchantmentVisionInteger[]::new);
+        this.rarity = VisionHelper.collect_vision_values(left_vision.rarity,right_vision.rarity,EnchantmentVisionString[]::new);
     }
     public Boolean get_banned(Enchantment enchantment){
         return VisionHelper.vision_value(enchantment,banned);

@@ -1,5 +1,6 @@
 package net.lixir.vminus.mixin.item;
 
+import net.lixir.vminus.util.Icon;
 import net.lixir.vminus.vision.VisionHelper;
 import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.type.EnchantmentVision;
@@ -10,15 +11,24 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 
 @Mixin(ItemStack.class)
@@ -99,7 +109,7 @@ public abstract class ItemStackMixin{
     @Inject(method = "addEnchantment", at = @At("HEAD"), cancellable = true)
     public void vision_enchantment(Enchantment enchantment, int level, CallbackInfo ci) {
         EnchantmentVision enchantment_vision = Vision.get_vision(enchantment);
-        if (enchantment_vision != null ) {
+        if (enchantment_vision != null) {
             if (enchantment_vision.get_banned(enchantment) != null && enchantment_vision.get_banned(enchantment)) ci.cancel();
             NbtCompound nbt_compound = This.getOrCreateNbt();
             int enchantment_limit = nbt_compound.contains("enchantment_limit") ? nbt_compound.getInt("enchantment_limit") : 1000;

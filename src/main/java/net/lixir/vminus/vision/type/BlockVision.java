@@ -33,17 +33,17 @@ public class BlockVision {
 
     public BlockVision(BlockVision left_vision, BlockVision right_vision){
         this.blocks = new String[]{};
-        this.slipperiness = VisionHelper.collect_vision_values(left_vision.slipperiness,right_vision.slipperiness).toArray(BlockVisionFloat[]::new);
-        this.speed_multiplier = VisionHelper.collect_vision_values(left_vision.speed_multiplier,right_vision.speed_multiplier).toArray(BlockVisionFloat[]::new);
-        this.jump_multiplier = VisionHelper.collect_vision_values(left_vision.jump_multiplier,right_vision.jump_multiplier).toArray(BlockVisionFloat[]::new);
-        this.blast_resistance = VisionHelper.collect_vision_values(left_vision.blast_resistance,right_vision.blast_resistance).toArray(BlockVisionFloat[]::new);
-        this.hardness = VisionHelper.collect_vision_values(left_vision.hardness,right_vision.hardness).toArray(BlockVisionFloat[]::new);
-        this.luminance = VisionHelper.collect_vision_values(left_vision.luminance,right_vision.luminance).toArray(BlockVisionInteger[]::new);
-        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned).toArray(BlockVisionBoolean[]::new);
-        this.replacement = VisionHelper.collect_vision_values(left_vision.replacement,right_vision.replacement).toArray(BlockVisionString[]::new);
-        this.pitch = VisionHelper.collect_vision_values(left_vision.pitch,right_vision.pitch).toArray(BlockVisionInteger[]::new);
-        this.sound_group = VisionHelper.collect_vision_values(left_vision.sound_group,right_vision.sound_group).toArray(BlockVisionSoundGroup[]::new);
-        this.direction = VisionHelper.collect_vision_values(left_vision.direction,right_vision.direction).toArray(BlockVisionString[]::new);
+        this.slipperiness = VisionHelper.collect_vision_values(left_vision.slipperiness,right_vision.slipperiness,BlockVisionFloat[]::new);
+        this.speed_multiplier = VisionHelper.collect_vision_values(left_vision.speed_multiplier,right_vision.speed_multiplier,BlockVisionFloat[]::new);
+        this.jump_multiplier = VisionHelper.collect_vision_values(left_vision.jump_multiplier,right_vision.jump_multiplier,BlockVisionFloat[]::new);
+        this.blast_resistance = VisionHelper.collect_vision_values(left_vision.blast_resistance,right_vision.blast_resistance,BlockVisionFloat[]::new);
+        this.hardness = VisionHelper.collect_vision_values(left_vision.hardness,right_vision.hardness,BlockVisionFloat[]::new);
+        this.luminance = VisionHelper.collect_vision_values(left_vision.luminance,right_vision.luminance,BlockVisionInteger[]::new);
+        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned,BlockVisionBoolean[]::new);
+        this.replacement = VisionHelper.collect_vision_values(left_vision.replacement,right_vision.replacement,BlockVisionString[]::new);
+        this.pitch = VisionHelper.collect_vision_values(left_vision.pitch,right_vision.pitch,BlockVisionInteger[]::new);
+        this.sound_group = VisionHelper.collect_vision_values(left_vision.sound_group,right_vision.sound_group,BlockVisionSoundGroup[]::new);
+        this.direction = VisionHelper.collect_vision_values(left_vision.direction,right_vision.direction,BlockVisionString[]::new);
     }
     public BlockVision(String[] blocks,BlockVisionBoolean[] banned, BlockVisionString[] replacement, BlockVisionFloat[] slipperiness, BlockVisionFloat[] speed_multiplier, BlockVisionFloat[] jump_multiplier, BlockVisionFloat[] blast_resistance, BlockVisionFloat[] hardness, BlockVisionInteger[] luminance, BlockVisionInteger[] pitch, BlockVisionSoundGroup[] sound_group, BlockVisionString[] direction) {
         this.blocks = blocks;

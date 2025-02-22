@@ -21,13 +21,8 @@ import java.util.*;
 public class ItemGroupMixin {
     @Unique
     private ItemGroup item_group = (ItemGroup) (Object) this;
-
     @Unique
     private ItemGroupAccessor accessor = (ItemGroupAccessor)item_group;
-    @Shadow
-    private Collection<ItemStack> displayStacks;
-    @Shadow
-    private Set<ItemStack> searchTabStacks;
     @Inject(method = "updateEntries",at = @At("TAIL"))
     private void updateEntries(ItemGroup.DisplayContext displayContext, CallbackInfo ci){
         Set<ItemStack> search_tab_stacks = ItemStackSet.create();

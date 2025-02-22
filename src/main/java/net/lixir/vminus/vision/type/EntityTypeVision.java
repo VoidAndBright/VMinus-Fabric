@@ -38,14 +38,14 @@ public class EntityTypeVision {
     }
     public EntityTypeVision(EntityTypeVision left_vision,EntityTypeVision right_vision){
         this.entity_types = new String[]{};
-        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned).toArray(EntityTypeVisionBoolean[]::new);
-        this.fire_proof = VisionHelper.collect_vision_values(left_vision.fire_proof,right_vision.fire_proof).toArray(EntityTypeVisionBoolean[]::new);
-        this.silent = VisionHelper.collect_vision_values(left_vision.silent,right_vision.silent).toArray(EntityTypeVisionBoolean[]::new);
-        this.dampens_vibrations = VisionHelper.collect_vision_values(left_vision.dampens_vibrations,right_vision.dampens_vibrations).toArray(EntityTypeVisionBoolean[]::new);
-        this.underwater_breathing = VisionHelper.collect_vision_values(left_vision.underwater_breathing,right_vision.underwater_breathing).toArray(EntityTypeVisionBoolean[]::new);
-        this.water_sensitive = VisionHelper.collect_vision_values(left_vision.water_sensitive,right_vision.water_sensitive).toArray(EntityTypeVisionBoolean[]::new);
-        this.exp_drop_amount = VisionHelper.collect_vision_values(left_vision.exp_drop_amount,right_vision.exp_drop_amount).toArray(EntityTypeVisionInteger[]::new);
-        this.volume = VisionHelper.collect_vision_values(left_vision.volume,right_vision.volume).toArray(EntityTypeVisionFloat[]::new);
+        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned,EntityTypeVisionBoolean[]::new);
+        this.fire_proof = VisionHelper.collect_vision_values(left_vision.fire_proof,right_vision.fire_proof,EntityTypeVisionBoolean[]::new);
+        this.silent = VisionHelper.collect_vision_values(left_vision.silent,right_vision.silent,EntityTypeVisionBoolean[]::new);
+        this.dampens_vibrations = VisionHelper.collect_vision_values(left_vision.dampens_vibrations,right_vision.dampens_vibrations,EntityTypeVisionBoolean[]::new);
+        this.underwater_breathing = VisionHelper.collect_vision_values(left_vision.underwater_breathing,right_vision.underwater_breathing,EntityTypeVisionBoolean[]::new);
+        this.water_sensitive = VisionHelper.collect_vision_values(left_vision.water_sensitive,right_vision.water_sensitive,EntityTypeVisionBoolean[]::new);
+        this.exp_drop_amount = VisionHelper.collect_vision_values(left_vision.exp_drop_amount,right_vision.exp_drop_amount,EntityTypeVisionInteger[]::new);
+        this.volume = VisionHelper.collect_vision_values(left_vision.volume,right_vision.volume,EntityTypeVisionFloat[]::new);
     }
     public Boolean get_banned(EntityType<?> entity_type){
         return VisionHelper.vision_value(entity_type,banned);

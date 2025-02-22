@@ -1,11 +1,15 @@
 package net.lixir.vminus.vision;
 
 import net.lixir.vminus.block.property.AxisProperty;
+import net.lixir.vminus.vision.properties.Attribute;
 import net.lixir.vminus.vision.properties.SoundGroup;
 import net.lixir.vminus.vision.value.VisionValue;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -18,43 +22,31 @@ import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
+import java.util.function.IntFunction;
 
 public class VisionHelper {
-    public static <T,V,TV extends VisionValue<T,V>> Vector<TV> collect_vision_values(TV[] left, TV[] right){
+    public static <T,V,TV extends VisionValue<T,V>> TV[] collect_vision_values(TV[] left, TV[] right, IntFunction<TV[]> array){
         if (left != null && right != null){
-            final Vector<TV> banned = new Vector<>(List.of(left));
-            banned.addAll(List.of(right));
-            banned.sort(Comparator.comparingInt(TV::get_priority));
-            return banned;
+            final Vector<TV> values = new Vector<>(List.of(left));
+            values.addAll(List.of(right));
+            values.sort(Comparator.comparingInt(TV::get_priority));
+            return values.toArray(array);
         }
-        else if (left == null && right != null) return new Vector<>(List.of(right));
-        else if (left != null) return new Vector<>(List.of(left));
-        else return new Vector<>();
+        else if (left == null && right != null) return right;
+        else return left;
     }
     public static <T,V,TV extends VisionValue<T,V>> T vision_value(V vision_type, TV[] vision_elements){
         return iterate_vision_values(vision_type,vision_elements,0);
     }
     private static <T,V,TV extends VisionValue<T,V>> T iterate_vision_values(V vision_type, TV[] vision_elements, int index){
-        if (vision_elements != null && index < vision_elements.length){
+        if (vision_elements == null) return null;
+        if (index < vision_elements.length){
             TV vision_element = vision_elements[index];
             if (vision_element.is_conditions_true(vision_type, vision_element.get_conditions(),0)) return vision_element.get_value();
             else return iterate_vision_values(vision_type,vision_elements,index+1);
         }
         return null;
-    }
-    public static <T,V,TV extends VisionValue<T,V>> Vector<T> vision_values(V vision_type, TV[] vision_elements){
-        return iterate_vision_values(new Vector<>(),vision_type,vision_elements,0);
-    }
-    private static <T,V,TV extends VisionValue<T,V>> Vector<T> iterate_vision_values(Vector<T> vector_type,V vision_type, TV[] vision_elements, int index){
-        if (vision_elements != null && index < vision_elements.length){
-            TV vision_element = vision_elements[index];
-            if (vision_element.is_conditions_true(vision_type, vision_element.get_conditions(),0)) vector_type.add(vision_element.get_value());
-            return iterate_vision_values(vector_type,vision_type,vision_elements,index+1);
-        }
-        return vector_type;
     }
     public static int hex(String hex) {
         if (hex.startsWith("#")) {
@@ -101,5 +93,17 @@ public class VisionHelper {
         SoundEvent hit_sound_event = sound_group.hit_sound != null ? Registries.SOUND_EVENT.get(new Identifier(sound_group.hit_sound)) : SoundEvents.BLOCK_STONE_BREAK;
         SoundEvent fall_sound_event = sound_group.fall_sound != null ? Registries.SOUND_EVENT.get(new Identifier(sound_group.fall_sound)) : SoundEvents.BLOCK_STONE_BREAK;
         return new BlockSoundGroup(sound_event_volume, sound_event_pitch, break_sound_event, step_sound_event, place_sound_event, hit_sound_event, fall_sound_event);
+    }
+    public static EntityAttribute attribute(Attribute attribute){
+        if (attribute.get_identifier() == null) return null;
+        return Registries.ATTRIBUTE.get(new Identifier(attribute.get_identifier()));
+    }
+    public static EquipmentSlot equipment_slot(Attribute attribute){
+        return EquipmentSlot.valueOf(attribute.get_slot().toUpperCase());
+    }
+    public static EntityAttributeModifier attribute_modifier(Attribute attribute){
+        UUID uuid = attribute.get_uuid() != null ? UUID.fromString(attribute.get_uuid()) : UUID.randomUUID();
+        EntityAttributeModifier.Operation operation = attribute.get_operation() != null ? EntityAttributeModifier.Operation.valueOf(attribute.get_operation().toUpperCase()) : EntityAttributeModifier.Operation.ADDITION;
+        return new EntityAttributeModifier(uuid,attribute.get_name(),attribute.get_value(),operation);
     }
 }

@@ -16,91 +16,52 @@ public class Vision {
     public static EntityTypeVision[] entity_type_visions = new EntityTypeVision[]{};
     public static ItemVision[] item_visions = new ItemVision[]{};
     public static StatusEffectVision[] status_effect_visions = new StatusEffectVision[]{};
-    private static void set_block_visions(int index){
-        if (index < block_visions.length) {
-            BlockVision block_vision = block_visions[index];
-            set_block_vision(block_vision, block_vision.get_blocks(new Vector<>(),0),0);
-            set_block_visions(index + 1);
-        }
-    }
-    private static void set_block_vision(BlockVision block_vision, Block[] blocks, int index){
-        if (index < blocks.length) {
-            Block block = blocks[index];
-            if (get_vision(block) != null)
-                set_vision(block,new BlockVision(get_vision(block),block_vision));
-            else set_vision(block,block_vision);
-            set_block_vision(block_vision,blocks,index + 1);
-        }
-    }
-    private static void set_enchantment_visions(int index){
-        if (index < enchantment_visions.length) {
-            EnchantmentVision enchantment_vision = enchantment_visions[index];
-            set_enchantment_vision(enchantment_vision,enchantment_vision.get_enchantments(new Vector<>(),0),0);
-            set_enchantment_visions(index + 1);
-        }
-    }
-    private static void set_enchantment_vision(EnchantmentVision enchantment_vision, Enchantment[] enchantments, int index){
-        if (index < enchantments.length) {
-            Enchantment enchantment = enchantments[index];
-            if (enchantment != null && get_vision(enchantment) != null)
-                set_vision(enchantment,new EnchantmentVision(get_vision(enchantment),enchantment_vision));
-            else if (enchantment != null) set_vision(enchantment,enchantment_vision);
-            set_enchantment_vision(enchantment_vision,enchantments,index + 1);
-        }
-    }
-    private static void set_entity_type_visions(int index){
-        if (index < entity_type_visions.length) {
-            EntityTypeVision entity_type_vision = entity_type_visions[index];
-            set_entity_type_vision(entity_type_vision,entity_type_vision.get_entity_types(new Vector<>(),0),0);
-            set_entity_type_visions(index + 1);
-        }
-    }
-    private static void set_entity_type_vision(EntityTypeVision entity_type_vision, EntityType<?>[] entity_types, int index){
-        if (index < entity_types.length) {
-            EntityType<?> entity_type = entity_types[index];
-            if (get_vision(entity_type) != null)
-                set_vision(entity_type,new EntityTypeVision(get_vision(entity_type),entity_type_vision));
-            else set_vision(entity_type,entity_type_vision);
-            set_entity_type_vision(entity_type_vision,entity_types,index + 1);
-        }
-    }
-    private static void set_item_visions(int index){
-        if (index < item_visions.length) {
-            ItemVision item_vision = item_visions[index];
-            set_item_vision(item_vision,item_vision.get_items(new Vector<>(),0),0);
-            set_item_visions(index + 1);
-        }
-    }
-    private static void set_item_vision(ItemVision item_vision, Item[] items, int index){
-        if (index < items.length) {
-            Item item = items[index];
-            if (get_vision(item) != null) set_vision(item,new ItemVision(get_vision(item),item_vision));
-            else set_vision(item,item_vision);
-            set_item_vision(item_vision,items,index + 1);
-        }
-    }
-    private static void set_status_effect_visions(int index){
-        if (index < status_effect_visions.length) {
-            StatusEffectVision status_effect_vision = status_effect_visions[index];
-            set_status_effect_vision(status_effect_vision,status_effect_vision.get_status_effects(new Vector<>(),0),0);
-            set_status_effect_visions(index + 1);
-        }
-    }
-    private static void set_status_effect_vision(StatusEffectVision status_effect_vision, StatusEffect[] status_effects, int index){
-        if (index < status_effects.length) {
-            StatusEffect status_effect = status_effects[index];
-            if (status_effect != null && get_vision(status_effect) != null)
-                set_vision(status_effect,new StatusEffectVision(get_vision(status_effect),status_effect_vision));
-            else if (status_effect != null) set_vision(status_effect,status_effect_vision);
-            set_status_effect_vision(status_effect_vision,status_effects,index + 1);
-        }
-    }
     public static void set_visions(){
-        set_block_visions(0);
-        set_enchantment_visions(0);
-        set_entity_type_visions(0);
-        set_status_effect_visions(0);
-        set_item_visions(0);
+        Arrays.stream(block_visions).forEach(Vision::set_block_visions);
+        Arrays.stream(enchantment_visions).forEach(Vision::set_enchantment_visions);
+        Arrays.stream(entity_type_visions).forEach(Vision::set_entity_type_visions);
+        Arrays.stream(status_effect_visions).forEach(Vision::set_status_effect_visions);
+        Arrays.stream(item_visions).forEach(Vision::set_item_visions);
+    }
+    private static void set_block_visions(BlockVision block_vision){
+        Arrays.stream(block_vision.get_blocks(new Vector<>(), 0)).forEach(block -> set_block_vision(block,block_vision));
+    }
+    private static void set_block_vision(Block block, BlockVision block_vision){
+        if (get_vision(block) != null)
+            set_vision(block,new BlockVision(get_vision(block),block_vision));
+        else set_vision(block,block_vision);
+    }
+    private static void set_enchantment_visions(EnchantmentVision enchantment_vision){
+        Arrays.stream(enchantment_vision.get_enchantments(new Vector<>(),0)).forEach(enchantment -> set_enchantment_vision(enchantment,enchantment_vision));
+    }
+    private static void set_enchantment_vision(Enchantment enchantment, EnchantmentVision enchantment_vision){
+        if (enchantment != null && get_vision(enchantment) != null)
+            set_vision(enchantment,new EnchantmentVision(get_vision(enchantment),enchantment_vision));
+        else if (enchantment != null) set_vision(enchantment,enchantment_vision);
+    }
+    private static void set_entity_type_visions(EntityTypeVision entity_type_vision){
+        Arrays.stream(entity_type_vision.get_entity_types(new Vector<>(),0)).forEach(entity_type -> set_entity_type_vision(entity_type,entity_type_vision));
+    }
+    private static void set_entity_type_vision(EntityType<?> entity_type, EntityTypeVision entity_type_vision){
+        if (get_vision(entity_type) != null)
+            set_vision(entity_type,new EntityTypeVision(get_vision(entity_type),entity_type_vision));
+        else set_vision(entity_type,entity_type_vision);
+    }
+    private static void set_item_visions(ItemVision item_vision){
+        Arrays.stream(item_vision.get_items(new Vector<>(),0)).forEach(item -> set_item_vision(item,item_vision));
+    }
+    private static void set_item_vision(Item item, ItemVision item_vision){
+        if (get_vision(item) != null)
+            set_vision(item,new ItemVision(get_vision(item),item_vision));
+        else set_vision(item,item_vision);
+    }
+    private static void set_status_effect_visions(StatusEffectVision status_effect_vision){
+        Arrays.stream(status_effect_vision.get_status_effects(new Vector<>(),0)).forEach(status_effect -> set_status_effect_vision(status_effect,status_effect_vision));
+    }
+    private static void set_status_effect_vision(StatusEffect status_effect, StatusEffectVision status_effect_vision){
+        if (status_effect != null && get_vision(status_effect) != null)
+            set_vision(status_effect,new StatusEffectVision(get_vision(status_effect),status_effect_vision));
+        else if (status_effect != null) set_vision(status_effect,status_effect_vision);
     }
     public static <T extends Block> BlockVision get_vision(T block){
         if (block instanceof BlockVisionAccessor block_vision_container) return block_vision_container.vminus$get_vision();

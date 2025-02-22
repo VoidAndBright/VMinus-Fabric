@@ -21,10 +21,10 @@ public class StatusEffectVision {
 
     public StatusEffectVision(StatusEffectVision vision_left,StatusEffectVision vision_right){
         this.status_effects = new String[]{};
-        this.banned = VisionHelper.collect_vision_values(vision_left.banned,vision_right.banned).toArray(StatusEffectVisionBoolean[]::new);
-        this.particle = VisionHelper.collect_vision_values(vision_left.particle,vision_right.particle).toArray(StatusEffectVisionString[]::new);
-        this.color = VisionHelper.collect_vision_values(vision_left.color,vision_right.color).toArray(StatusEffectVisionString[]::new);
-        this.category = VisionHelper.collect_vision_values(vision_left.category,vision_right.category).toArray(StatusEffectVisionString[]::new);
+        this.banned = VisionHelper.collect_vision_values(vision_left.banned,vision_right.banned,StatusEffectVisionBoolean[]::new);
+        this.particle = VisionHelper.collect_vision_values(vision_left.particle,vision_right.particle,StatusEffectVisionString[]::new);
+        this.color = VisionHelper.collect_vision_values(vision_left.color,vision_right.color,StatusEffectVisionString[]::new);
+        this.category = VisionHelper.collect_vision_values(vision_left.category,vision_right.category,StatusEffectVisionString[]::new);
     }
     public Boolean get_banned(StatusEffect status_effect){
         return VisionHelper.vision_value(status_effect,banned);

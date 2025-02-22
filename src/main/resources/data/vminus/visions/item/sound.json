@@ -2,7 +2,7 @@
   "items":[
     "minecraft:wooden_pickaxe"
   ],
-  "banned":[{
-    "value": true
+  "replacement":[{
+    "value": "minecraft:golden_pickaxe"
   }]
 }

@@ -127,7 +127,7 @@ key_key.nbttooltip.scroll_up:key.keyboard.up
 soundCategory_master:0.5
 soundCategory_music:0.0
 soundCategory_record:1.0
-soundCategory_weather:1.0
+soundCategory_weather:0.0
 soundCategory_block:1.0
 soundCategory_hostile:1.0
 soundCategory_neutral:1.0

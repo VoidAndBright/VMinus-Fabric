@@ -7,16 +7,16 @@ import net.lixir.vminus.vision.properties.Attribute;
 import net.lixir.vminus.vision.value.VisionValue;
 import net.minecraft.item.Item;
 
-public class ItemVisionAttribute implements VisionValue<Attribute,Item> {
-    private final Attribute value;
+public class ItemVisionAttributes implements VisionValue<Attribute[],Item> {
+    private final Attribute[] value;
     private final int priority;
     private final ItemCondition[] conditions;
-    public ItemVisionAttribute(Attribute value, int priority, ItemCondition[] conditions) {
+    public ItemVisionAttributes(Attribute[] value, int priority, ItemCondition[] conditions) {
         this.value = value;
         this.priority = priority;
         this.conditions = conditions;
     }
-    public Attribute get_value() {
+    public Attribute[] get_value() {
         return value;
     }
 

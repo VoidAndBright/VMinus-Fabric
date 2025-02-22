@@ -15,12 +15,12 @@ public class ItemVisionDeserializer implements JsonDeserializer<ItemVision> {
         String[] entries = json_object.get("items").getAsJsonArray().asList().stream().map(JsonElement::getAsString).toArray(String[]::new);
         ItemVisionBoolean[] banned = item_vision_elements(json_object,"banned");
         VMinus.LOGGER.info("this is triggering");
-        return new ItemVision(entries,banned,null,null,null,null,null,null,null,null,null,null,null,null,null);
+        return new ItemVision(entries,banned,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
     }
     public static ItemVisionBoolean[] item_vision_elements(JsonObject json_object, String name){
-        return json_object.get(name).getAsJsonArray().asList().stream().map(json_element_banned -> item_vision_element(json_object,json_element_banned)).sorted(Comparator.comparingInt(ItemVisionBoolean::get_priority)).toArray(ItemVisionBoolean[]::new);
+        return json_object.get(name).getAsJsonArray().asList().stream().map(json_element -> item_vision_value(json_object,json_element)).sorted(Comparator.comparingInt(ItemVisionBoolean::get_priority)).toArray(ItemVisionBoolean[]::new);
     }
-    public static ItemVisionBoolean item_vision_element(JsonObject json_object, JsonElement json_element){
+    public static ItemVisionBoolean item_vision_value(JsonObject json_object, JsonElement json_element){
         String name = json_element.getAsString();
         Boolean value = json_object.get(name).getAsBoolean();
         String name_priority = name+"/priority";
