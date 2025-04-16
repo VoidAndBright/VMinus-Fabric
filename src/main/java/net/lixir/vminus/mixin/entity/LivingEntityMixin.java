@@ -1,8 +1,8 @@
 package net.lixir.vminus.mixin.entity;
 
-import net.lixir.vminus.VMinus;
 import net.lixir.vminus.entity.EntityVariant;
-import net.lixir.vminus.vision.Vision;
+import net.lixir.vminus.vision.implement.EntityTypeVisionable;
+import net.lixir.vminus.vision.implement.StatusEffectVisionable;
 import net.lixir.vminus.vision.type.EntityTypeVision;
 import net.lixir.vminus.vision.type.StatusEffectVision;
 import net.minecraft.entity.EntityType;
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.*;
+import java.util.Iterator;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements EntityVariant {
@@ -32,11 +32,11 @@ public abstract class LivingEntityMixin implements EntityVariant {
     @Unique
     private final LivingEntityAccessor accessor = (LivingEntityAccessor)this;
     @Unique
-    String variant;
+    private String variant;
     @Inject(method = "getLootTable", at = @At("HEAD"), cancellable = true)
-    public void getLootTable(CallbackInfoReturnable<Identifier> cir) {
+    public void redirect_loot_table(CallbackInfoReturnable<Identifier> cir) {
         String entity_name = Registries.ENTITY_TYPE.getId(living_entity.getType()).getPath();
-        if (variant != "") cir.setReturnValue(new Identifier("vminus:entities/variant/" + entity_name + "/" + variant));
+        if (!"".equals(variant)) cir.setReturnValue(new Identifier("vminus:entities/variant/" + entity_name + "/" + variant));
     }
     @Inject(method = "tickStatusEffects", at = @At("HEAD"), cancellable = true)
     private void tickStatusEffects(CallbackInfo ci) {
@@ -67,7 +67,7 @@ public abstract class LivingEntityMixin implements EntityVariant {
         for (StatusEffectInstance status_effect_instance : living_entity.getActiveStatusEffects().values()) {
             StatusEffect status_effect = status_effect_instance.getEffectType();
             if (!status_effect.isInstant()) {
-                StatusEffectVision status_effect_vision = Vision.get_vision(status_effect);
+                StatusEffectVision status_effect_vision = StatusEffectVisionable.get_vision(status_effect);
                 if (status_effect_vision == null || status_effect_vision.get_particle(status_effect) == null) {
                     colour = status_effect.getColor();
                     beneficial = status_effect.getCategory() == StatusEffectCategory.BENEFICIAL;
@@ -99,28 +99,28 @@ public abstract class LivingEntityMixin implements EntityVariant {
     @Inject(method = "hurtByWater", at = @At("HEAD"), cancellable = true)
     private void isSensitiveToWater(CallbackInfoReturnable<Boolean> cir) {
         EntityType<?> entity_type = living_entity.getType();
-        EntityTypeVision entity_type_vision = Vision.get_vision(entity_type);
+        EntityTypeVision entity_type_vision = EntityTypeVisionable.get_vision(entity_type);
         if (entity_type_vision != null && entity_type_vision.get_water_sensitive(entity_type) != null)
             cir.setReturnValue(entity_type_vision.get_water_sensitive(entity_type));
     }
     @Inject(method = "canBreatheInWater", at = @At("HEAD"), cancellable = true)
     private void return_underwater_breathing(CallbackInfoReturnable<Boolean> cir) {
         EntityType<?> entity_type = living_entity.getType();
-        EntityTypeVision entity_type_vision = Vision.get_vision(entity_type);
+        EntityTypeVision entity_type_vision = EntityTypeVisionable.get_vision(entity_type);
         if (entity_type_vision != null && entity_type_vision.get_underwater_breathing(entity_type) != null)
             cir.setReturnValue(entity_type_vision.get_underwater_breathing(entity_type));
     }
     @Inject(method = "getSoundVolume", at = @At("HEAD"), cancellable = true)
     private void getSoundVolume(CallbackInfoReturnable<Float> cir) {
         EntityType<?> entity_type = living_entity.getType();
-        EntityTypeVision entity_type_vision = Vision.get_vision(entity_type);
+        EntityTypeVision entity_type_vision = EntityTypeVisionable.get_vision(entity_type);
         if (entity_type_vision != null && entity_type_vision.get_volume(entity_type) != null)
             cir.setReturnValue(Math.max(0f, entity_type_vision.get_volume(entity_type)));
     }
     @Inject(method = "getXpToDrop", at = @At("HEAD"), cancellable = true)
     private void return_exp_amount(CallbackInfoReturnable<Integer> cir) {
         EntityType<?> entity_type = living_entity.getType();
-        EntityTypeVision entity_type_vision = Vision.get_vision(entity_type);
+        EntityTypeVision entity_type_vision = EntityTypeVisionable.get_vision(entity_type);
         if (entity_type_vision != null && entity_type_vision.get_exp_drop_amount(entity_type) != null)
             cir.setReturnValue(Math.max(0, entity_type_vision.get_exp_drop_amount(entity_type)));
     }

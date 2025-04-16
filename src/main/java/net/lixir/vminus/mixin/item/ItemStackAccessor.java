@@ -11,7 +11,9 @@ import java.util.Collection;
 @Mixin(ItemStack.class)
 public interface ItemStackAccessor {
     @Invoker("parseBlockTag")
-    Collection<Text> parse_block_tag(String tag);
+    static Collection<Text> parse_block_tag(String tag){
+        throw new AssertionError();
+    }
 
     @Invoker("getHideFlags")
     int get_hide_flags();

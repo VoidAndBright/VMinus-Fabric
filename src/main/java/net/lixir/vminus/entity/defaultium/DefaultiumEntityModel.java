@@ -2,11 +2,11 @@ package net.lixir.vminus.entity.defaultium;
 
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.SinglePartEntityModel;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
-public class DefaultiumEntityModel<T extends DefaultiumEntity> extends SinglePartEntityModel<T> {
+public class DefaultiumEntityModel<T extends DefaultiumEntity> extends EntityModel<T> {
 	private final ModelPart Body;
     private final ModelPart Head;
 	public DefaultiumEntityModel(ModelPart root) {

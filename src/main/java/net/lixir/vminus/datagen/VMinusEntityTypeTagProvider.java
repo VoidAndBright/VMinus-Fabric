@@ -1,8 +1,8 @@
 package net.lixir.vminus.datagen;
 
-import net.lixir.vminus.util.tag.VMinusEntityTypeTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.lixir.vminus.util.tag.VMinusEntityTypeTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.RegistryWrapper;
 

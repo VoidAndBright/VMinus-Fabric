@@ -1,0 +1,9 @@
+{
+  "items": ["golden_helmet"],
+  "remove_attributes": [
+    {"value": [{
+      "identifier": "generic.armor",
+      "slot": "head"
+    }]}
+  ]
+}

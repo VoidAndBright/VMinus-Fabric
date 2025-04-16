@@ -1,7 +1,13 @@
 package net.lixir.vminus.screen.screens;
 
-import com.terraformersmc.modmenu.config.ModMenuConfig;
-import com.terraformersmc.modmenu.config.ModMenuConfigManager;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.lixir.vminus.VMinus;
+import net.lixir.vminus.cape.Cape;
+import net.lixir.vminus.config.VMinusConfigManager;
+import net.lixir.vminus.config.VMinusConfigs;
+import net.lixir.vminus.networking.VMinusNetworking;
+import net.lixir.vminus.util.PersistentNbt;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -11,25 +17,24 @@ import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
-import static net.lixir.vminus.config.VMinusConfigs.TOOLTIP_REWORK;
+import static net.lixir.vminus.config.VMinusConfigs.CAPE;
 
 public class VMinusConfigScreen extends GameOptionsScreen {
     private final Screen previous;
     private OptionListWidget list;
-
+    public static final Text TITLE = Text.translatable("vminus.configs");
     public VMinusConfigScreen(Screen previous) {
-        super(previous, MinecraftClient.getInstance().options, Text.translatable("vminus.configs"));
+        super(previous, MinecraftClient.getInstance().options, TITLE);
         this.previous = previous;
-
     }
     protected void init() {
         this.list = new OptionListWidget(this.client, this.width, this.height, 32, this.height - 32, 25);
-        this.list.addSingleOptionEntry(TOOLTIP_REWORK.asOption());
+        this.list.addSingleOptionEntry(CAPE.asOption());
         this.addSelectableChild(this.list);
         this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, this::create_button).position(this.width / 2 - 100, this.height - 27).size(200, 20).build());
     }
     private void create_button(ButtonWidget button){
-        ModMenuConfigManager.save();
+        VMinusConfigManager.save();
         assert this.client != null;
         this.client.setScreen(this.previous);
     }
@@ -40,7 +45,12 @@ public class VMinusConfigScreen extends GameOptionsScreen {
         super.render(DrawContext, mouseX, mouseY, delta);
     }
     public void removed() {
-        ModMenuConfigManager.save();
+        if (MinecraftClient.getInstance().player != null){
+            String cape = Cape.to_string(CAPE.getValue());
+            PersistentNbt.get(MinecraftClient.getInstance().player).putString("Cape",cape);
+            ClientPlayNetworking.send(VMinusNetworking.CAPE_PACKET, PacketByteBufs.create().writeString(cape));
+        }
+        VMinusConfigManager.save();
     }
 
 }

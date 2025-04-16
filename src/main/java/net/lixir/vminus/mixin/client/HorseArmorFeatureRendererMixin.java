@@ -20,9 +20,9 @@ public class HorseArmorFeatureRendererMixin {
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V",
             at = @At(value = "STORE", target = "Lnet/minecraft/client/render/VertexConsumerProvider;getBuffer(Lnet/minecraft/client/render/RenderLayer;)Lnet/minecraft/client/render/VertexConsumer;")
     )
-    private VertexConsumer renderHorseArmorGlint(VertexConsumer original, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, HorseEntity horseEntity, float f, float g, float h, float j, float k, float l) {
-        ItemStack stack = horseEntity.getEquippedStack(EquipmentSlot.CHEST);
-        HorseArmorItem horseArmorItem = (HorseArmorItem)stack.getItem();
-        return ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(horseArmorItem.getEntityTexture()), false, stack.hasGlint());
+    private VertexConsumer renderHorseArmorGlint(VertexConsumer original, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, HorseEntity horse_entity, float f, float g, float h, float j, float k, float l) {
+        ItemStack stack = horse_entity.getEquippedStack(EquipmentSlot.CHEST);
+        HorseArmorItem horse_armor_item = (HorseArmorItem)stack.getItem();
+        return ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(horse_armor_item.getEntityTexture()), false, stack.hasGlint());
     }
 }

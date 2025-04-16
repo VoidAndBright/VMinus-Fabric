@@ -3,7 +3,7 @@ package net.lixir.vminus.vision.condition;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 
-public class ItemCondition implements Condition<Item>{
+public class ItemCondition implements Condition<Item> {
     public String is_mod_loaded;
     public boolean inverted;
 
@@ -13,8 +13,8 @@ public class ItemCondition implements Condition<Item>{
     }
 
     public boolean is_false(Item item){
-        if (FabricLoader.getInstance().isModLoaded(is_mod_loaded))
-            return !inverted;
+        if (is_mod_loaded != null && FabricLoader.getInstance().isModLoaded(is_mod_loaded))
+            return inverted;
         return true;
     }
 }

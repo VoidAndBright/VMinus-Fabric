@@ -1,10 +1,11 @@
 package net.lixir.vminus.vision.type;
 
-import net.lixir.vminus.vision.VisionHelper;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.value.enchantment.EnchantmentVisionBoolean;
 import net.lixir.vminus.vision.value.enchantment.EnchantmentVisionInteger;
 import net.lixir.vminus.vision.value.enchantment.EnchantmentVisionString;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -15,13 +16,13 @@ import java.util.Vector;
 
 public class EnchantmentVision{
     private final String[] enchantments;
-    private final EnchantmentVisionBoolean[] banned;
-    private final EnchantmentVisionBoolean[] curse;
-    private final EnchantmentVisionBoolean[] treasure;
-    private final EnchantmentVisionBoolean[] tradeable;
-    private final EnchantmentVisionInteger[] min_level;
-    private final EnchantmentVisionInteger[] max_level;
-    private final EnchantmentVisionString[] rarity;
+    private final Vector<EnchantmentVisionBoolean> banned;
+    private final Vector<EnchantmentVisionBoolean> curse;
+    private final Vector<EnchantmentVisionBoolean> treasure;
+    private final Vector<EnchantmentVisionBoolean> tradeable;
+    private final Vector<EnchantmentVisionInteger> min_level;
+    private final Vector<EnchantmentVisionInteger> max_level;
+    private final Vector<EnchantmentVisionString> rarity;
 
     public EnchantmentVision(EnchantmentVision enchantment_vision) {
         this.enchantments = new String[]{};
@@ -35,40 +36,54 @@ public class EnchantmentVision{
     }
     public EnchantmentVision(EnchantmentVision left_vision,EnchantmentVision right_vision) {
         this.enchantments = new String[]{};
-        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned,EnchantmentVisionBoolean[]::new);
-        this.curse = VisionHelper.collect_vision_values(left_vision.curse,right_vision.curse,EnchantmentVisionBoolean[]::new);
-        this.treasure = VisionHelper.collect_vision_values(left_vision.treasure,right_vision.treasure,EnchantmentVisionBoolean[]::new);
-        this.tradeable = VisionHelper.collect_vision_values(left_vision.tradeable,right_vision.tradeable,EnchantmentVisionBoolean[]::new);
-        this.min_level = VisionHelper.collect_vision_values(left_vision.min_level,right_vision.min_level,EnchantmentVisionInteger[]::new);
-        this.max_level = VisionHelper.collect_vision_values(left_vision.max_level,right_vision.max_level,EnchantmentVisionInteger[]::new);
-        this.rarity = VisionHelper.collect_vision_values(left_vision.rarity,right_vision.rarity,EnchantmentVisionString[]::new);
+        this.banned = Vision.sum(left_vision.banned,right_vision.banned);
+        this.curse = Vision.sum(left_vision.curse,right_vision.curse);
+        this.treasure = Vision.sum(left_vision.treasure,right_vision.treasure);
+        this.tradeable = Vision.sum(left_vision.tradeable,right_vision.tradeable);
+        this.min_level = Vision.sum(left_vision.min_level,right_vision.min_level);
+        this.max_level = Vision.sum(left_vision.max_level,right_vision.max_level);
+        this.rarity = Vision.sum(left_vision.rarity,right_vision.rarity);
     }
     public Boolean get_banned(Enchantment enchantment){
-        return VisionHelper.vision_value(enchantment,banned);
+        return Vision.unwrap(enchantment,banned);
     }
     public Boolean get_curse(Enchantment enchantment){
-        return VisionHelper.vision_value(enchantment,curse);
+        return Vision.unwrap(enchantment,curse);
     }
     public Boolean get_treasure(Enchantment enchantment){
-        return VisionHelper.vision_value(enchantment,treasure);
+        return Vision.unwrap(enchantment,treasure);
     }
     public Boolean get_tradeable(Enchantment enchantment){
-        return VisionHelper.vision_value(enchantment,tradeable);
+        return Vision.unwrap(enchantment,tradeable);
     }
     public Integer get_min_level(Enchantment enchantment){
-        return VisionHelper.vision_value(enchantment,min_level);
+        return Vision.unwrap(enchantment,min_level);
     }
     public Integer get_max_level(Enchantment enchantment){
-        return VisionHelper.vision_value(enchantment,max_level);
+        return Vision.unwrap(enchantment,max_level);
     }
-    public String get_rarity(Enchantment enchantment){
-        return VisionHelper.vision_value(enchantment,rarity);
+    public Rarity get_rarity(Enchantment enchantment){
+        String string = Vision.unwrap(enchantment,rarity);
+        if (string == null) return null;
+        return switch (string){
+            case "uncommon" -> Rarity.UNCOMMON;
+            case "rare" -> Rarity.RARE;
+            case "very rare" -> Rarity.VERY_RARE;
+            default -> Rarity.COMMON;
+        };
     }
 
-    public Enchantment[] get_enchantments(Vector<Enchantment> vector_enchantments,int index){
-        if (index < enchantments.length){
-            String enchantment_entry = enchantments[index];
-            if (enchantment_entry.startsWith("*")) return Registries.ENCHANTMENT.stream().toArray(Enchantment[]::new);
+    public Vector<Enchantment> get_enchantments(){
+        Vector<Enchantment> vector_enchantments = new Vector<>();
+        for (String enchantment_entry:enchantments){
+            if (enchantment_entry.startsWith("*")) {
+                String block_wild_card = enchantment_entry.substring(1);
+                for (Enchantment enchantment:Registries.ENCHANTMENT){
+                    if (Registries.ENCHANTMENT.getId(enchantment).toString().endsWith(block_wild_card)){
+                        vector_enchantments.add(enchantment);
+                    }
+                }
+            }
             else if (enchantment_entry.startsWith("!#")) {
                 String block_tag =  enchantment_entry.substring(2);
                 TagKey<Enchantment> block_tag_key = TagKey.of(RegistryKeys.ENCHANTMENT, new Identifier(block_tag));
@@ -81,8 +96,7 @@ public class EnchantmentVision{
             }
             else if (enchantment_entry.startsWith("!")) vector_enchantments.remove(Registries.ENCHANTMENT.get(new Identifier(enchantment_entry.substring(1))));
             else vector_enchantments.add(Registries.ENCHANTMENT.get(new Identifier(enchantment_entry)));
-            return get_enchantments(vector_enchantments,index+1);
         }
-        return vector_enchantments.toArray(Enchantment[]::new);
+        return vector_enchantments;
     }
 }

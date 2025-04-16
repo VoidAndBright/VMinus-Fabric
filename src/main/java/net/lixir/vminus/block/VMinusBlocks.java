@@ -1,17 +1,14 @@
 package net.lixir.vminus.block;
 
-import net.lixir.vminus.VMinus;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.lixir.vminus.VMinus;
 import net.lixir.vminus.block.head.HeadBlock;
 import net.lixir.vminus.block.head.VMinusHeadShapes;
 import net.lixir.vminus.util.VMinusInstruments;
 import net.minecraft.block.Block;
-import net.minecraft.block.HangingSignBlock;
-import net.minecraft.block.SignBlock;
-import net.minecraft.block.WoodType;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroups;

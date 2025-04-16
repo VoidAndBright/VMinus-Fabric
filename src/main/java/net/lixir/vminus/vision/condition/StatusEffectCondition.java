@@ -13,7 +13,7 @@ public class StatusEffectCondition implements Condition<StatusEffect>{
     }
 
     public boolean is_false(StatusEffect status_effect) {
-        if (FabricLoader.getInstance().isModLoaded(is_mod_loaded)) return !inverted;
+        if (is_mod_loaded != null && FabricLoader.getInstance().isModLoaded(is_mod_loaded)) return inverted;
         return true;
     }
 }

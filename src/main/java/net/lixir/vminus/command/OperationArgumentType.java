@@ -19,12 +19,8 @@ public class OperationArgumentType implements ArgumentType<String> {
     public static OperationArgumentType operation(){
         return new OperationArgumentType();
     }
-    public static String getOperation(final CommandContext<?> context, final String name) {
-        return switch (context.getArgument(name, String.class)){
-            case "set" -> "set";
-            case "minus" -> "minus";
-            default -> "add";
-        };
+    public static Operation getOperation(final CommandContext<?> context, final String name) {
+        return Operation.from_string(context.getArgument(name, String.class));
     }
     public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder) {
         if ("add".startsWith(builder.getRemainingLowerCase())) {

@@ -13,7 +13,7 @@ public class BlockCondition implements Condition<Block>{
     }
 
     public boolean is_false(Block block) {
-        if (FabricLoader.getInstance().isModLoaded(is_mod_loaded)) return !inverted;
-        else return true;
+        if (is_mod_loaded != null && FabricLoader.getInstance().isModLoaded(is_mod_loaded)) return inverted;
+        return true;
     }
 }

@@ -1,9 +1,8 @@
 package net.lixir.vminus.mixin.enchantment;
 
-import net.lixir.vminus.vision.VisionHelper;
-import net.lixir.vminus.vision.Vision;
+import net.lixir.vminus.vision.implement.EnchantmentVisionable;
+import net.lixir.vminus.vision.implement.ItemVisionable;
 import net.lixir.vminus.vision.type.EnchantmentVision;
-import net.lixir.vminus.vision.accessor.EnchantmentVisionAccessor;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
@@ -14,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Enchantment.class)
-public class EnchantmentMixin implements EnchantmentVisionAccessor {
+public class EnchantmentMixin implements EnchantmentVisionable {
     @Unique
     private EnchantmentVision enchantment_vision;
     @Unique
@@ -47,7 +46,7 @@ public class EnchantmentMixin implements EnchantmentVisionAccessor {
     @Inject(method = "isAcceptableItem", at = @At("HEAD"), cancellable = true)
     private void canEnchant(ItemStack itemstack, CallbackInfoReturnable<Boolean> cir) {
         Item item = itemstack.getItem();
-        ItemVision item_vision = Vision.get_vision(item);
+        ItemVision item_vision = ItemVisionable.get_vision(item);
         if (item_vision != null && item_vision.get_enchantable(item) != null)
             cir.setReturnValue(item_vision.get_enchantable(item));
     }
@@ -72,8 +71,8 @@ public class EnchantmentMixin implements EnchantmentVisionAccessor {
 
     @Inject(method = "getRarity", at = @At("HEAD"), cancellable = true)
     private void getRarity(CallbackInfoReturnable<Enchantment.Rarity> cir) {
-        if (enchantment_vision != null && enchantment_vision.get_tradeable(enchantment) != null)
-            cir.setReturnValue(VisionHelper.rarity(enchantment_vision.get_rarity(enchantment)));
+        if (enchantment_vision != null && enchantment_vision.get_rarity(enchantment) != null)
+            cir.setReturnValue(enchantment_vision.get_rarity(enchantment));
     }
 
     @Override

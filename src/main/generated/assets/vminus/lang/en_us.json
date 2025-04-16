@@ -15,7 +15,15 @@
   "block.vminus.defaultium_head": "Defaultium Head",
   "entity.vminus.defaultium_entity": "Defaultium Entity",
   "item.vminus.defaultium_item": "Defaultium Item",
-  "key.vminus.open_capes_menu": "Capes",
-  "vminus.screen.capes.title": "VMinus Capes",
+  "option.modmenu.cape": "Cape",
+  "option.modmenu.cape.beeper": "Beeper",
+  "option.modmenu.cape.ghost": "Ghost",
+  "option.modmenu.cape.marrow": "Marrow",
+  "option.modmenu.cape.none": "None",
+  "option.modmenu.cape.photon": "Photon",
+  "option.modmenu.cape.prototype": "Prototype",
+  "option.modmenu.cape.shroud": "Shroud",
+  "option.modmenu.cape.troll": "Troll",
+  "vminus.configs": "VMinus Configs",
   "vminus.screen.default.title": "Defaultium"
 }

@@ -1,8 +1,8 @@
 {
   "blocks": [
-    "dirt",
-    "stone",
-    "grass_block"
+    "*",
+    "!copper_block"
   ],
+
   "replacement": [{"value": "copper_block"}]
 }

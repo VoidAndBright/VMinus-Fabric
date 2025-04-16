@@ -14,7 +14,7 @@ public class EntityTypeCondition implements Condition<EntityType<? extends Entit
     }
 
     public boolean is_false(EntityType<? extends Entity> entity_type) {
-        if (FabricLoader.getInstance().isModLoaded(is_mod_loaded)) return !inverted;
+        if (is_mod_loaded != null && FabricLoader.getInstance().isModLoaded(is_mod_loaded)) return inverted;
         return true;
     }
 }

@@ -1,8 +1,8 @@
 package net.lixir.vminus.datagen;
 
-import net.lixir.vminus.block.VMinusBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.lixir.vminus.block.VMinusBlocks;
 
 public class VMinusBlockLootTableProvider extends FabricBlockLootTableProvider {
     public VMinusBlockLootTableProvider(FabricDataOutput dataOutput) {

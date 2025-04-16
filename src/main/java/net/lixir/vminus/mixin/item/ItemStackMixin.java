@@ -1,8 +1,7 @@
 package net.lixir.vminus.mixin.item;
 
-import net.lixir.vminus.util.Icon;
-import net.lixir.vminus.vision.VisionHelper;
-import net.lixir.vminus.vision.Vision;
+import net.lixir.vminus.vision.implement.EnchantmentVisionable;
+import net.lixir.vminus.vision.implement.ItemVisionable;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.enchantment.Enchantment;
@@ -11,31 +10,22 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
-
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin{
 
     @Unique
-    private final ItemStack This = (ItemStack) (Object) this;
+    private final ItemStack item_stack = (ItemStack) (Object) this;
 
     //@Inject(method = "isSectionVisible", at = @At(value = "HEAD"), cancellable = true)
     //private static void vminus$shouldShowInTooltip(int flags, ItemStack.TooltipSection tooltipSection, CallbackInfoReturnable<Boolean> cir) {
@@ -47,20 +37,20 @@ public abstract class ItemStackMixin{
     @Inject(method = "damage(ILnet/minecraft/util/math/random/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z",at=@At("RETURN"), cancellable = true)
     public void replace_item_upon_breaking(int amount, Random random, ServerPlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
-            Item item = This.getItem();
-            ItemVision item_vision = Vision.get_vision(item);
+            Item item = item_stack.getItem();
+            ItemVision item_vision = ItemVisionable.get_vision(item);
             if (item_vision != null && item_vision.get_break_replacement(item) != null) {
-                ItemStack replacement_stack = new ItemStack(VisionHelper.item(item_vision.get_break_replacement(item)));
+                ItemStack replacement_stack = new ItemStack(item_vision.get_break_replacement(item));
                 if(item_vision.get_transfer_nbt(item) != null && item_vision.get_transfer_nbt(item)) {
-                    replacement_stack.setNbt(This.getOrCreateNbt());
+                    replacement_stack.setNbt(item_stack.getOrCreateNbt());
                     replacement_stack.setDamage(1);
                 }
                 PlayerInventory player_inventory = player.getInventory();
-                int inventory_slot_index = player_inventory.getSlotWithStack(This);
+                int inventory_slot_index = player_inventory.getSlotWithStack(item_stack);
                 if (inventory_slot_index != -1)
-                    player_inventory.setStack(inventory_slot_index, This);
+                    player_inventory.setStack(inventory_slot_index, item_stack);
                 else{
-                    int armor_slot_index = get_armor_slot_with_stack(player_inventory,This);
+                    int armor_slot_index = get_armor_slot_with_stack(player_inventory, item_stack);
                     if(armor_slot_index != -1) player_inventory.armor.set(armor_slot_index, replacement_stack);
                     else if(player_inventory.offHand.get(0).isOf(item)) player_inventory.offHand.set(0, replacement_stack);
                     player.incrementStat(Stats.BROKEN.getOrCreateStat(item));
@@ -71,49 +61,49 @@ public abstract class ItemStackMixin{
     }
     @Inject(method = "getMaxDamage", at = @At("RETURN"), cancellable = true)
     public void return_max_damage(CallbackInfoReturnable<Integer> cir) {
-        Item item = This.getItem();
-        ItemVision item_vision = Vision.get_vision(item);
+        Item item = item_stack.getItem();
+        ItemVision item_vision = ItemVisionable.get_vision(item);
         if (item_vision!=null && item_vision.get_max_damage(item) != null) {
             cir.setReturnValue(item_vision.get_max_damage(item));
         }
     }
     @Inject(method = "isEnchantable", at = @At("RETURN"), cancellable = true)
     private void return_enchantable(CallbackInfoReturnable<Boolean> cir) {
-        Item item = This.getItem();
-        ItemVision item_vision = Vision.get_vision(item);
+        Item item = item_stack.getItem();
+        ItemVision item_vision = ItemVisionable.get_vision(item);
         if (item_vision!= null && item_vision.get_enchantable(item) != null) {
             cir.setReturnValue(item_vision.get_enchantable(item));
         }
     }
     @Inject(method = "hasGlint", at = @At("RETURN"), cancellable = true)
     private void return_glinted(CallbackInfoReturnable<Boolean> cir){
-        Item item = This.getItem();
-        ItemVision item_vision = Vision.get_vision(item);
+        Item item = item_stack.getItem();
+        ItemVision item_vision = ItemVisionable.get_vision(item);
         if (item_vision!= null && item_vision.get_glinted(item) != null) {
             cir.setReturnValue(item_vision.get_glinted(item));
         }
     }
     @Unique
     private int get_armor_slot_with_stack(PlayerInventory inventory, ItemStack target_itemstack){
-        return iterate_armor_itemstack(inventory,target_itemstack,0);
+        return iterate_armor_item_stack(inventory,target_itemstack,0);
     }
     @Unique
-    private int iterate_armor_itemstack(PlayerInventory inventory, ItemStack target_itemstack, int index){
+    private int iterate_armor_item_stack(PlayerInventory inventory, ItemStack target_itemstack, int index){
         if(index < inventory.armor.size()){
             if (inventory.getArmorStack(index).isOf(target_itemstack.getItem()))
                 return index;
-            return iterate_armor_itemstack(inventory,target_itemstack,index+1);
+            return iterate_armor_item_stack(inventory,target_itemstack,index+1);
         }
         return -1;
     }
     @Inject(method = "addEnchantment", at = @At("HEAD"), cancellable = true)
     public void vision_enchantment(Enchantment enchantment, int level, CallbackInfo ci) {
-        EnchantmentVision enchantment_vision = Vision.get_vision(enchantment);
+        EnchantmentVision enchantment_vision = EnchantmentVisionable.get_vision(enchantment);
         if (enchantment_vision != null) {
             if (enchantment_vision.get_banned(enchantment) != null && enchantment_vision.get_banned(enchantment)) ci.cancel();
-            NbtCompound nbt_compound = This.getOrCreateNbt();
+            NbtCompound nbt_compound = item_stack.getOrCreateNbt();
             int enchantment_limit = nbt_compound.contains("enchantment_limit") ? nbt_compound.getInt("enchantment_limit") : 1000;
-            int total_enchantment_level = This.hasEnchantments() ? get_total_enchantment_level(This) : 0;
+            int total_enchantment_level = item_stack.hasEnchantments() ? get_total_enchantment_level(item_stack) : 0;
             if (total_enchantment_level + level > enchantment_limit) ci.cancel();
         }
     }

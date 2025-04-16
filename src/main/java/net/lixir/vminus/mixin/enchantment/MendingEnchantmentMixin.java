@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.enchantment;
 
-import net.lixir.vminus.vision.Vision;
+import net.lixir.vminus.vision.implement.EnchantmentVisionable;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.MendingEnchantment;
@@ -16,7 +16,7 @@ public class MendingEnchantmentMixin {
     private final Enchantment enchantment = (Enchantment) (Object) this;
     @Inject(method = "isTreasure", at = @At("HEAD"), cancellable = true)
     private void isTreasureOnly(CallbackInfoReturnable<Boolean> cir) {
-        EnchantmentVision enchantment_vision = Vision.get_vision(enchantment);
+        EnchantmentVision enchantment_vision = EnchantmentVisionable.get_vision(enchantment);
         if (enchantment_vision != null && enchantment_vision.get_treasure(enchantment) != null)
             cir.setReturnValue(enchantment_vision.get_treasure(enchantment));
     }

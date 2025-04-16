@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.entity;
 
+import net.lixir.vminus.vision.implement.EntityTypeVisionable;
 import net.lixir.vminus.vision.type.EntityTypeVision;
-import net.lixir.vminus.vision.accessor.EntityTypeVisionAccessor;
 import net.minecraft.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityType.class)
-public class EntityTypeMixin implements EntityTypeVisionAccessor {
+public class EntityTypeMixin implements EntityTypeVisionable {
     @Unique
     private EntityTypeVision entity_type_vision;
     @Unique

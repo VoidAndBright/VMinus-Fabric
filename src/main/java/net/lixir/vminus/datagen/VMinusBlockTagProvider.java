@@ -1,9 +1,9 @@
 package net.lixir.vminus.datagen;
 
-import net.lixir.vminus.block.VMinusBlocks;
-import net.lixir.vminus.util.tag.VMinusBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.lixir.vminus.block.VMinusBlocks;
+import net.lixir.vminus.util.tag.VMinusBlockTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;

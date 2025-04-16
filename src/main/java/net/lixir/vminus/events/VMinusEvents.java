@@ -1,155 +1,155 @@
 package net.lixir.vminus.events;
 
 import com.google.common.collect.Multimap;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.biome.v1.BiomeModification;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.lixir.vminus.VMinus;
-import net.lixir.vminus.attribute.VMinusAttributes;
-import net.lixir.vminus.entity.VMinusEntities;
-import net.lixir.vminus.mixin.client.DrawContextAccessor;
+import net.lixir.vminus.cape.Cape;
+import net.lixir.vminus.config.VMinusConfigs;
+import net.lixir.vminus.networking.VMinusNetworking;
 import net.lixir.vminus.util.Icon;
-import net.lixir.vminus.vision.Vision;
-import net.lixir.vminus.vision.VisionHelper;
-import net.lixir.vminus.vision.type.ItemVision;
-import net.minecraft.client.gui.DrawContext;
+import net.lixir.vminus.util.PersistentNbt;
+import net.lixir.vminus.vision.implement.*;
+import net.lixir.vminus.vision.properties.VisionAttributeModifier;
+import net.lixir.vminus.vision.type.*;
+import net.minecraft.block.Block;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
+
 
 public class VMinusEvents {
-    private static void on_load(MinecraftServer minecraftServer, ServerWorld serverWorld) {
-        Vision.set_visions();
-    }
-    public static void register(){
-        ServerWorldEvents.LOAD.register(VMinusEvents::on_load);
-        ModifyItemAttributeModifiersCallback.EVENT.register(VMinusEvents::add_vision_attributes);
-        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), SpawnGroup.CREATURE, VMinusEntities.DEFAULTIUM_ENTITY,5,5,10);
-    }
-    private static final Identifier HEALTH_LOST_STAT_BOOST_OVERLAY = new Identifier(VMinus.MOD_ID,"textures/misc/health_lost_stat_boost_overlay.png");
-
-    private static void health_lost_stat_boost_overlay(DrawContext context, float v) {
-        if (context instanceof DrawContextAccessor draw_context_accessor){
-            PlayerEntity player_entity = draw_context_accessor.get_client().player;
-            if (player_entity != null) {
-                float health = player_entity.getHealth();
-                float max_health = player_entity.getMaxHealth();
-                float health_percentage =  health / max_health;
-                double attribute_total = get_attribute_total_from_player_entity(player_entity, VMinusAttributes.HEALTH_LOST_STAT_BOOST);
-                float opacity = 1f - health_percentage;
-                if (attribute_total > 0) {
-                    render_overlay(context,HEALTH_LOST_STAT_BOOST_OVERLAY,opacity);
+    public static BlockVision[] block_visions = new BlockVision[]{};
+    public static EnchantmentVision[] enchantment_visions = new EnchantmentVision[]{};
+    public static EntityTypeVision[] entity_type_visions = new EntityTypeVision[]{};
+    public static ItemVision[] item_visions = new ItemVision[]{};
+    public static StatusEffectVision[] status_effect_visions = new StatusEffectVision[]{};
+    private static void on_server_start(MinecraftServer minecraftServer) {
+        for (BlockVision block_vision:block_visions){
+            Vector<Block> blocks = block_vision.get_blocks();
+            for (Block block:blocks){
+                if (BlockVisionable.get_vision(block) != null) {
+                    BlockVisionable.set_vision(block, new BlockVision(BlockVisionable.get_vision(block), block_vision));
+                }
+                else {
+                    BlockVisionable.set_vision(block,block_vision);
                 }
             }
         }
-    }
-    public static void render_overlay(DrawContext context, Identifier texture, float opacity) {
-        RenderSystem.disableDepthTest();
-        RenderSystem.depthMask(false);
-        RenderSystem.enableBlend();
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
-        RenderSystem.setShaderColor(1, 1, 1, opacity);
-        context.drawTexture(texture, 0, 0, 0, 0, context.getScaledWindowWidth(), context.getScaledWindowHeight(), context.getScaledWindowWidth(), context.getScaledWindowHeight());
-        RenderSystem.depthMask(true);
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.enableDepthTest();
-        RenderSystem.disableBlend();
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-    }
-    private static double get_attribute_total_from_player_entity(PlayerEntity player_entity, EntityAttribute entity_attribute){
-        return Arrays.stream(EquipmentSlot.values()).mapToDouble(slot -> get_attribute_total_from_item(player_entity.getEquippedStack(slot), slot, entity_attribute)).sum();
-    }
-    private static double get_attribute_total_from_item(ItemStack item_stack, EquipmentSlot slot, EntityAttribute attribute) {
-        Collection<EntityAttributeModifier> modifiers = item_stack.getAttributeModifiers(slot).get(attribute);
-        if (!modifiers.isEmpty()) {
-            return modifiers.stream().mapToDouble(EntityAttributeModifier::getValue).sum();
+        for (EnchantmentVision enchantment_vision:enchantment_visions){
+            for (Enchantment enchantment:enchantment_vision.get_enchantments()){
+                if (enchantment != null && EnchantmentVisionable.get_vision(enchantment) != null)
+                    EnchantmentVisionable.set_vision(enchantment,new EnchantmentVision(EnchantmentVisionable.get_vision(enchantment),enchantment_vision));
+                else if (enchantment != null) EnchantmentVisionable.set_vision(enchantment,enchantment_vision);
+            }
         }
-        return 0.0;
+        for (EntityTypeVision entity_type_vision:entity_type_visions){
+            for (EntityType<?> entity_type:entity_type_vision.get_entity_types()){
+                if (EntityTypeVisionable.get_vision(entity_type) != null)
+                    EntityTypeVisionable.set_vision(entity_type,new EntityTypeVision(EntityTypeVisionable.get_vision(entity_type),entity_type_vision));
+                else EntityTypeVisionable.set_vision(entity_type,entity_type_vision);
+            }
+        }
+        for(StatusEffectVision status_effect_vision:status_effect_visions){
+            for (StatusEffect status_effect:status_effect_vision.get_status_effects()){
+                if (status_effect != null && StatusEffectVisionable.get_vision(status_effect) != null)
+                    StatusEffectVisionable.set_vision(status_effect,new StatusEffectVision(StatusEffectVisionable.get_vision(status_effect),status_effect_vision));
+                else if (status_effect != null) StatusEffectVisionable.set_vision(status_effect,status_effect_vision);
+            }
+        }
+        for (ItemVision item_vision:item_visions){
+            for (Item item:item_vision.get_items()){
+                if (ItemVisionable.get_vision(item) != null)
+                    ItemVisionable.set_vision(item,new ItemVision(ItemVisionable.get_vision(item),item_vision));
+                else ItemVisionable.set_vision(item,item_vision);
+            }
+        }
     }
+    public static void register(){
+        ServerLifecycleEvents.SERVER_STARTED.register(VMinusEvents::on_server_start);
+        ServerLifecycleEvents.SERVER_STOPPED.register(VMinusEvents::on_server_stop);
+        ModifyItemAttributeModifiersCallback.EVENT.register(VMinusEvents::add_vision_attributes);
+        ClientPlayConnectionEvents.JOIN.register(VMinusEvents::on_client_join);
+    }
+
+    private static void on_client_join(ClientPlayNetworkHandler clientPlayNetworkHandler, PacketSender packetSender, MinecraftClient minecraftClient) {
+        String cape = Cape.to_string(VMinusConfigs.CAPE.getValue());
+        PersistentNbt.get(minecraftClient.player).putString("Cape", cape);
+        ClientPlayNetworking.send(VMinusNetworking.CAPE_PACKET, PacketByteBufs.create().writeString(cape));
+    }
+
+    private static void on_server_stop(MinecraftServer minecraftServer) {
+        for (Block block : Registries.BLOCK){
+            BlockVisionable.set_vision(block,null);
+        }
+        for (Enchantment enchantment : Registries.ENCHANTMENT){
+            EnchantmentVisionable.set_vision(enchantment,null);
+        }
+        for (EntityType<?> entity_type : Registries.ENTITY_TYPE){
+            EntityTypeVisionable.set_vision(entity_type,null);
+        }
+        for (StatusEffect status_effect : Registries.STATUS_EFFECT){
+            StatusEffectVisionable.set_vision(status_effect,null);
+        }
+        for (Item item : Registries.ITEM){
+            ItemVisionable.set_vision(item,null);
+        }
+    }
+
+
+
     public static void client_register(){
-        HudRenderCallback.EVENT.register(VMinusEvents::health_lost_stat_boost_overlay);
         ItemTooltipCallback.EVENT.register(VMinusEvents::inspect_tooltip);
     }
 
     private static void add_vision_attributes(ItemStack itemstack, EquipmentSlot equipment_slot, Multimap<EntityAttribute, EntityAttributeModifier> entity_attribute_multimap) {
 
         Item item = itemstack.getItem();
-        ItemVision item_vision = Vision.get_vision(item);
+        ItemVision item_vision = ItemVisionable.get_vision(item);
         if (item_vision != null) {
             if (item_vision.get_attributes(item) != null) {
                 entity_attribute_multimap.clear();
-                Arrays.stream(item_vision.get_attributes(item)).forEach(attribute -> {
-                    if (VisionHelper.equipment_slot(attribute) == equipment_slot){
-                        entity_attribute_multimap.put(VisionHelper.attribute(attribute),VisionHelper.attribute_modifier(attribute));
-                    }
-                });
+                for (VisionAttributeModifier attribute:item_vision.get_attributes(item)) {
+                    if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
+                    entity_attribute_multimap.put(VisionAttributeModifier.attribute(attribute),VisionAttributeModifier.attribute_modifier(attribute));
+                }
             }
             else if (item_vision.get_add_attributes(item) != null){
-                Arrays.stream(item_vision.get_attributes(item)).forEach(attribute -> {
-                    if (VisionHelper.equipment_slot(attribute) == equipment_slot){
-                        entity_attribute_multimap.put(VisionHelper.attribute(attribute),VisionHelper.attribute_modifier(attribute));
-                    }
-                });
+                for (VisionAttributeModifier attribute:item_vision.get_add_attributes(item)) {
+                    if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
+                    entity_attribute_multimap.put(VisionAttributeModifier.attribute(attribute),VisionAttributeModifier.attribute_modifier(attribute));
+                }
             }
-            else if (item_vision.get_remove_attributes(item) != null){
-                Arrays.stream(item_vision.get_attributes(item)).forEach(attribute -> {
-                    if (VisionHelper.equipment_slot(attribute) == equipment_slot){
-                        entity_attribute_multimap.remove(VisionHelper.attribute(attribute),VisionHelper.attribute_modifier(attribute));
+            else if (item_vision.get_remove_attributes(item) != null) {
+                for (VisionAttributeModifier attribute : item_vision.get_remove_attributes(item)) {
+                    if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
+                    EntityAttribute vision_attribute = VisionAttributeModifier.attribute(attribute);
+                    for (EntityAttributeModifier modifier : entity_attribute_multimap.get(vision_attribute).stream().toList()) {
+                        entity_attribute_multimap.remove(vision_attribute,modifier);
                     }
-                });
+                }
             }
         }
-        //boolean miningFlag = false;
-        //List<VisionAttribute> visionAttributes = itemVision.attribute.getValues(new VisionConditionArguments.Builder().passItemStack(itemStack).build());
-        //for (VisionAttribute visionAttribute : visionAttributes) {
-        //    boolean replace = visionAttribute.replace();
-        //    boolean remove = visionAttribute.remove();
-        //    if (replace || remove) {
-        //        Multimap<Attribute, AttributeModifier> originalModifiers = event.getOriginalModifiers();
-        //        for (Attribute a : originalModifiers.keySet()) {
-        //            for (AttributeModifier modifier : originalModifiers.get(a)) {
-        //                String modifierId = Objects.requireNonNull(ForgeRegistries.ATTRIBUTES.getKey(a)).toString();
-        //                if (modifierId.equals(visionAttribute.id())) {
-        //                    event.removeModifier(a, modifier);
-        //                }
-        //            }
-        //        }
-        //        if (remove)
-        //            continue;
-        //    }
-        //    EquipmentSlot equipmentSlot = visionAttribute.equipmentSlot();
-        //    if (equipmentSlot == null) {
-        //        if (item instanceof Equipable equipable) {
-        //            equipmentSlot = equipable.getEquipmentSlot();
-        //        } else {
-        //            equipmentSlot = EquipmentSlot.MAINHAND;
-        //        }
-        //    }
-        //    if (eventSlot == equipmentSlot)
-        //        event.addModifier(visionAttribute.attribute(), visionAttribute.attributeModifier());
-        //}
     }
 
     private static void inspect_tooltip(ItemStack item_stack, TooltipContext tooltip_context, List<Text> tooltip){

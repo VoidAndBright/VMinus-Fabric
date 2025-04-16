@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.client;
 
-import net.lixir.vminus.vision.Vision;
+import net.lixir.vminus.vision.implement.ItemVisionable;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
@@ -30,7 +30,7 @@ public class ClientPlayNetworkHandlerMixin {
         Entity entity = world.getEntityById(packet.getEntityId());
         if (entity instanceof ItemEntity item_entity) {
             Item item = item_entity.getStack().getItem();
-            ItemVision item_vision = Vision.get_vision(item);
+            ItemVision item_vision = ItemVisionable.get_vision(item);
             if (item_vision != null && item_vision.get_pick_up_sound(item) != null) {
                 Identifier identifier = new Identifier(item_vision.get_pick_up_sound(item));
                 Random random = accessor.get_random();

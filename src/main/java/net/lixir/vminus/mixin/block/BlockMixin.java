@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.block;
 
+import net.lixir.vminus.vision.implement.BlockVisionable;
 import net.lixir.vminus.vision.type.BlockVision;
-import net.lixir.vminus.vision.accessor.BlockVisionAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.sound.BlockSoundGroup;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Block.class)
-public class BlockMixin implements BlockVisionAccessor {
+public class BlockMixin implements BlockVisionable {
     @Unique
     private BlockVision block_vision;
     @Unique private final Block block = (Block)(Object)this;

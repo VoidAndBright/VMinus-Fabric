@@ -1,5 +1,5 @@
-// 1.20.1	2025-02-19T01:30:53.6616431	VMinus/Tags for minecraft:entity_type
-aad93ad2ce10e786864a907423c9a43a27835e8b data\vminus\tags\entity_types\horses.json
+// 1.20.1	2025-04-12T22:04:12.9716002	VMinus/Tags for minecraft:entity_type
 76186aca787f9a3b523b3d5692d14c8b2829b9f6 data\vminus\tags\entity_types\illagers.json
-84bd0ec9f5d1987989e2a66c5b801af5333a4826 data\vminus\tags\entity_types\spiders.json
 989228e80d92c9cfa9dc0fa24f8dba6488f3878d data\vminus\tags\entity_types\zombies.json
+84bd0ec9f5d1987989e2a66c5b801af5333a4826 data\vminus\tags\entity_types\spiders.json
+aad93ad2ce10e786864a907423c9a43a27835e8b data\vminus\tags\entity_types\horses.json

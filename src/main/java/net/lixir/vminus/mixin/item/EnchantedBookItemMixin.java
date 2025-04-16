@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.item;
 
-import net.lixir.vminus.vision.Vision;
+import net.lixir.vminus.vision.implement.EnchantmentVisionable;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -16,7 +16,7 @@ public class EnchantedBookItemMixin {
     @Inject(method = "addEnchantment", at = @At("HEAD"), cancellable = true)
     private static void addEnchantment(ItemStack stack, EnchantmentLevelEntry entry, CallbackInfo ci) {
         Enchantment enchantment = entry.enchantment;
-        EnchantmentVision enchantment_vision = Vision.get_vision(enchantment);
+        EnchantmentVision enchantment_vision = EnchantmentVisionable.get_vision(enchantment);
         if (enchantment_vision != null && enchantment_vision.get_banned(enchantment) != null && enchantment_vision.get_banned(enchantment))
             ci.cancel();
     }

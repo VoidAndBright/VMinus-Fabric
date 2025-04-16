@@ -1,8 +1,0 @@
-{
-  "items":[
-    "minecraft:wooden_pickaxe"
-  ],
-  "replacement":[{
-    "value": "minecraft:golden_pickaxe"
-  }]
-}

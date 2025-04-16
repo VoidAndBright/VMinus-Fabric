@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.item;
 
 import com.google.common.collect.Multimap;
-import net.lixir.vminus.attribute.VMinusAttributes;
+import net.lixir.vminus.entity.attribute.VMinusEntityAttributes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -13,8 +13,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Collection;
 
 @Mixin(MiningToolItem.class)
 public class MiningToolItemMixin {
@@ -29,9 +27,8 @@ public class MiningToolItemMixin {
         EquipmentSlot slot = EquipmentSlot.MAINHAND;
         Multimap<EntityAttribute, EntityAttributeModifier> modifiers = stack.getAttributeModifiers(slot);
         for (EntityAttribute attribute : modifiers.keySet()) {
-            Collection<EntityAttributeModifier> attributeModifiers = modifiers.get(attribute);
-            for (EntityAttributeModifier entity_attribute_modifier : attributeModifiers) {
-                if (attribute == VMinusAttributes.MINING_SPEED) {
+            for (EntityAttributeModifier entity_attribute_modifier : modifiers.get(attribute)) {
+                if (attribute == VMinusEntityAttributes.MINING_SPEED) {
                     new_mining_speed += (float) entity_attribute_modifier.getValue();
                 }
             }

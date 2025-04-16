@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 
 public class DefaultScreen extends HandledScreen<DefaultScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier(VMinus.MOD_ID, "textures/screen/default_menu.png");
+    private static final Identifier TEXTURE = new Identifier(VMinus.MOD_ID, "textures/screen/default_screen.png");
     public static final Text TITLE = Text.translatable(VMinus.MOD_ID+".screen.default.title");
 
     public DefaultScreen(DefaultScreenHandler handler, PlayerInventory inventory, Text title) {

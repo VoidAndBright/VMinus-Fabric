@@ -13,7 +13,7 @@ public class EnchantmentCondition implements Condition<Enchantment> {
     }
 
     public boolean is_false(Enchantment enchantment) {
-        if (FabricLoader.getInstance().isModLoaded(is_mod_loaded)) return !inverted;
+        if (is_mod_loaded != null && FabricLoader.getInstance().isModLoaded(is_mod_loaded)) return inverted;
         return true;
     }
 }

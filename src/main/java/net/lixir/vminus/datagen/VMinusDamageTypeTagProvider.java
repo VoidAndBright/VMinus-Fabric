@@ -1,8 +1,8 @@
 package net.lixir.vminus.datagen;
 
-import net.lixir.vminus.util.tag.VMinusDamageTypeTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.lixir.vminus.util.tag.VMinusDamageTypeTags;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.registry.RegistryKeys;

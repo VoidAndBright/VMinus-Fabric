@@ -1,7 +1,6 @@
 package net.lixir.vminus.util;
 
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.Formatting;
 
 public enum Icon implements VMinusIcon {

@@ -1,9 +1,10 @@
 package net.lixir.vminus.vision.type;
 
-import net.lixir.vminus.vision.VisionHelper;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.value.status_effect.StatusEffectVisionBoolean;
 import net.lixir.vminus.vision.value.status_effect.StatusEffectVisionString;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -14,34 +15,42 @@ import java.util.Vector;
 
 public class StatusEffectVision {
     private final String[] status_effects;
-    private final StatusEffectVisionBoolean[] banned;
-    private final StatusEffectVisionString[] particle;
-    private final StatusEffectVisionString[] color;
-    private final StatusEffectVisionString[] category;
+    private final Vector<StatusEffectVisionBoolean> banned;
+    private final Vector<StatusEffectVisionString> particle;
+    private final Vector<StatusEffectVisionString> color;
+    private final Vector<StatusEffectVisionString> category;
 
     public StatusEffectVision(StatusEffectVision vision_left,StatusEffectVision vision_right){
         this.status_effects = new String[]{};
-        this.banned = VisionHelper.collect_vision_values(vision_left.banned,vision_right.banned,StatusEffectVisionBoolean[]::new);
-        this.particle = VisionHelper.collect_vision_values(vision_left.particle,vision_right.particle,StatusEffectVisionString[]::new);
-        this.color = VisionHelper.collect_vision_values(vision_left.color,vision_right.color,StatusEffectVisionString[]::new);
-        this.category = VisionHelper.collect_vision_values(vision_left.category,vision_right.category,StatusEffectVisionString[]::new);
+        this.banned = Vision.sum(vision_left.banned,vision_right.banned);
+        this.particle = Vision.sum(vision_left.particle,vision_right.particle);
+        this.color = Vision.sum(vision_left.color,vision_right.color);
+        this.category = Vision.sum(vision_left.category,vision_right.category);
     }
     public Boolean get_banned(StatusEffect status_effect){
-        return VisionHelper.vision_value(status_effect,banned);
+        return Vision.unwrap(status_effect,banned);
     }
     public String get_particle(StatusEffect status_effect){
-        return VisionHelper.vision_value(status_effect,particle);
+        return Vision.unwrap(status_effect,particle);
     }
-    public String get_color(StatusEffect status_effect){
-        return VisionHelper.vision_value(status_effect,color);
+    public Integer get_color(StatusEffect status_effect){
+        String string = Vision.unwrap(status_effect,color);
+        if (string == null) return null;
+        return Integer.parseInt(string,16);
     }
-    public String get_category(StatusEffect status_effect){
-        return VisionHelper.vision_value(status_effect,category);
+    public StatusEffectCategory get_category(StatusEffect status_effect){
+        String string = Vision.unwrap(status_effect,category);
+        if (string == null) return null;
+        return switch (string){
+            case "harmful"->StatusEffectCategory.HARMFUL;
+            case "neutral"->StatusEffectCategory.NEUTRAL;
+            default -> StatusEffectCategory.BENEFICIAL;
+        };
     }
 
-    public StatusEffect[] get_status_effects(Vector<StatusEffect> vector_enchantments,int index){
-        if (index < status_effects.length){
-            String status_effect_entry = status_effects[index];
+    public StatusEffect[] get_status_effects(){
+        Vector<StatusEffect> vector_enchantments = new Vector<>();
+        for (String status_effect_entry:status_effects){
             if (status_effect_entry.startsWith("*")){
                 vector_enchantments.addAll(Registries.STATUS_EFFECT.stream().toList());
             }
@@ -59,8 +68,7 @@ public class StatusEffectVision {
             }
             else if (status_effect_entry.startsWith("!")) vector_enchantments.remove(Registries.STATUS_EFFECT.get(new Identifier(status_effect_entry.substring(1))));
             else vector_enchantments.add(Registries.STATUS_EFFECT.get(new Identifier(status_effect_entry)));
-            return get_status_effects(vector_enchantments,index+1);
         }
-        else return vector_enchantments.toArray(StatusEffect[]::new);
+        return vector_enchantments.toArray(StatusEffect[]::new);
     }
 }

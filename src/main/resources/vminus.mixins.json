@@ -68,16 +68,15 @@
     "util.RarityAccessor",
     "world.ChunkSectionMixin",
     "world.PlayerInventoryMixin",
-    "world.PlayerListEntryMixin",
     "world.SimpleInventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "client.AbstractClientPlayerEntityMixin",
     "client.ClientPlayNetworkHandlerAccessor",
     "client.ClientPlayNetworkHandlerMixin",
-    "client.DrawContextAccessor",
     "client.HorseArmorFeatureRendererMixin"
   ]
 }

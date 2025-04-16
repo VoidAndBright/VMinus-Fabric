@@ -1,9 +1,9 @@
 package net.lixir.vminus.datagen;
 
-import net.lixir.vminus.block.VMinusBlocks;
-import net.lixir.vminus.item.VMinusItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.lixir.vminus.block.VMinusBlocks;
+import net.lixir.vminus.item.VMinusItems;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.recipe.book.RecipeCategory;
 

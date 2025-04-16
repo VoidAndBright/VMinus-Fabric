@@ -1,6 +1,6 @@
 package net.lixir.vminus.vision.type;
 
-import net.lixir.vminus.vision.VisionHelper;
+import net.lixir.vminus.vision.Vision;
 import net.lixir.vminus.vision.value.entity_type.EntityTypeVisionBoolean;
 import net.lixir.vminus.vision.value.entity_type.EntityTypeVisionFloat;
 import net.lixir.vminus.vision.value.entity_type.EntityTypeVisionInteger;
@@ -16,14 +16,14 @@ import java.util.Vector;
 
 public class EntityTypeVision {
     private final String[] entity_types;
-    private final EntityTypeVisionBoolean[] banned;
-    private final EntityTypeVisionBoolean[] fire_proof;
-    private final EntityTypeVisionBoolean[] dampens_vibrations;
-    private final EntityTypeVisionBoolean[] silent;
-    private final EntityTypeVisionBoolean[] underwater_breathing;
-    private final EntityTypeVisionBoolean[] water_sensitive;
-    private final EntityTypeVisionInteger[] exp_drop_amount;
-    private final EntityTypeVisionFloat[] volume;
+    private final Vector<EntityTypeVisionBoolean> banned;
+    private final Vector<EntityTypeVisionBoolean> fire_proof;
+    private final Vector<EntityTypeVisionBoolean> dampens_vibrations;
+    private final Vector<EntityTypeVisionBoolean> silent;
+    private final Vector<EntityTypeVisionBoolean> underwater_breathing;
+    private final Vector<EntityTypeVisionBoolean> water_sensitive;
+    private final Vector<EntityTypeVisionInteger> exp_drop_amount;
+    private final Vector<EntityTypeVisionFloat> volume;
 
     public EntityTypeVision(EntityTypeVision entityVision){
         this.entity_types = new String[]{};
@@ -38,43 +38,43 @@ public class EntityTypeVision {
     }
     public EntityTypeVision(EntityTypeVision left_vision,EntityTypeVision right_vision){
         this.entity_types = new String[]{};
-        this.banned = VisionHelper.collect_vision_values(left_vision.banned,right_vision.banned,EntityTypeVisionBoolean[]::new);
-        this.fire_proof = VisionHelper.collect_vision_values(left_vision.fire_proof,right_vision.fire_proof,EntityTypeVisionBoolean[]::new);
-        this.silent = VisionHelper.collect_vision_values(left_vision.silent,right_vision.silent,EntityTypeVisionBoolean[]::new);
-        this.dampens_vibrations = VisionHelper.collect_vision_values(left_vision.dampens_vibrations,right_vision.dampens_vibrations,EntityTypeVisionBoolean[]::new);
-        this.underwater_breathing = VisionHelper.collect_vision_values(left_vision.underwater_breathing,right_vision.underwater_breathing,EntityTypeVisionBoolean[]::new);
-        this.water_sensitive = VisionHelper.collect_vision_values(left_vision.water_sensitive,right_vision.water_sensitive,EntityTypeVisionBoolean[]::new);
-        this.exp_drop_amount = VisionHelper.collect_vision_values(left_vision.exp_drop_amount,right_vision.exp_drop_amount,EntityTypeVisionInteger[]::new);
-        this.volume = VisionHelper.collect_vision_values(left_vision.volume,right_vision.volume,EntityTypeVisionFloat[]::new);
+        this.banned = Vision.sum(left_vision.banned,right_vision.banned);
+        this.fire_proof = Vision.sum(left_vision.fire_proof,right_vision.fire_proof);
+        this.silent = Vision.sum(left_vision.silent,right_vision.silent);
+        this.dampens_vibrations = Vision.sum(left_vision.dampens_vibrations,right_vision.dampens_vibrations);
+        this.underwater_breathing = Vision.sum(left_vision.underwater_breathing,right_vision.underwater_breathing);
+        this.water_sensitive = Vision.sum(left_vision.water_sensitive,right_vision.water_sensitive);
+        this.exp_drop_amount = Vision.sum(left_vision.exp_drop_amount,right_vision.exp_drop_amount);
+        this.volume = Vision.sum(left_vision.volume,right_vision.volume);
     }
     public Boolean get_banned(EntityType<?> entity_type){
-        return VisionHelper.vision_value(entity_type,banned);
+        return Vision.unwrap(entity_type,banned);
     }
     public Boolean get_fire_proof(EntityType<?> entity_type){
-        return VisionHelper.vision_value(entity_type,fire_proof);
+        return Vision.unwrap(entity_type,fire_proof);
     }
     public Boolean get_silent(EntityType<?> entity_type){
-        return VisionHelper.vision_value(entity_type,fire_proof);
+        return Vision.unwrap(entity_type,fire_proof);
     }
     public Boolean get_dampens_vibrations(EntityType<?> entity_type){
-        return VisionHelper.vision_value(entity_type,fire_proof);
+        return Vision.unwrap(entity_type,fire_proof);
     }
     public Boolean get_underwater_breathing(EntityType<?> entity_type){
-        return VisionHelper.vision_value(entity_type,underwater_breathing);
+        return Vision.unwrap(entity_type,underwater_breathing);
     }
     public Boolean get_water_sensitive(EntityType<?> entity_type){
-        return VisionHelper.vision_value(entity_type,water_sensitive);
+        return Vision.unwrap(entity_type,water_sensitive);
     }
     public Integer get_exp_drop_amount(EntityType<?> entity_type){
-        return VisionHelper.vision_value(entity_type,exp_drop_amount);
+        return Vision.unwrap(entity_type,exp_drop_amount);
     }
     public Float get_volume(EntityType<?> entity_type){
-        return VisionHelper.vision_value(entity_type,volume);
+        return Vision.unwrap(entity_type,volume);
     }
 
-    public EntityType<?>[] get_entity_types(Vector<EntityType<?>> vector_enchantments,int index){
-        if (index < entity_types.length){
-            String entity_type_entry = entity_types[index];
+    public EntityType<?>[] get_entity_types(){
+        Vector<EntityType<?>> vector_enchantments = new Vector<>();
+        for (String entity_type_entry:entity_types){
             if (entity_type_entry.startsWith("*")){
                 vector_enchantments.addAll(Registries.ENTITY_TYPE.stream().toList());
             }
@@ -90,11 +90,7 @@ public class EntityTypeVision {
             }
             else if (entity_type_entry.startsWith("!")) vector_enchantments.remove(Registries.ENTITY_TYPE.get(new Identifier(entity_type_entry.substring(1))));
             else vector_enchantments.add(Registries.ENTITY_TYPE.get(new Identifier(entity_type_entry)));
-            return get_entity_types(vector_enchantments,index+1);
         }
-        else return vector_enchantments.toArray(EntityType<?>[]::new);
-    }
-    private static Identifier get_enchantment_identifier(RegistryEntry<EntityType<?>> registry_entry_enchantment){
-        return Registries.ENTITY_TYPE.getId(registry_entry_enchantment.value());
+        return vector_enchantments.toArray(EntityType<?>[]::new);
     }
 }
