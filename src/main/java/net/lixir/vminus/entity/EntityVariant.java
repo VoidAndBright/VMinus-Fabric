@@ -8,6 +8,7 @@ public interface EntityVariant {
     static <T extends Entity> void set_variant(T entity, String new_variant){
         if (entity instanceof EntityVariant entity_variant)
             entity_variant.vminus$set_variant(new_variant);
+
     }
     static <T extends Entity> String get_variant(T entity){
         if (entity instanceof EntityVariant entity_variant)
