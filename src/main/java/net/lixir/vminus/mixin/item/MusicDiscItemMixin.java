@@ -34,9 +34,8 @@ public class MusicDiscItemMixin {
                 PlayerEntity player = context.getPlayer();
                 BlockEntity block_entity = world.getBlockEntity(block_pos);
                 if (block_entity instanceof JukeboxBlockEntity jukeboxBlockEntity) {
-                    ItemStack copy_item_stack = item_stack.copy();
-                    copy_item_stack.setCount(1);
-                    jukeboxBlockEntity.setDisc(copy_item_stack);
+                    ItemStack music_disc_item_stack = new ItemStack(item_stack.getItem());
+                    jukeboxBlockEntity.setDisc(music_disc_item_stack);
                     world.emitGameEvent(GameEvent.BLOCK_CHANGE, block_pos, GameEvent.Emitter.of(player, block_state));
                     item_stack.decrement(1);
                     if (player != null) {

@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.client;
 
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;

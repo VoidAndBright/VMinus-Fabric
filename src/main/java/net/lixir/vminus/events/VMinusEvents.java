@@ -8,13 +8,12 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.lixir.vminus.VMinus;
 import net.lixir.vminus.cape.Cape;
+import net.lixir.vminus.cape.CapeOwner;
 import net.lixir.vminus.config.VMinusConfigs;
 import net.lixir.vminus.networking.VMinusNetworking;
 import net.lixir.vminus.util.Icon;
-import net.lixir.vminus.util.PersistentNbt;
-import net.lixir.vminus.vision.implement.*;
+import net.lixir.vminus.vision.direct.*;
 import net.lixir.vminus.vision.properties.VisionAttributeModifier;
 import net.lixir.vminus.vision.type.*;
 import net.minecraft.block.Block;
@@ -50,38 +49,45 @@ public class VMinusEvents {
             for (Block block:blocks){
                 if (BlockVisionable.get_vision(block) != null) {
                     BlockVisionable.set_vision(block, new BlockVision(BlockVisionable.get_vision(block), block_vision));
+                    continue;
                 }
-                else {
-                    BlockVisionable.set_vision(block,block_vision);
-                }
+                BlockVisionable.set_vision(block,block_vision);
             }
         }
         for (EnchantmentVision enchantment_vision:enchantment_visions){
             for (Enchantment enchantment:enchantment_vision.get_enchantments()){
-                if (enchantment != null && EnchantmentVisionable.get_vision(enchantment) != null)
-                    EnchantmentVisionable.set_vision(enchantment,new EnchantmentVision(EnchantmentVisionable.get_vision(enchantment),enchantment_vision));
-                else if (enchantment != null) EnchantmentVisionable.set_vision(enchantment,enchantment_vision);
+                if (EnchantmentVisionable.get_vision(enchantment) != null) {
+                    EnchantmentVisionable.set_vision(enchantment, new EnchantmentVision(EnchantmentVisionable.get_vision(enchantment), enchantment_vision));
+                    continue;
+                }
+                EnchantmentVisionable.set_vision(enchantment,enchantment_vision);
             }
         }
         for (EntityTypeVision entity_type_vision:entity_type_visions){
             for (EntityType<?> entity_type:entity_type_vision.get_entity_types()){
-                if (EntityTypeVisionable.get_vision(entity_type) != null)
+                if (EntityTypeVisionable.get_vision(entity_type) != null){
                     EntityTypeVisionable.set_vision(entity_type,new EntityTypeVision(EntityTypeVisionable.get_vision(entity_type),entity_type_vision));
-                else EntityTypeVisionable.set_vision(entity_type,entity_type_vision);
+                    continue;
+                }
+                EntityTypeVisionable.set_vision(entity_type,entity_type_vision);
             }
         }
         for(StatusEffectVision status_effect_vision:status_effect_visions){
             for (StatusEffect status_effect:status_effect_vision.get_status_effects()){
-                if (status_effect != null && StatusEffectVisionable.get_vision(status_effect) != null)
-                    StatusEffectVisionable.set_vision(status_effect,new StatusEffectVision(StatusEffectVisionable.get_vision(status_effect),status_effect_vision));
-                else if (status_effect != null) StatusEffectVisionable.set_vision(status_effect,status_effect_vision);
+                if (StatusEffectVisionable.get_vision(status_effect) != null) {
+                    StatusEffectVisionable.set_vision(status_effect, new StatusEffectVision(StatusEffectVisionable.get_vision(status_effect), status_effect_vision));
+                    continue;
+                }
+                StatusEffectVisionable.set_vision(status_effect,status_effect_vision);
             }
         }
         for (ItemVision item_vision:item_visions){
             for (Item item:item_vision.get_items()){
-                if (ItemVisionable.get_vision(item) != null)
-                    ItemVisionable.set_vision(item,new ItemVision(ItemVisionable.get_vision(item),item_vision));
-                else ItemVisionable.set_vision(item,item_vision);
+                if (ItemVisionable.get_vision(item) != null) {
+                    ItemVisionable.set_vision(item, new ItemVision(ItemVisionable.get_vision(item), item_vision));
+                    continue;
+                }
+                ItemVisionable.set_vision(item,item_vision);
             }
         }
     }
@@ -93,9 +99,10 @@ public class VMinusEvents {
     }
 
     private static void on_client_join(ClientPlayNetworkHandler clientPlayNetworkHandler, PacketSender packetSender, MinecraftClient minecraftClient) {
-        String cape = Cape.to_string(VMinusConfigs.CAPE.getValue());
-        PersistentNbt.get(minecraftClient.player).putString("Cape", cape);
-        ClientPlayNetworking.send(VMinusNetworking.CAPE_PACKET, PacketByteBufs.create().writeString(cape));
+        if (minecraftClient.player == null) return;
+        Cape cape = VMinusConfigs.CAPE.getValue();
+        CapeOwner.cast(minecraftClient.player).set_cape(cape);
+        ClientPlayNetworking.send(VMinusNetworking.CAPE_PACKET, PacketByteBufs.create().writeString(Cape.to_string(cape)));
     }
 
     private static void on_server_stop(MinecraftServer minecraftServer) {
@@ -123,42 +130,38 @@ public class VMinusEvents {
     }
 
     private static void add_vision_attributes(ItemStack itemstack, EquipmentSlot equipment_slot, Multimap<EntityAttribute, EntityAttributeModifier> entity_attribute_multimap) {
-
         Item item = itemstack.getItem();
         ItemVision item_vision = ItemVisionable.get_vision(item);
-        if (item_vision != null) {
-            if (item_vision.get_attributes(item) != null) {
-                entity_attribute_multimap.clear();
-                for (VisionAttributeModifier attribute:item_vision.get_attributes(item)) {
-                    if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
-                    entity_attribute_multimap.put(VisionAttributeModifier.attribute(attribute),VisionAttributeModifier.attribute_modifier(attribute));
-                }
+        if (item_vision == null) return;
+        if (item_vision.get_attributes(item) != null) {
+            entity_attribute_multimap.clear();
+            for (VisionAttributeModifier attribute:item_vision.get_attributes(item)) {
+                if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
+                entity_attribute_multimap.put(VisionAttributeModifier.attribute(attribute),VisionAttributeModifier.attribute_modifier(attribute));
             }
-            else if (item_vision.get_add_attributes(item) != null){
-                for (VisionAttributeModifier attribute:item_vision.get_add_attributes(item)) {
-                    if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
-                    entity_attribute_multimap.put(VisionAttributeModifier.attribute(attribute),VisionAttributeModifier.attribute_modifier(attribute));
-                }
+        }
+        else if (item_vision.get_add_attributes(item) != null){
+            for (VisionAttributeModifier attribute:item_vision.get_add_attributes(item)) {
+                if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
+                entity_attribute_multimap.put(VisionAttributeModifier.attribute(attribute),VisionAttributeModifier.attribute_modifier(attribute));
             }
-            else if (item_vision.get_remove_attributes(item) != null) {
-                for (VisionAttributeModifier attribute : item_vision.get_remove_attributes(item)) {
-                    if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
-                    EntityAttribute vision_attribute = VisionAttributeModifier.attribute(attribute);
-                    for (EntityAttributeModifier modifier : entity_attribute_multimap.get(vision_attribute).stream().toList()) {
-                        entity_attribute_multimap.remove(vision_attribute,modifier);
-                    }
+        }
+        else if (item_vision.get_remove_attributes(item) != null) {
+            for (VisionAttributeModifier attribute : item_vision.get_remove_attributes(item)) {
+                if (VisionAttributeModifier.equipment_slot(attribute) != equipment_slot) break;
+                EntityAttribute vision_attribute = VisionAttributeModifier.attribute(attribute);
+                for (EntityAttributeModifier modifier : entity_attribute_multimap.get(vision_attribute).stream().toList()) {
+                    entity_attribute_multimap.remove(vision_attribute,modifier);
                 }
             }
         }
     }
 
     private static void inspect_tooltip(ItemStack item_stack, TooltipContext tooltip_context, List<Text> tooltip){
-        if (tooltip == null)
-            return;
-        if (!Screen.hasAltDown()){
-            Text first_line = tooltip.get(0);
-            tooltip.removeAll(tooltip.stream().filter(text -> text != first_line).toList());
-            tooltip.add(Text.literal(Icon.INSPECT_BAUBLE.get_icon() + " Inspection"));
-        }
+        if (tooltip == null) return;
+        if (Screen.hasAltDown()) return;
+        Text first_line = tooltip.get(0);
+        tooltip.removeAll(tooltip.stream().filter(text -> text != first_line).toList());
+        tooltip.add(Text.literal(Icon.INSPECT_BAUBLE.get_icon() + " Inspection"));
     }
 }

@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.recipe;
 
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,36 +18,26 @@ public abstract class IngredientMixin {
     @Shadow @Final
     private Ingredient.Entry[] entries;
 
-    @Shadow public abstract boolean isEmpty();
+    @Unique
+    private final Ingredient ingredient = (Ingredient)(Object)this;
 
     @Inject(method = "test(Lnet/minecraft/item/ItemStack;)Z",at=@At("HEAD"), cancellable = true)
     public void test(ItemStack itemstack, CallbackInfoReturnable<Boolean> cir){
         if (itemstack == null) cir.setReturnValue(false);
-        else if (this.isEmpty()) cir.setReturnValue(itemstack.isEmpty());
-        else cir.setReturnValue(matchesIngredient(itemstack));
+        else if (ingredient.isEmpty()) cir.setReturnValue(false);
+        else cir.setReturnValue(matches_ingredient(itemstack));
     }
     @Unique
-    private boolean matchesIngredient(ItemStack targetStack) {
-        return iterate_entries(entries,targetStack,0);
-    }
-    @Unique
-    private boolean iterate_entries(Ingredient.Entry[] entries,ItemStack target_itemstack, int index){
-        if (index < entries.length) {
-            if (iterate_itemstack(entries[index].getStacks().toArray(ItemStack[]::new), target_itemstack,0)) return true;
-            return iterate_entries(entries,target_itemstack,index+1);
+    private boolean matches_ingredient(ItemStack target_itemstack) {
+        for (Ingredient.Entry o:entries){
+            for (ItemStack item_stack:o.getStacks()){
+                Item item = item_stack.getItem();
+                ItemVision itemVision = ItemVisionable.get_vision(item);
+                if (itemVision != null)
+                    if(itemVision.get_replacement(item) != null && itemVision.get_replacement(item) == target_itemstack.getItem()) return true;
+                    else if (itemVision.get_banned(item) != null && !itemVision.get_banned(item) && item_stack.isOf(target_itemstack.getItem())) return true;
+            }
         }
-        else return false;
-    }
-    @Unique
-    private boolean iterate_itemstack(ItemStack[] itemstacks,ItemStack target_itemstack,int index){
-        if (index < itemstacks.length){
-            Item item = itemstacks[index].getItem();
-            ItemVision itemVision = ItemVisionable.get_vision(item);
-            if (itemVision != null)
-                if(itemVision.get_replacement(item) != null && itemVision.get_replacement(item) == target_itemstack.getItem()) return true;
-                else if (itemVision.get_banned(item) != null && !itemVision.get_banned(item) && itemstacks[index].isOf(target_itemstack.getItem())) return true;
-            return iterate_itemstack(itemstacks,target_itemstack,index+1);
-        }
-        else return false;
+        return false;
     }
 }

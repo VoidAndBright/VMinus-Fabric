@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.world;
 
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;

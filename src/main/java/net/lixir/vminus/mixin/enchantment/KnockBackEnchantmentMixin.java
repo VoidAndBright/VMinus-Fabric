@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.enchantment;
 
-import net.lixir.vminus.vision.implement.EnchantmentVisionable;
+import net.lixir.vminus.vision.direct.EnchantmentVisionable;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.KnockbackEnchantment;

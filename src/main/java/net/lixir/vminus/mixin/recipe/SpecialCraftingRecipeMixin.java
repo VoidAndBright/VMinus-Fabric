@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.recipe;
 
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

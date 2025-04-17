@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.lixir.vminus.VMinus;
 import net.lixir.vminus.cape.Cape;
+import net.lixir.vminus.cape.CapeOwner;
 import net.lixir.vminus.networking.VMinusNetworking;
 import net.lixir.vminus.util.PersistentNbt;
 import net.minecraft.command.CommandRegistryAccess;
@@ -118,9 +119,9 @@ public class VMinusCommands {
     }
 
     private static int cape_command_execute(CommandContext<FabricClientCommandSource> arguments) {
-        String cape = Cape.to_string(CapeArgumentType.get_cape(arguments,"cape"));
-        PersistentNbt.get(arguments.getSource().getPlayer()).putString("Cape",cape);
-        ClientPlayNetworking.send(VMinusNetworking.CAPE_PACKET,PacketByteBufs.create().writeString(cape));
+        Cape cape = CapeArgumentType.get_cape(arguments,"cape");
+        CapeOwner.cast(arguments.getSource().getPlayer()).set_cape(cape);
+        ClientPlayNetworking.send(VMinusNetworking.CAPE_PACKET,PacketByteBufs.create().writeString(Cape.to_string(cape)));
         return 0;
     }
 }

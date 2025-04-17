@@ -1,6 +1,8 @@
 package net.lixir.vminus.mixin.entity;
 
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.cape.Cape;
+import net.lixir.vminus.cape.CapeOwner;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.EntityType;
@@ -20,10 +22,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity {
+public abstract class PlayerEntityMixin extends LivingEntity implements CapeOwner {
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
+    @Unique
+    private Cape cape = Cape.NONE;
     @Unique
     private final PlayerEntity player_entity = (PlayerEntity) (Object) this;
     @Inject(method = "eatFood",at = @At("HEAD"), cancellable = true)
@@ -39,5 +43,15 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             Criteria.CONSUME_ITEM.trigger(server_player_entity, itemstack);
         }
         cir.setReturnValue(super.eatFood(world,itemstack));
+    }
+
+    @Override
+    public Cape get_cape() {
+        return cape;
+    }
+
+    @Override
+    public void set_cape(Cape cape) {
+        this.cape = cape;
     }
 }

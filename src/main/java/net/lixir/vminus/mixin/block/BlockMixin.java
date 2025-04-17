@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.block;
 
-import net.lixir.vminus.vision.implement.BlockVisionable;
+import net.lixir.vminus.vision.direct.BlockVisionable;
 import net.lixir.vminus.vision.type.BlockVision;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -47,11 +47,11 @@ public class BlockMixin implements BlockVisionable {
         }
     }
 
-    public BlockVision vminus$get_vision() {
+    public BlockVision get_vision() {
         return block_vision;
     }
 
-    public void vminus$set_vision(BlockVision block_vision) {
+    public void set_vision(BlockVision block_vision) {
         this.block_vision = block_vision;
     }
 }

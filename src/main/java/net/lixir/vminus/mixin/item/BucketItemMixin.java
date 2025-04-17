@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BucketItemMixin {
     @Inject(method = "getEmptiedStack", at = @At("HEAD"), cancellable = true)
     private static void getEmptySuccessItem(ItemStack itemStack, PlayerEntity player, CallbackInfoReturnable<ItemStack> cir) {
+        if (itemStack.getCount() == 1)
+            return;
         if (!player.getAbilities().creativeMode) {
             if (itemStack.getItem() instanceof BucketItem) {
                 ItemStack emptyBucket = new ItemStack(Items.BUCKET);

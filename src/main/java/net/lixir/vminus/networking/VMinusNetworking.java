@@ -3,6 +3,8 @@ package net.lixir.vminus.networking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.lixir.vminus.VMinus;
+import net.lixir.vminus.cape.Cape;
+import net.lixir.vminus.cape.CapeOwner;
 import net.lixir.vminus.util.PersistentNbt;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
@@ -17,6 +19,6 @@ public class VMinusNetworking {
     }
 
     private static void set_cape_handler(MinecraftServer minecraftServer, ServerPlayerEntity serverPlayerEntity, ServerPlayNetworkHandler serverPlayNetworkHandler, PacketByteBuf packetByteBuf, PacketSender packetSender) {
-        PersistentNbt.get(serverPlayerEntity).putString("Cape",packetByteBuf.readString());
+        CapeOwner.cast(serverPlayerEntity).set_cape(Cape.from_string(packetByteBuf.readString()));
     }
 }

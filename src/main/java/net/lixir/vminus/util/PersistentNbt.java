@@ -5,8 +5,8 @@ import net.minecraft.nbt.NbtCompound;
 
 
 public interface PersistentNbt {
-    NbtCompound vminus$get_nbt();
+    NbtCompound get_nbt();
     static <T extends Entity> NbtCompound get(T entity){
-        return ((PersistentNbt)entity).vminus$get_nbt();
+        return ((PersistentNbt)entity).get_nbt();
     }
 }

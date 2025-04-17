@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.entity;
 
 import net.lixir.vminus.util.PersistentNbt;
-import net.lixir.vminus.vision.implement.EntityTypeVisionable;
+import net.lixir.vminus.vision.direct.EntityTypeVisionable;
 import net.lixir.vminus.vision.type.EntityTypeVision;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public class EntityMixin implements PersistentNbt {
     @Unique
-    private NbtCompound persistent_nbt = new NbtCompound();
+    private final NbtCompound persistent_nbt = new NbtCompound();
     @Unique
     Entity entity = (Entity)(Object)this;
     @Inject(method = "isFireImmune",at = @At("HEAD"), cancellable = true)
@@ -41,7 +41,7 @@ public class EntityMixin implements PersistentNbt {
             cir.setReturnValue(!entity_type_vision.get_dampens_vibrations(entity_type));
     }
 
-    public NbtCompound vminus$get_nbt() {
+    public NbtCompound get_nbt() {
         return persistent_nbt;
     }
 }

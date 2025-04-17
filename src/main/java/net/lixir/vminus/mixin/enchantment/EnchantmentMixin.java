@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.enchantment;
 
-import net.lixir.vminus.vision.implement.EnchantmentVisionable;
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.EnchantmentVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.enchantment.Enchantment;
@@ -76,12 +76,12 @@ public class EnchantmentMixin implements EnchantmentVisionable {
     }
 
     @Override
-    public EnchantmentVision vminus$get_vision() {
+    public EnchantmentVision get_vision() {
         return enchantment_vision;
     }
 
     @Override
-    public void vminus$set_vision(EnchantmentVision enchantment_vision) {
+    public void set_vision(EnchantmentVision enchantment_vision) {
         this.enchantment_vision = enchantment_vision;
     }
 }

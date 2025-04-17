@@ -166,11 +166,12 @@ public class CapeOwners {
         LUCENTIC
     };
     public static boolean matches(UUID player_uuid, UUID[] uuids){
-        for (UUID uuid:uuids){
-            if (player_uuid == uuid){
-                return true;
-            }
-        }
-        return false;
+        return true;
+        //for (UUID uuid:uuids){
+        //    if (player_uuid == uuid){
+        //        return true;
+        //    }
+        //}
+        //return false;
     }
 }

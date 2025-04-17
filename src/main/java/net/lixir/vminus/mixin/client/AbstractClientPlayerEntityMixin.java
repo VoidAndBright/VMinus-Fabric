@@ -1,12 +1,9 @@
 package net.lixir.vminus.mixin.client;
 
-import net.lixir.vminus.VMinus;
 import net.lixir.vminus.cape.Cape;
+import net.lixir.vminus.cape.CapeOwner;
 import net.lixir.vminus.cape.CapeOwners;
-import net.lixir.vminus.config.VMinusConfigs;
-import net.lixir.vminus.util.PersistentNbt;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -23,7 +20,7 @@ public class AbstractClientPlayerEntityMixin {
     @Inject(method = "getCapeTexture",at = @At("HEAD"), cancellable = true)
     private void redirect_cape_texture(CallbackInfoReturnable<Identifier> cir){
         UUID player_uuid = client_player_entity.getUuid();
-        switch (Cape.from_string(PersistentNbt.get(client_player_entity).getString("Cape"))) {
+        switch (CapeOwner.cast(client_player_entity).get_cape()) {
             case BEEPER -> {
                 if(CapeOwners.matches(player_uuid, CapeOwners.PATRONS) || CapeOwners.matches(player_uuid, CapeOwners.BOOSTERS)){
                     cir.setReturnValue(Cape.BEEPER_CAPE_TEXTURE);

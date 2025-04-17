@@ -2,7 +2,6 @@ package net.lixir.vminus.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.lixir.vminus.block.VMinusBlocks;
 import net.lixir.vminus.util.tag.VMinusBlockTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
@@ -70,9 +69,6 @@ public class VMinusBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(Blocks.BUBBLE_CORAL_BLOCK)
                 .add(Blocks.FIRE_CORAL_BLOCK)
                 .add(Blocks.HORN_CORAL_BLOCK);
-
-        getOrCreateTagBuilder(VMinusBlockTags.EMISSIVE_RENDERING)
-                .add(VMinusBlocks.DEFAULTIUM_BLOCK);
 
         getOrCreateTagBuilder(VMinusBlockTags.EXPOSED_COPPER)
                 .add(Blocks.EXPOSED_COPPER)

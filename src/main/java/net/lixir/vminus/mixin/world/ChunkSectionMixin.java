@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.world;
 
-import net.lixir.vminus.block.property.AxisProperty;
-import net.lixir.vminus.vision.implement.BlockVisionable;
+import net.lixir.vminus.block.AxisProperty;
+import net.lixir.vminus.vision.direct.BlockVisionable;
 import net.lixir.vminus.vision.type.BlockVision;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

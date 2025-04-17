@@ -2,7 +2,7 @@ package net.lixir.vminus;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import net.lixir.vminus.screen.screens.VMinusConfigScreen;
+import net.lixir.vminus.screen.VMinusConfigScreen;
 
 
 public class VMinusModMenu implements ModMenuApi {

@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.entity;
 
-import net.lixir.vminus.vision.implement.EntityTypeVisionable;
+import net.lixir.vminus.vision.direct.EntityTypeVisionable;
 import net.lixir.vminus.vision.type.EntityTypeVision;
 import net.minecraft.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,11 +23,11 @@ public class EntityTypeMixin implements EntityTypeVisionable {
         }
     }
 
-    public EntityTypeVision vminus$get_vision() {
+    public EntityTypeVision get_vision() {
         return entity_type_vision;
     }
 
-    public void vminus$set_vision(EntityTypeVision entity_type_vision) {
+    public void set_vision(EntityTypeVision entity_type_vision) {
         this.entity_type_vision = entity_type_vision;
     }
 }

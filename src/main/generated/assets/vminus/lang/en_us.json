@@ -4,17 +4,13 @@
   "attribute.vminus.critical_damage": "Critical Damage",
   "attribute.vminus.fall_protection": "Fall Protection",
   "attribute.vminus.fire_protection": "Fire Protection",
-  "attribute.vminus.health_lost_stat_boost": "Health Lost Stat Boost",
+  "attribute.vminus.health_lost_stat_boost": "Jump boost",
   "attribute.vminus.magic_protection": "Magic Protection",
   "attribute.vminus.mining_speed": "Mining Speed",
   "attribute.vminus.mob_detection_range": "Critical Damage",
-  "attribute.vminus.momentum": "Momentum",
+  "attribute.vminus.momentum": "Width",
   "attribute.vminus.protection": "Protection",
-  "attribute.vminus.translucence": "Translucence",
-  "block.vminus.defaultium_block": "Defaultium Block",
-  "block.vminus.defaultium_head": "Defaultium Head",
-  "entity.vminus.defaultium_entity": "Defaultium Entity",
-  "item.vminus.defaultium_item": "Defaultium Item",
+  "attribute.vminus.translucence": "Height",
   "option.modmenu.cape": "Cape",
   "option.modmenu.cape.beeper": "Beeper",
   "option.modmenu.cape.ghost": "Ghost",
@@ -24,6 +20,5 @@
   "option.modmenu.cape.prototype": "Prototype",
   "option.modmenu.cape.shroud": "Shroud",
   "option.modmenu.cape.troll": "Troll",
-  "vminus.configs": "VMinus Configs",
-  "vminus.screen.default.title": "Defaultium"
+  "vminus.configs": "VMinus Configs"
 }

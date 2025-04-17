@@ -1,13 +1,11 @@
-package net.lixir.vminus.screen.screens;
+package net.lixir.vminus.screen;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.lixir.vminus.VMinus;
 import net.lixir.vminus.cape.Cape;
+import net.lixir.vminus.cape.CapeOwner;
 import net.lixir.vminus.config.VMinusConfigManager;
-import net.lixir.vminus.config.VMinusConfigs;
 import net.lixir.vminus.networking.VMinusNetworking;
-import net.lixir.vminus.util.PersistentNbt;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -46,9 +44,9 @@ public class VMinusConfigScreen extends GameOptionsScreen {
     }
     public void removed() {
         if (MinecraftClient.getInstance().player != null){
-            String cape = Cape.to_string(CAPE.getValue());
-            PersistentNbt.get(MinecraftClient.getInstance().player).putString("Cape",cape);
-            ClientPlayNetworking.send(VMinusNetworking.CAPE_PACKET, PacketByteBufs.create().writeString(cape));
+            Cape cape = CAPE.getValue();
+            CapeOwner.cast(MinecraftClient.getInstance().player).set_cape(cape);
+            ClientPlayNetworking.send(VMinusNetworking.CAPE_PACKET, PacketByteBufs.create().writeString(Cape.to_string(cape)));
         }
         VMinusConfigManager.save();
     }

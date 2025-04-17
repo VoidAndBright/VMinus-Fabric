@@ -2,7 +2,6 @@ package net.lixir.vminus.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.lixir.vminus.item.VMinusItems;
 import net.lixir.vminus.util.tag.VMinusItemTags;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
@@ -16,18 +15,6 @@ public class VMinusItemTagProvider extends FabricTagProvider.ItemTagProvider {
     }
 
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-
-        getOrCreateTagBuilder(VMinusItemTags.RarityTags.COMMON)
-                .add(VMinusItems.DEFAULTIUM_ITEM);
-
-        getOrCreateTagBuilder(VMinusItemTags.RarityTags.UNCOMMON)
-                .add(VMinusItems.DEFAULTIUM_ITEM);
-
-        getOrCreateTagBuilder(VMinusItemTags.RarityTags.RARE)
-                .add(VMinusItems.DEFAULTIUM_ITEM);
-
-        getOrCreateTagBuilder(VMinusItemTags.RarityTags.EPIC)
-                .add(VMinusItems.DEFAULTIUM_ITEM);
 
         getOrCreateTagBuilder(VMinusItemTags.ToolTipTags.HIDE_MINING_SPEED)
                 .forceAddTag(ItemTags.SWORDS);

@@ -1,8 +1,8 @@
 package net.lixir.vminus.mixin.entity;
 
 import net.lixir.vminus.entity.EntityVariant;
-import net.lixir.vminus.vision.implement.EntityTypeVisionable;
-import net.lixir.vminus.vision.implement.StatusEffectVisionable;
+import net.lixir.vminus.vision.direct.EntityTypeVisionable;
+import net.lixir.vminus.vision.direct.StatusEffectVisionable;
 import net.lixir.vminus.vision.type.EntityTypeVision;
 import net.lixir.vminus.vision.type.StatusEffectVision;
 import net.minecraft.entity.EntityType;
@@ -132,10 +132,10 @@ public abstract class LivingEntityMixin implements EntityVariant {
     private void read_variant_nbt(NbtCompound nbt, CallbackInfo ci){
         this.variant = nbt.getString("Variant");
     }
-    public void vminus$set_variant(String variant) {
+    public void set_variant(String variant) {
         this.variant = variant;
     }
-    public String vminus$get_variant(){
+    public String get_variant(){
         return variant;
     }
 }

@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.entity;
 
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;

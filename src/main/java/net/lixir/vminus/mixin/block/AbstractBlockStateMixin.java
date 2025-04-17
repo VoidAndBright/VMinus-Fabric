@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.block;
 
-import net.lixir.vminus.vision.implement.BlockVisionable;
+import net.lixir.vminus.vision.direct.BlockVisionable;
 import net.lixir.vminus.vision.type.BlockVision;
 import net.minecraft.block.AbstractBlock.AbstractBlockState;
 import net.minecraft.block.Block;

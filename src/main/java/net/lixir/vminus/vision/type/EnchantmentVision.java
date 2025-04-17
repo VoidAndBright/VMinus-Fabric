@@ -79,7 +79,9 @@ public class EnchantmentVision{
             if (enchantment_entry.startsWith("*")) {
                 String block_wild_card = enchantment_entry.substring(1);
                 for (Enchantment enchantment:Registries.ENCHANTMENT){
-                    if (Registries.ENCHANTMENT.getId(enchantment).toString().endsWith(block_wild_card)){
+                    Identifier identifier = Registries.ENCHANTMENT.getId(enchantment);
+                    if (identifier == null) break;
+                    if (identifier.toString().endsWith(block_wild_card)){
                         vector_enchantments.add(enchantment);
                     }
                 }

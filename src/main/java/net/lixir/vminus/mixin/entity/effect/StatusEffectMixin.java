@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.entity.effect;
 
-import net.lixir.vminus.vision.implement.StatusEffectVisionable;
+import net.lixir.vminus.vision.direct.StatusEffectVisionable;
 import net.lixir.vminus.vision.type.StatusEffectVision;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -28,12 +28,12 @@ public class StatusEffectMixin implements StatusEffectVisionable {
     }
 
     @Override
-    public StatusEffectVision vminus$get_vision() {
+    public StatusEffectVision get_vision() {
         return status_effect_vision;
     }
 
     @Override
-    public void vminus$set_vision(StatusEffectVision status_effect_vision) {
+    public void set_vision(StatusEffectVision status_effect_vision) {
         this.status_effect_vision = status_effect_vision;
     }
 }

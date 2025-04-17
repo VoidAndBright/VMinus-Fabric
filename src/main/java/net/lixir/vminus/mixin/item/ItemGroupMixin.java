@@ -1,6 +1,6 @@
 package net.lixir.vminus.mixin.item;
 
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -21,15 +21,15 @@ public class ItemGroupMixin {
     @Unique
     private final ItemGroup item_group = (ItemGroup) (Object) this;
     @Unique
-    private final ItemGroupAccessor accessor = (ItemGroupAccessor)item_group;
+    private final ItemGroupAccessor item_group_accessor = (ItemGroupAccessor)item_group;
     @Inject(method = "updateEntries",at = @At("TAIL"))
     private void updateEntries(ItemGroup.DisplayContext displayContext, CallbackInfo ci){
         Set<ItemStack> search_tab_stacks = ItemStackSet.create();
-        search_tab_stacks.addAll(accessor.get_search_tab_stacks().stream().filter(ItemGroupMixin::filter_banned).map(ItemGroupMixin::replace_item_stacks).toList());
-        accessor.set_search_tab_stacks(search_tab_stacks);
+        search_tab_stacks.addAll(item_group_accessor.get_search_tab_stacks().stream().filter(ItemGroupMixin::filter_banned).map(ItemGroupMixin::replace_item_stacks).toList());
+        item_group_accessor.set_search_tab_stacks(search_tab_stacks);
         Collection<ItemStack> display_stacks = ItemStackSet.create();
-        display_stacks.addAll(accessor.get_display_stacks().stream().filter(ItemGroupMixin::filter_banned).map(ItemGroupMixin::replace_item_stacks).toList());
-        accessor.set_display_stacks(display_stacks);
+        display_stacks.addAll(item_group_accessor.get_display_stacks().stream().filter(ItemGroupMixin::filter_banned).map(ItemGroupMixin::replace_item_stacks).toList());
+        item_group_accessor.set_display_stacks(display_stacks);
     }
     @Unique
     private static boolean filter_banned(ItemStack item_stack){

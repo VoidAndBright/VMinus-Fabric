@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.item;
 
-import net.lixir.vminus.vision.implement.EnchantmentVisionable;
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.EnchantmentVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.enchantment.Enchantment;
@@ -43,7 +43,7 @@ public abstract class ItemStackMixin{
                 ItemStack replacement_stack = new ItemStack(item_vision.get_break_replacement(item));
                 if(item_vision.get_transfer_nbt(item) != null && item_vision.get_transfer_nbt(item)) {
                     replacement_stack.setNbt(item_stack.getOrCreateNbt());
-                    replacement_stack.setDamage(1);
+                    replacement_stack.setDamage(replacement_stack.getMaxDamage()-1);
                 }
                 PlayerInventory player_inventory = player.getInventory();
                 int inventory_slot_index = player_inventory.getSlotWithStack(item_stack);

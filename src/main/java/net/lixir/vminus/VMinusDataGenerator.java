@@ -13,7 +13,5 @@ public class VMinusDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(VMinusBiomeTagProvider::new);
 		pack.addProvider(VMinusEntityTypeTagProvider::new);
 		pack.addProvider(VMinusDamageTypeTagProvider::new);
-		pack.addProvider(VMinusModelProvider::new);
-		pack.addProvider(VMinusBlockLootTableProvider::new);
 	}
 }

@@ -1,7 +1,7 @@
 package net.lixir.vminus.mixin.enchantment;
 
-import net.lixir.vminus.vision.implement.EnchantmentVisionable;
-import net.lixir.vminus.vision.implement.ItemVisionable;
+import net.lixir.vminus.vision.direct.EnchantmentVisionable;
+import net.lixir.vminus.vision.direct.ItemVisionable;
 import net.lixir.vminus.vision.type.EnchantmentVision;
 import net.lixir.vminus.vision.type.ItemVision;
 import net.minecraft.enchantment.Enchantment;
