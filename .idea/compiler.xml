@@ -3,4 +3,10 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17" />
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_STRING" value="-AoutRefMapFile=C:\Users\voida\Documents\GitHub\VMinus-Fabric\build\classes\java\main\vminus-refmap.json -AdefaultObfuscationEnv=named:intermediary -Aquiet=true -AoutMapFileNamedIntermediary=C:\Users\voida\Documents\GitHub\VMinus-Fabric\build\loom-cache\mixin-map-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.main.tiny -AinMapFileNamedIntermediary=C:\Users\voida\.gradle\caches\fabric-loom\1.20.1\net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2\mappings.tiny" />
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="VMinus-Fabric.test" options="-AoutRefMapFile=C:\Users\voida\Documents\GitHub\VMinus-Fabric\build\classes\java\test\test-vminus-refmap.json -AdefaultObfuscationEnv=named:intermediary -Aquiet=true -AoutMapFileNamedIntermediary=C:\Users\voida\Documents\GitHub\VMinus-Fabric\build\loom-cache\mixin-map-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.test.tiny -AinMapFileNamedIntermediary=C:\Users\voida\.gradle\caches\fabric-loom\1.20.1\net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2\mappings.tiny" />
+    </option>
+  </component>
 </project>

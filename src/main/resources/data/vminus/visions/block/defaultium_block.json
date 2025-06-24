@@ -2,7 +2,6 @@
   "blocks": [
     "*",
     "!copper_block"
-  ]
-
-
+  ],
+  "replacement": [{"value": "copper_block"}]
 }

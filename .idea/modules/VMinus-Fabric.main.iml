@@ -137,7 +137,7 @@
     <orderEntry type="library" name="Gradle: net_fabricmc_yarn_1_20_1_1_20_1_build_10_v2.net.fabricmc.fabric-api:fabric-sound-api-v1:1.0.13+1802ada577" level="project" />
     <orderEntry type="library" name="Gradle: net_fabricmc_yarn_1_20_1_1_20_1_build_10_v2.net.fabricmc.fabric-api:fabric-transitive-access-wideners-v1:4.3.1+1802ada577" level="project" />
     <orderEntry type="module-library" scope="RUNTIME">
-      <library>
+      <library name="Gradle: mappings.jar">
         <CLASSES>
           <root url="jar://$USER_HOME$/.gradle/caches/fabric-loom/1.20.1/net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2/mappings.jar!/" />
         </CLASSES>
